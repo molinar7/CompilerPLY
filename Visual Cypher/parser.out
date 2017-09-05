@@ -1,0 +1,90 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    ID
+    CARET
+    POINT
+    LPAREN
+    RPAREN
+    EQUALS
+
+Grammar
+
+Rule 0     S' -> cal
+Rule 1     cal -> expression
+Rule 2     cal -> epsilon
+Rule 3     expression -> INT
+Rule 4     expression -> FLOAT
+Rule 5     epsilon -> <empty>
+
+Terminals, with rules where they appear
+
+CARET                : 
+EQUALS               : 
+FLOAT                : 4
+ID                   : 
+INT                  : 3
+LPAREN               : 
+POINT                : 
+RPAREN               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+cal                  : 0
+epsilon              : 2
+expression           : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . cal
+    (1) cal -> . expression
+    (2) cal -> . epsilon
+    (3) expression -> . INT
+    (4) expression -> . FLOAT
+    (5) epsilon -> .
+
+    INT             shift and go to state 4
+    FLOAT           shift and go to state 5
+    $end            reduce using rule 5 (epsilon -> .)
+
+    cal                            shift and go to state 1
+    expression                     shift and go to state 2
+    epsilon                        shift and go to state 3
+
+state 1
+
+    (0) S' -> cal .
+
+
+
+state 2
+
+    (1) cal -> expression .
+
+    $end            reduce using rule 1 (cal -> expression .)
+
+
+state 3
+
+    (2) cal -> epsilon .
+
+    $end            reduce using rule 2 (cal -> epsilon .)
+
+
+state 4
+
+    (3) expression -> INT .
+
+    $end            reduce using rule 3 (expression -> INT .)
+
+
+state 5
+
+    (4) expression -> FLOAT .
+
+    $end            reduce using rule 4 (expression -> FLOAT .)
+
