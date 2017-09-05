@@ -1,9 +1,8 @@
 import ply.lex as lex
-import ply.yacc as yacc
 import sys
 
 
-file = open('test.txt', 'r') 
+#file = open('test.txt', 'r') 
 
 
 
@@ -17,7 +16,8 @@ tokens = [
 'CARET',
 'POINT',
 'LPAREN',
-'RPAREN'
+'RPAREN',
+'EQUALS'
 ]
 ########################## Reserver Words ####################################################
 reserved = {
@@ -35,6 +35,7 @@ t_ignore = ' \t' #Ignore spaces and tabs.
 t_ignore_COMMENT = r'\#.*'
 t_CARET= r'\^'
 t_POINT= r'\.'
+t_EQUALS= r'\='
 
 
 ############## A regular expression rule with some action code########################
@@ -65,8 +66,11 @@ def t_error(t): # Error handling rule
     t.lexer.skip(1)
 
 
+#############################Building a lexer#######################################
+lexer = lex.lex() 
 
-lexer = lex.lex() # Building a lexer
+
+''' ##################Removing the input from the user########3
 lexer.input(file.read()) # lexer reading some input
 
 
@@ -77,6 +81,7 @@ while True:
 	if not tok:
 		break	#nomore input
 	print(tok)
-#####################
 
+###########################################################
 
+'''
