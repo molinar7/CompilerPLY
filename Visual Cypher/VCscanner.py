@@ -4,38 +4,97 @@ import sys
 
 #file = open('test.txt', 'r') 
 
-
-
 ######################LIST OF TOKENS###################################
 tokens = [
+
+'PROGRAM',
 'ID',
+
 # types of numbers
 'FLOAT',
 'INT',
+
 #Symbols
 'CARET',
 'POINT',
-'LPAREN',
-'RPAREN',
-'EQUALS'
+
+##Operadores###
+'OP_PLUS',
+'OP_MINUS',
+'OP_TIMES',
+'OP_DIVISION',
+'OP_EQUALS_TWO',
+'OP_NOT_EQUALS',
+'OP_LPAREN',
+'OP_RPAREN',
+'OP_EQUALS',
+'OP_LESS_THAN',
+'OP_LESS_EQUALS_THAN',
+'OP_GREATER_THAN',
+'OP_GREATER_EQUALS_THAN',
+'AND',
+'OR',
+'PRINT',
+'QUOT_MARK',
+'SEMICOLON',
+'LCURLY_BRACKET',
+'RCURLY_BRACKET',
+'VAR'
+
+
 ]
+
 ########################## Reserver Words ####################################################
 reserved = {
-   'if' : 'IF',
-   'then' : 'THEN',
-   'else' : 'ELSE',
-   'while' : 'WHILE'
+
+
+    #Basic tokens
+    'program' : 'PROGRAM',
+    'var'   :   'VAR',
+    'print' : 'PRINT',
+
+    # Condition tokens
+    'if' : 'IF',
+    'then' : 'THEN',
+    'else' : 'ELSE',
+    'and' : 'AND',
+    'or' : 'OR',
+
+    # Cycle tokens
+    'while'      : 'WHILE',
+    'for'       : 'FOR',
+    
+    # Type declaration tokens
+    'boolean'   : 'BOOLEAN',
+    'int'       : 'INT',
+    'float'   : 'FLOAT'
    
 }
 
 ################### Regular expression rules for simple tokens###########################
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
+
+
+t_OP_PLUS = r'\+'
+t_OP_MINUS = r'\-'
+t_OP_TIMES = r'\*'
+t_OP_DIVISION = r'\/'
+t_OP_EQUALS_TWO= r'\=='
+t_OP_NOT_EQUALS= r'\!='
+t_OP_LPAREN  = r'\('
+t_OP_RPAREN  = r'\)'
+t_OP_EQUALS= r'\='
+t_OP_LESS_THAN = r'\<'
+t_OP_LESS_EQUALS_THAN = r'\<='
+t_OP_GREATER_THAN = r'\>'
+t_OP_GREATER_EQUALS_THAN=  r'\>='
 t_ignore = ' \t' #Ignore spaces and tabs.
 t_ignore_COMMENT = r'\#.*'
 t_CARET= r'\^'
 t_POINT= r'\.'
-t_EQUALS= r'\='
+t_QUOT_MARK = r'\"'
+t_SEMICOLON = r'\;'
+t_LCURLY_BRACKET = r'\{'
+t_RCURLY_BRACKET = r'\}'
 
 
 ############## A regular expression rule with some action code########################

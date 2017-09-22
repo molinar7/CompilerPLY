@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ID FLOAT INT CARET POINT LPAREN RPAREN EQUALS\n\tcal :\texpression \n\t\t|\tepsilon\n\t\n\texpression :\tINT\n\t\t\t\t|\tFLOAT\n\t\t\t\t\n\tepsilon : '
+_lr_signature = 'PROGRAM ID FLOAT INT CARET POINT OP_PLUS OP_MINUS OP_TIMES OP_DIVISION OP_EQUALS_TWO OP_NOT_EQUALS OP_LPAREN OP_RPAREN OP_EQUALS OP_LESS_THAN OP_LESS_EQUALS_THAN OP_GREATER_THAN OP_GREATER_EQUALS_THAN AND OR PRINT QUOT_MARK SEMICOLON LCURLY_BRACKET RCURLY_BRACKET VAR\n\tprogram\t\t:\tPROGRAM\t\tID\t\tvars\tbloque\n\n\t\n\tvars\t:\tVAR\t\ttype\t ID\t\tOP_EQUALS\tID\t SEMICOLON \n\t\n\ttype\t:\tINT\n\t\t\t|\tFLOAT\n\t\n\tbloque\t:\tLCURLY_BRACKET\tstatement\tRCURLY_BRACKET\t\t\n\t\n\tstatement\t:\tmega_expression\n\t\n\tmega_expression\t:\tsuper_expression\n\t\t\t\t\t|\tsuper_expression\tAND\t\tsuper_expression\n\t\t\t\t\t|\tsuper_expression\tOR\t\tsuper_expression\n\t\n\tsuper_expression\t:\texpression\n\t\t\t\t\t\t|\texpression\tOP_GREATER_THAN\t\t\t expression\n\t\t\t\t\t\t|\texpression\tOP_LESS_THAN\t\t\t expression\n\t\t\t\t\t\t|\texpression\tOP_GREATER_EQUALS_THAN\t expression\n\t\t\t\t\t\t|\texpression\tOP_LESS_EQUALS_THAN\t\t expression\n\t\t\t\t\t\t|\texpression\tOP_EQUALS_TWO\t\t\t expression\n\t\t\t\t\t\t|\texpression\tOP_NOT_EQUALS\t\t\t expression\n\n\t\n\texpression :\tterm\n\t\t\t\t|\tterm\tOP_PLUS\t\texpression\t\n\t\t\t\t|\tterm\tOP_MINUS\texpression\t\n\t\t\t\t\n\t\n\tterm\t:\tfact\n\t\t\t|\tfact\tOP_DIVISION\t\tterm\t\n\t\t\t|\tfact\tOP_TIMES\t\tterm\t\n\n\t\n\tfact\t:\tID\n\t\t\t|\tFLOAT\n\t\t\t|\tINT\n\t\t\t|\tOP_LPAREN\tsuper_expression\tOP_RPAREN\t\n\t\n\tprinter\t:\tPRINT\tOP_LPAREN\tQUOT_MARK\tID\tQUOT_MARK\t\tOP_RPAREN\n\n\tepsilon : '
     
-_lr_action_items = {'INT':([0,],[4,]),'FLOAT':([0,],[5,]),'$end':([0,1,2,3,4,5,],[-5,0,-1,-2,-3,-4,]),}
+_lr_action_items = {'PROGRAM':([0,],[2,]),'$end':([1,6,22,],[0,-1,-5,]),'ID':([2,7,8,9,10,20,23,24,25,26,27,28,29,30,31,32,33,34,36,],[3,17,21,-3,-4,17,17,17,17,17,17,17,17,17,17,17,17,17,50,]),'VAR':([3,],[5,]),'LCURLY_BRACKET':([4,51,],[7,-2,]),'INT':([5,7,20,23,24,25,26,27,28,29,30,31,32,33,34,],[9,19,19,19,19,19,19,19,19,19,19,19,19,19,19,]),'FLOAT':([5,7,20,23,24,25,26,27,28,29,30,31,32,33,34,],[10,18,18,18,18,18,18,18,18,18,18,18,18,18,18,]),'OP_LPAREN':([7,20,23,24,25,26,27,28,29,30,31,32,33,34,],[20,20,20,20,20,20,20,20,20,20,20,20,20,20,]),'RCURLY_BRACKET':([11,12,13,14,15,16,17,18,19,37,38,39,40,41,42,43,44,45,46,47,48,49,],[22,-6,-7,-10,-17,-20,-23,-24,-25,-8,-9,-11,-12,-13,-14,-15,-16,-18,-19,-21,-22,-26,]),'AND':([13,14,15,16,17,18,19,39,40,41,42,43,44,45,46,47,48,49,],[23,-10,-17,-20,-23,-24,-25,-11,-12,-13,-14,-15,-16,-18,-19,-21,-22,-26,]),'OR':([13,14,15,16,17,18,19,39,40,41,42,43,44,45,46,47,48,49,],[24,-10,-17,-20,-23,-24,-25,-11,-12,-13,-14,-15,-16,-18,-19,-21,-22,-26,]),'OP_RPAREN':([14,15,16,17,18,19,35,39,40,41,42,43,44,45,46,47,48,49,],[-10,-17,-20,-23,-24,-25,49,-11,-12,-13,-14,-15,-16,-18,-19,-21,-22,-26,]),'OP_GREATER_THAN':([14,15,16,17,18,19,45,46,47,48,49,],[25,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_LESS_THAN':([14,15,16,17,18,19,45,46,47,48,49,],[26,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_GREATER_EQUALS_THAN':([14,15,16,17,18,19,45,46,47,48,49,],[27,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_LESS_EQUALS_THAN':([14,15,16,17,18,19,45,46,47,48,49,],[28,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_EQUALS_TWO':([14,15,16,17,18,19,45,46,47,48,49,],[29,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_NOT_EQUALS':([14,15,16,17,18,19,45,46,47,48,49,],[30,-17,-20,-23,-24,-25,-18,-19,-21,-22,-26,]),'OP_PLUS':([15,16,17,18,19,47,48,49,],[31,-20,-23,-24,-25,-21,-22,-26,]),'OP_MINUS':([15,16,17,18,19,47,48,49,],[32,-20,-23,-24,-25,-21,-22,-26,]),'OP_DIVISION':([16,17,18,19,49,],[33,-23,-24,-25,-26,]),'OP_TIMES':([16,17,18,19,49,],[34,-23,-24,-25,-26,]),'OP_EQUALS':([21,],[36,]),'SEMICOLON':([50,],[51,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'cal':([0,],[1,]),'expression':([0,],[2,]),'epsilon':([0,],[3,]),}
+_lr_goto_items = {'program':([0,],[1,]),'vars':([3,],[4,]),'bloque':([4,],[6,]),'type':([5,],[8,]),'statement':([7,],[11,]),'mega_expression':([7,],[12,]),'super_expression':([7,20,23,24,],[13,35,37,38,]),'expression':([7,20,23,24,25,26,27,28,29,30,31,32,],[14,14,14,14,39,40,41,42,43,44,45,46,]),'term':([7,20,23,24,25,26,27,28,29,30,31,32,33,34,],[15,15,15,15,15,15,15,15,15,15,15,15,47,48,]),'fact':([7,20,23,24,25,26,27,28,29,30,31,32,33,34,],[16,16,16,16,16,16,16,16,16,16,16,16,16,16,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,10 +25,33 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> cal","S'",1,None,None,None),
-  ('cal -> expression','cal',1,'p_cal','vcparser.py',10),
-  ('cal -> epsilon','cal',1,'p_cal','vcparser.py',11),
-  ('expression -> INT','expression',1,'p_expression','vcparser.py',18),
-  ('expression -> FLOAT','expression',1,'p_expression','vcparser.py',19),
-  ('epsilon -> <empty>','epsilon',0,'p_epsilon','vcparser.py',26),
+  ("S' -> program","S'",1,None,None,None),
+  ('program -> PROGRAM ID vars bloque','program',4,'p_program','vcparser.py',12),
+  ('vars -> VAR type ID OP_EQUALS ID SEMICOLON','vars',6,'p_vars','vcparser.py',18),
+  ('type -> INT','type',1,'p_type','vcparser.py',23),
+  ('type -> FLOAT','type',1,'p_type','vcparser.py',24),
+  ('bloque -> LCURLY_BRACKET statement RCURLY_BRACKET','bloque',3,'p_bloque','vcparser.py',29),
+  ('statement -> mega_expression','statement',1,'p_statement','vcparser.py',33),
+  ('mega_expression -> super_expression','mega_expression',1,'p_mega_expression','vcparser.py',38),
+  ('mega_expression -> super_expression AND super_expression','mega_expression',3,'p_mega_expression','vcparser.py',39),
+  ('mega_expression -> super_expression OR super_expression','mega_expression',3,'p_mega_expression','vcparser.py',40),
+  ('super_expression -> expression','super_expression',1,'p_super_expression','vcparser.py',45),
+  ('super_expression -> expression OP_GREATER_THAN expression','super_expression',3,'p_super_expression','vcparser.py',46),
+  ('super_expression -> expression OP_LESS_THAN expression','super_expression',3,'p_super_expression','vcparser.py',47),
+  ('super_expression -> expression OP_GREATER_EQUALS_THAN expression','super_expression',3,'p_super_expression','vcparser.py',48),
+  ('super_expression -> expression OP_LESS_EQUALS_THAN expression','super_expression',3,'p_super_expression','vcparser.py',49),
+  ('super_expression -> expression OP_EQUALS_TWO expression','super_expression',3,'p_super_expression','vcparser.py',50),
+  ('super_expression -> expression OP_NOT_EQUALS expression','super_expression',3,'p_super_expression','vcparser.py',51),
+  ('expression -> term','expression',1,'p_expression','vcparser.py',56),
+  ('expression -> term OP_PLUS expression','expression',3,'p_expression','vcparser.py',57),
+  ('expression -> term OP_MINUS expression','expression',3,'p_expression','vcparser.py',58),
+  ('term -> fact','term',1,'p_term','vcparser.py',64),
+  ('term -> fact OP_DIVISION term','term',3,'p_term','vcparser.py',65),
+  ('term -> fact OP_TIMES term','term',3,'p_term','vcparser.py',66),
+  ('fact -> ID','fact',1,'p_fact','vcparser.py',71),
+  ('fact -> FLOAT','fact',1,'p_fact','vcparser.py',72),
+  ('fact -> INT','fact',1,'p_fact','vcparser.py',73),
+  ('fact -> OP_LPAREN super_expression OP_RPAREN','fact',3,'p_fact','vcparser.py',74),
+  ('printer -> PRINT OP_LPAREN QUOT_MARK ID QUOT_MARK OP_RPAREN','printer',6,'p_printer','vcparser.py',79),
+  ('epsilon -> <empty>','epsilon',0,'p_epsilon','vcparser.py',85),
 ]
