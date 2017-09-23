@@ -1,9 +1,6 @@
 import ply.lex as lex
 import sys
 
-
-#file = open('test.txt', 'r') 
-
 ######################LIST OF TOKENS###################################
 tokens = [
 
@@ -128,11 +125,7 @@ def t_error(t): # Error handling rule
 #############################Building a lexer#######################################
 lexer = lex.lex() 
 
-
-''' ##################Removing the input from the user########3
-lexer.input(file.read()) # lexer reading some input
-
-
+''' 
 ####TOKENIZE##########
 while True:
 	tok = lexer.token()

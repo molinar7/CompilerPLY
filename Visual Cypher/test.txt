@@ -1,1 +1,8 @@
-=
+
+program patito
+var 
+int maestro = gato;
+
+{
+    3 + 3
+}

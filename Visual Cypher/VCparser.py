@@ -2,16 +2,14 @@ import VCscanner as lexer
 import ply.yacc as yacc
 import sys
 
-
 tokens = lexer.tokens
-
-
 
 def p_program(p):
 	'''
 	program		:	PROGRAM		ID		vars	bloque
 
 	'''
+	p[0] = "Syntax Accepted!"
 
 def p_vars(p):# NO valida que enteros en realidad se guarden en int y decimales en floats y letras en Strings
 	'''
@@ -90,12 +88,26 @@ def p_error(p):
 	print ("Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value))
 	sys.exit(0)
 
-#lexer.input(file.read()) # lexer reading some input
 
+##### Reading the input from a file#################3
 parser = yacc.yacc()
+f = open('test.txt', 'r').read()
+result = parser.parse(f)	
+print(result)
+
+
+
+'''
+##########Reading the input from the terminal#############
 while True: #Passing the input to the parser
 	try:
-		s= input('')
+		s= input()
 	except EOFError:
 		break
-	parser.parse(s)
+	#if not s: continue
+	result = parser.parse(s)
+	#print(result)
+'''	
+
+
+
