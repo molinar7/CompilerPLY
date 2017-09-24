@@ -1,8 +1,23 @@
 
-program patito
-var 
-int maestro = gato;
+program patito{
 
-{
-    3 + 3
+    var 
+        int maestro =  -763423432432;
+        float maestro = -765.120;
+        string maestro = "765";
+        boolean maestro = true;
+
+
+    {
+      print( "GATO" + 2 + "El gato tom");
+      
+    }
+
+    {
+      if(  3){
+          gato = 45;
+      }
+      
+    }
+    
 }

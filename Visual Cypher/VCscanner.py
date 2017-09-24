@@ -6,10 +6,16 @@ tokens = [
 
 'PROGRAM',
 'ID',
+'VAR_INT',
+'VAR_FLOAT',
+'VAR_STRING',
+'VAR_BOOLEAN',
 
 # types of numbers
 'FLOAT',
 'INT',
+'STRING',
+'BOOLEAN',
 
 #Symbols
 'CARET',
@@ -36,7 +42,8 @@ tokens = [
 'SEMICOLON',
 'LCURLY_BRACKET',
 'RCURLY_BRACKET',
-'VAR'
+'VAR',
+'IF'
 
 
 ]
@@ -49,6 +56,7 @@ reserved = {
     'program' : 'PROGRAM',
     'var'   :   'VAR',
     'print' : 'PRINT',
+
 
     # Condition tokens
     'if' : 'IF',
@@ -64,7 +72,13 @@ reserved = {
     # Type declaration tokens
     'boolean'   : 'BOOLEAN',
     'int'       : 'INT',
-    'float'   : 'FLOAT'
+    'float'   : 'FLOAT',
+    'string'    :  'STRING',
+    'true'      : 'VAR_BOOLEAN',
+    'false'     : 'VAR_BOOLEAN'
+
+    # Type of Variables
+
    
 }
 
@@ -107,15 +121,23 @@ def t_newline(t): # Define a rule so we can track line numbers
     t.lexer.lineno += len(t.value)
     
 
-def t_FLOAT (t):# above the int define so the '.' is not an ilegal char
-	r'\d*\.\d+' # integer then a dot followed by 1 or more integers
+def t_VAR_FLOAT (t):# above the int define so the '.' is not an ilegal char
+	r'\-*\d*\.\d+' # integer then a dot followed by 1 or more integers
 	t.value = float(t.value)
 	return t
 
-def t_INT (t): # Function for defining our INT token
-	r'\d+' #d means any integer and the + means 1 or more
+def t_VAR_INT (t): # Function for defining our INT token
+	r'\-*\d+' #d means any integer and the + means 1 or more
 	t.value = int(t.value)
 	return t
+
+def t_VAR_STRING (t) :    
+    r'("(\\"|[^"])*")|(\'(\\\'|[^\'])*\')'
+    return t
+
+def t_VAR_BOOLEAN (t):
+    r'[true|false]'
+    return t
 
 def t_error(t): # Error handling rule
     print("Illegal character '%s'" % t.value[0])
