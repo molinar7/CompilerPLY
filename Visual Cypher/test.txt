@@ -4,20 +4,16 @@ program patito{
     var 
         int maestro =  -763423432432;
         float maestro = -765.120;
-        string maestro = "765";
+        String maestro = "765";
         boolean maestro = true;
 
+        {
+            perro = 34; 
+            fs = 34;
+          
+        }
 
-    {
-      print( "GATO" + 2 + "El gato tom");
-      
-    }
 
-    {
-      if(  3){
-          gato = 45;
-      }
-      
-    }
+    
     
 }

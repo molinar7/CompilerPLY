@@ -72,8 +72,8 @@ reserved = {
     # Type declaration tokens
     'boolean'   : 'BOOLEAN',
     'int'       : 'INT',
-    'float'   : 'FLOAT',
-    'string'    :  'STRING',
+    'float'     : 'FLOAT',
+    'String'    :  'STRING',
     'true'      : 'VAR_BOOLEAN',
     'false'     : 'VAR_BOOLEAN'
 
@@ -139,6 +139,10 @@ def t_VAR_BOOLEAN (t):
     r'[true|false]'
     return t
 
+def t_COMMENT(t):
+    r'\#.*'
+    pass
+    # No return value. Token discarded
 def t_error(t): # Error handling rule
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)

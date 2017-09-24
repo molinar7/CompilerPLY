@@ -22,7 +22,8 @@ def p_vars(p):
 
 def p_bloque(p):
 	'''
-	bloque	:	LCURLY_BRACKET	statement	RCURLY_BRACKET		bloque
+	bloque	:	LCURLY_BRACKET	bloque	RCURLY_BRACKET	
+			|	bloque	statement
 			|	epsilon
 	'''
 def	p_statement(p):
@@ -40,22 +41,15 @@ def p_assigment(p):
 	'''
 def p_if (p):
 	'''
-	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque
+	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque	
+			
 	'''
 def p_condition(p):
 	'''
-	condition	:	condition_types	
+	condition		:	super_expression	AND		super_expression
+					|	super_expression	OR		super_expression
 	'''
-def p_condition_types(p):
-	'''
-	condition_types		:	expression	OP_GREATER_THAN			 expression
-						|	expression	OP_LESS_THAN			 expression
-						|	expression	OP_GREATER_EQUALS_THAN	 expression
-						|	expression	OP_LESS_EQUALS_THAN		 expression
-						|	expression	OP_EQUALS_TWO			 expression
-						|	expression	OP_NOT_EQUALS			 expression
 
-	'''
 def p_printer(p):
 	'''
 	printer	:	PRINT	OP_LPAREN	impresion	OP_RPAREN	 SEMICOLON
