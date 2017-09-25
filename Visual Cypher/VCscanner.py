@@ -20,6 +20,7 @@ tokens = [
 #Symbols
 'CARET',
 'POINT',
+'COMA',
 
 ##Operadores###
 'OP_PLUS',
@@ -43,7 +44,15 @@ tokens = [
 'LCURLY_BRACKET',
 'RCURLY_BRACKET',
 'VAR',
-'IF'
+'IF',
+'ELSE',
+'OP_PLUS_EQUALS',
+'OP_MINUS_EQUALS',
+'RETURN',
+'FUNCTION',
+'MAIN',
+'FOR'
+
 
 
 ]
@@ -56,6 +65,9 @@ reserved = {
     'program' : 'PROGRAM',
     'var'   :   'VAR',
     'print' : 'PRINT',
+    'return' : 'RETURN',
+    'function' : 'FUNCTION',
+    'main'  :   'MAIN',
 
 
     # Condition tokens
@@ -102,10 +114,13 @@ t_ignore = ' \t' #Ignore spaces and tabs.
 t_ignore_COMMENT = r'\#.*'
 t_CARET= r'\^'
 t_POINT= r'\.'
+t_COMA= r'\,'
 t_QUOT_MARK = r'\"'
 t_SEMICOLON = r'\;'
 t_LCURLY_BRACKET = r'\{'
 t_RCURLY_BRACKET = r'\}'
+t_OP_PLUS_EQUALS = r'\+='
+t_OP_MINUS_EQUALS = r'\-='
 
 
 ############## A regular expression rule with some action code########################

@@ -1,0 +1,13 @@
+
+program perro{
+
+    function int gato(){
+
+        int j =9;
+
+    }
+
+    main(){
+
+    }
+}

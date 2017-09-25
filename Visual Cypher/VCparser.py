@@ -6,31 +6,63 @@ tokens = lexer.tokens
 
 def p_program(p):
 	'''
-	program		:	PROGRAM ID LCURLY_BRACKET VAR vars bloque RCURLY_BRACKET	
+	program		:	PROGRAM  ID  LCURLY_BRACKET  vars   function 	main_function	 RCURLY_BRACKET	
 
 	'''
 	p[0] = "Syntax Accepted!"
 
 def p_vars(p):
 	'''
-	vars	:		INT	 ID		OP_EQUALS	VAR_INT	 SEMICOLON	vars
-			|		FLOAT	 ID		OP_EQUALS	VAR_FLOAT SEMICOLON	vars
-			|		STRING	 ID		OP_EQUALS	VAR_STRING	 SEMICOLON	vars
-			|		BOOLEAN ID		OP_EQUALS	VAR_BOOLEAN	 SEMICOLON	vars
+	vars	:		INT	 	 ID		OP_EQUALS	VAR_INT	 	SEMICOLON	vars
+			|		FLOAT	 ID		OP_EQUALS	VAR_FLOAT 	SEMICOLON	vars
+			|		STRING	 ID		OP_EQUALS	VAR_STRING	SEMICOLON	vars
+			|		BOOLEAN	 ID		OP_EQUALS	VAR_BOOLEAN	SEMICOLON	vars
 			|		epsilon
 	'''
+def p_function(p):
+	'''
+	function	:	FUNCTION	type	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
+				|	epsilon
+	'''
+def p_main_function(p):
+	'''
+	main_function	:	MAIN	OP_LPAREN	OP_RPAREN	bloque	
+	'''
+def p_type(p):
+	'''
+	type	:	INT
+			|	FLOAT
+			|	STRING
+			|	BOOLEAN
+	'''
+def p_parameters(p):
+	'''
+	parameters	:	type	ID	parameters
+				|	COMA	type	ID		parameters
+				|	epsilon
+	'''
+
 
 def p_bloque(p):
 	'''
-	bloque	:	LCURLY_BRACKET	bloque	RCURLY_BRACKET	
-			|	bloque	statement
-			|	epsilon
+	bloque	:	LCURLY_BRACKET	bloque_temp	RCURLY_BRACKET	
+	
 	'''
+def p_bloque_temp(p):
+	'''
+	bloque_temp	:	bloque_temp	statement
+				|	epsilon
+			
+	'''	
 def	p_statement(p):
 	'''
 	statement	:	assigment
 				|	if
 				|	printer
+				|	increment
+				|	vars
+				|	for
+				|	return
 				
 	'''
 
@@ -41,14 +73,11 @@ def p_assigment(p):
 	'''
 def p_if (p):
 	'''
-	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque	
+	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque
+		|	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque	ELSE	bloque	
 			
 	'''
-def p_condition(p):
-	'''
-	condition		:	super_expression	AND		super_expression
-					|	super_expression	OR		super_expression
-	'''
+
 
 def p_printer(p):
 	'''
@@ -61,7 +90,23 @@ def	p_impresion(p):
 				|	var_cte		OP_PLUS		impresion
 	
 	'''
+def p_increment(p):
+	'''
+	increment	:	ID	OP_PLUS_EQUALS mega_expression	SEMICOLON
+				|	ID	OP_MINUS_EQUALS mega_expression	SEMICOLON
+				|	ID	OP_PLUS		OP_PLUS		SEMICOLON
+				|	ID	OP_MINUS	OP_MINUS	SEMICOLON
+	'''
+def p_for(p):
+	'''
+	for	:	FOR		OP_LPAREN	vars	mega_expression		SEMICOLON	increment	OP_RPAREN	bloque	
+	'''
 
+def p_return(p):
+	'''
+	return	:	RETURN	ID SEMICOLON
+			|	RETURN mega_expression SEMICOLON
+	'''
 def p_mega_expression(p):
 	'''
 	mega_expression	:	super_expression
