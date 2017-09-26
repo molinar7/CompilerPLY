@@ -51,7 +51,8 @@ tokens = [
 'RETURN',
 'FUNCTION',
 'MAIN',
-'FOR'
+'FOR',
+'VOID'
 
 
 
@@ -68,6 +69,7 @@ reserved = {
     'return' : 'RETURN',
     'function' : 'FUNCTION',
     'main'  :   'MAIN',
+    'void'  :   'VOID',
 
 
     # Condition tokens
@@ -145,6 +147,8 @@ def t_VAR_INT (t): # Function for defining our INT token
 	r'\-*\d+' #d means any integer and the + means 1 or more
 	t.value = int(t.value)
 	return t
+
+
 
 def t_VAR_STRING (t) :    
     r'("(\\"|[^"])*")|(\'(\\\'|[^\'])*\')'

@@ -1,4 +1,7 @@
-
+##Fallas en la sintaxis
+#1. Las mega expressiones en las condiciones
+#2. Se le puede hacer returns a bloques que no deben de tener retrun
+#3. Se pueden declarar vparametros en las funciones de tipo void
 program perro{
 
     function int gato(){

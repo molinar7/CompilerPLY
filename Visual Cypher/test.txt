@@ -7,7 +7,7 @@ program patito{
         boolean maestro = true;
       
 
-        function int gatas (String david){
+        function int gatas (void david){
         
             perro = 34; 
             fs = 34;
@@ -20,7 +20,10 @@ program patito{
             else{
                 print("objeto: " + gato + " no valido" );
 
-                return cacahuate ;
+                
+                for(int kaka = 0 ; k< 10; kaka ++;){
+                perro = 50 +50;
+            }
             }
 
           return david;
@@ -30,7 +33,9 @@ program patito{
          main (){
 
             perro += 1;
-            return run;
+
+            gato(perro, lala, yayaya, asda);
+          
 
             for(int kaka = 0 ; k< 10; kaka ++;){
                 perro = 50 +50;

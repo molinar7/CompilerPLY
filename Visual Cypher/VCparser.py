@@ -34,6 +34,7 @@ def p_type(p):
 			|	FLOAT
 			|	STRING
 			|	BOOLEAN
+			|	VOID
 	'''
 def p_parameters(p):
 	'''
@@ -45,13 +46,14 @@ def p_parameters(p):
 
 def p_bloque(p):
 	'''
-	bloque	:	LCURLY_BRACKET	bloque_temp	RCURLY_BRACKET	
+	bloque	:	LCURLY_BRACKET	bloque_primo	RCURLY_BRACKET	
 	
 	'''
-def p_bloque_temp(p):
+
+def p_bloque_primo(p):
 	'''
-	bloque_temp	:	bloque_temp	statement
-				|	epsilon
+	bloque_primo	:	bloque_primo	statement 
+					|	epsilon
 			
 	'''	
 def	p_statement(p):
@@ -63,6 +65,7 @@ def	p_statement(p):
 				|	vars
 				|	for
 				|	return
+				|	function_call
 				
 	'''
 
@@ -81,13 +84,13 @@ def p_if (p):
 
 def p_printer(p):
 	'''
-	printer	:	PRINT	OP_LPAREN	impresion	OP_RPAREN	 SEMICOLON
+	printer	:	PRINT	OP_LPAREN	impression	OP_RPAREN	 SEMICOLON
 
 	'''
-def	p_impresion(p):
+def	p_impression(p):
 	'''
-	impresion	:	var_cte
-				|	var_cte		OP_PLUS		impresion
+	impression	:	var_cte
+				|	var_cte		OP_PLUS		impression
 	
 	'''
 def p_increment(p):
@@ -106,6 +109,16 @@ def p_return(p):
 	'''
 	return	:	RETURN	ID SEMICOLON
 			|	RETURN mega_expression SEMICOLON
+	'''
+def p_function_call(p):
+	'''
+	function_call :	ID	OP_LPAREN	function_call_prime		OP_RPAREN	SEMICOLON
+	'''
+def p_function_call_prime(p):
+	'''
+	function_call_prime	:	ID	function_call_prime
+						|	COMA	ID	function_call_prime
+						|	epsilon
 	'''
 def p_mega_expression(p):
 	'''
