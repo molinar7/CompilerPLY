@@ -12,7 +12,7 @@ program patito{
             perro = 34; 
             fs = 34;
 
-            if(3 +3){
+            if(3 +3 >0){
                 int gato = 34; # vars
                 peroo ++; # Increment
                 gato += 3; # Increment

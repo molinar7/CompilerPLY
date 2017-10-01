@@ -76,8 +76,8 @@ def p_assigment(p):
 	'''
 def p_if (p):
 	'''
-	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque
-		|	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque	ELSE	bloque	
+	if	:	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque
+		|	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque	ELSE	bloque	
 			
 	'''
 
@@ -102,7 +102,7 @@ def p_increment(p):
 	'''
 def p_for(p):
 	'''
-	for	:	FOR		OP_LPAREN	vars	mega_expression		SEMICOLON	increment	OP_RPAREN	bloque	
+	for	:	FOR		OP_LPAREN	vars	condition_super_expression	SEMICOLON	increment	OP_RPAREN	bloque	
 	'''
 
 def p_return(p):
@@ -119,6 +119,21 @@ def p_function_call_prime(p):
 	function_call_prime	:	ID	function_call_prime
 						|	COMA	ID	function_call_prime
 						|	epsilon
+	'''
+def p_condition_mega_expression(p):
+	'''
+	condition_mega_expression	:	condition_super_expression
+								|	condition_super_expression	AND		condition_super_expression
+								|	condition_super_expression	OR		condition_super_expression
+	'''
+def p_condition_super_expression(p):
+	'''
+	condition_super_expression	:	expression	OP_GREATER_THAN			 expression
+								|	expression	OP_LESS_THAN			 expression
+								|	expression	OP_GREATER_EQUALS_THAN	 expression
+								|	expression	OP_LESS_EQUALS_THAN		 expression
+								|	expression	OP_EQUALS_TWO			 expression
+								|	expression	OP_NOT_EQUALS			 expression
 	'''
 def p_mega_expression(p):
 	'''

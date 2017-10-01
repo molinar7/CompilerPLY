@@ -39,8 +39,8 @@ Rule 26    statement -> for
 Rule 27    statement -> return
 Rule 28    statement -> function_call
 Rule 29    assigment -> ID OP_EQUALS mega_expression SEMICOLON
-Rule 30    if -> IF OP_LPAREN mega_expression OP_RPAREN bloque
-Rule 31    if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque
+Rule 30    if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque
+Rule 31    if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque
 Rule 32    printer -> PRINT OP_LPAREN impression OP_RPAREN SEMICOLON
 Rule 33    impression -> var_cte
 Rule 34    impression -> var_cte OP_PLUS impression
@@ -48,40 +48,49 @@ Rule 35    increment -> ID OP_PLUS_EQUALS mega_expression SEMICOLON
 Rule 36    increment -> ID OP_MINUS_EQUALS mega_expression SEMICOLON
 Rule 37    increment -> ID OP_PLUS OP_PLUS SEMICOLON
 Rule 38    increment -> ID OP_MINUS OP_MINUS SEMICOLON
-Rule 39    for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque
+Rule 39    for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque
 Rule 40    return -> RETURN ID SEMICOLON
 Rule 41    return -> RETURN mega_expression SEMICOLON
 Rule 42    function_call -> ID OP_LPAREN function_call_prime OP_RPAREN SEMICOLON
 Rule 43    function_call_prime -> ID function_call_prime
 Rule 44    function_call_prime -> COMA ID function_call_prime
 Rule 45    function_call_prime -> epsilon
-Rule 46    mega_expression -> super_expression
-Rule 47    mega_expression -> super_expression AND super_expression
-Rule 48    mega_expression -> super_expression OR super_expression
-Rule 49    super_expression -> expression
-Rule 50    super_expression -> expression OP_GREATER_THAN expression
-Rule 51    super_expression -> expression OP_LESS_THAN expression
-Rule 52    super_expression -> expression OP_GREATER_EQUALS_THAN expression
-Rule 53    super_expression -> expression OP_LESS_EQUALS_THAN expression
-Rule 54    super_expression -> expression OP_EQUALS_TWO expression
-Rule 55    super_expression -> expression OP_NOT_EQUALS expression
-Rule 56    expression -> term
-Rule 57    expression -> term OP_PLUS expression
-Rule 58    expression -> term OP_MINUS expression
-Rule 59    term -> fact
-Rule 60    term -> fact OP_DIVISION term
-Rule 61    term -> fact OP_TIMES term
-Rule 62    fact -> var_cte
-Rule 63    fact -> OP_LPAREN mega_expression OP_RPAREN
-Rule 64    var_cte -> ID
-Rule 65    var_cte -> VAR_INT
-Rule 66    var_cte -> VAR_FLOAT
-Rule 67    var_cte -> VAR_STRING
-Rule 68    epsilon -> <empty>
+Rule 46    condition_mega_expression -> condition_super_expression
+Rule 47    condition_mega_expression -> condition_super_expression AND condition_super_expression
+Rule 48    condition_mega_expression -> condition_super_expression OR condition_super_expression
+Rule 49    condition_super_expression -> expression OP_GREATER_THAN expression
+Rule 50    condition_super_expression -> expression OP_LESS_THAN expression
+Rule 51    condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression
+Rule 52    condition_super_expression -> expression OP_LESS_EQUALS_THAN expression
+Rule 53    condition_super_expression -> expression OP_EQUALS_TWO expression
+Rule 54    condition_super_expression -> expression OP_NOT_EQUALS expression
+Rule 55    mega_expression -> super_expression
+Rule 56    mega_expression -> super_expression AND super_expression
+Rule 57    mega_expression -> super_expression OR super_expression
+Rule 58    super_expression -> expression
+Rule 59    super_expression -> expression OP_GREATER_THAN expression
+Rule 60    super_expression -> expression OP_LESS_THAN expression
+Rule 61    super_expression -> expression OP_GREATER_EQUALS_THAN expression
+Rule 62    super_expression -> expression OP_LESS_EQUALS_THAN expression
+Rule 63    super_expression -> expression OP_EQUALS_TWO expression
+Rule 64    super_expression -> expression OP_NOT_EQUALS expression
+Rule 65    expression -> term
+Rule 66    expression -> term OP_PLUS expression
+Rule 67    expression -> term OP_MINUS expression
+Rule 68    term -> fact
+Rule 69    term -> fact OP_DIVISION term
+Rule 70    term -> fact OP_TIMES term
+Rule 71    fact -> var_cte
+Rule 72    fact -> OP_LPAREN mega_expression OP_RPAREN
+Rule 73    var_cte -> ID
+Rule 74    var_cte -> VAR_INT
+Rule 75    var_cte -> VAR_FLOAT
+Rule 76    var_cte -> VAR_STRING
+Rule 77    epsilon -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 47
+AND                  : 47 56
 BOOLEAN              : 5 13
 CARET                : 
 COMA                 : 16 44
@@ -89,27 +98,27 @@ ELSE                 : 31
 FLOAT                : 3 11
 FOR                  : 39
 FUNCTION             : 7
-ID                   : 1 2 3 4 5 7 15 16 29 35 36 37 38 40 42 43 44 64
+ID                   : 1 2 3 4 5 7 15 16 29 35 36 37 38 40 42 43 44 73
 IF                   : 30 31
 INT                  : 2 10
 LCURLY_BRACKET       : 1 18
 MAIN                 : 9
-OP_DIVISION          : 60
+OP_DIVISION          : 69
 OP_EQUALS            : 2 3 4 5 29
-OP_EQUALS_TWO        : 54
-OP_GREATER_EQUALS_THAN : 52
-OP_GREATER_THAN      : 50
-OP_LESS_EQUALS_THAN  : 53
-OP_LESS_THAN         : 51
-OP_LPAREN            : 7 9 30 31 32 39 42 63
-OP_MINUS             : 38 38 58
+OP_EQUALS_TWO        : 53 63
+OP_GREATER_EQUALS_THAN : 51 61
+OP_GREATER_THAN      : 49 59
+OP_LESS_EQUALS_THAN  : 52 62
+OP_LESS_THAN         : 50 60
+OP_LPAREN            : 7 9 30 31 32 39 42 72
+OP_MINUS             : 38 38 67
 OP_MINUS_EQUALS      : 36
-OP_NOT_EQUALS        : 55
-OP_PLUS              : 34 37 37 57
+OP_NOT_EQUALS        : 54 64
+OP_PLUS              : 34 37 37 66
 OP_PLUS_EQUALS       : 35
-OP_RPAREN            : 7 9 30 31 32 39 42 63
-OP_TIMES             : 61
-OR                   : 48
+OP_RPAREN            : 7 9 30 31 32 39 42 72
+OP_TIMES             : 70
+OR                   : 48 57
 POINT                : 
 PRINT                : 32
 PROGRAM              : 1
@@ -120,9 +129,9 @@ SEMICOLON            : 2 3 4 5 29 32 35 36 37 38 39 40 41 42
 STRING               : 4 12
 VAR                  : 
 VAR_BOOLEAN          : 5
-VAR_FLOAT            : 3 66
-VAR_INT              : 2 65
-VAR_STRING           : 4 67
+VAR_FLOAT            : 3 75
+VAR_INT              : 2 74
+VAR_STRING           : 4 76
 VOID                 : 14
 error                : 
 
@@ -131,9 +140,11 @@ Nonterminals, with rules where they appear
 assigment            : 21
 bloque               : 7 9 30 31 31 39
 bloque_primo         : 18 19
+condition_mega_expression : 30 31
+condition_super_expression : 39 46 47 47 48 48
 epsilon              : 6 8 17 20 45
-expression           : 49 50 50 51 51 52 52 53 53 54 54 55 55 57 58
-fact                 : 59 60 61
+expression           : 49 49 50 50 51 51 52 52 53 53 54 54 58 59 59 60 60 61 61 62 62 63 63 64 64 66 67
+fact                 : 68 69 70
 for                  : 26
 function             : 1 7
 function_call        : 28
@@ -142,16 +153,16 @@ if                   : 22
 impression           : 32 34
 increment            : 24 39
 main_function        : 1
-mega_expression      : 29 30 31 35 36 39 41 63
+mega_expression      : 29 35 36 41 72
 parameters           : 7 15 16
 printer              : 23
 program              : 0
 return               : 27
 statement            : 19
-super_expression     : 46 47 47 48 48
-term                 : 56 57 58 60 61
+super_expression     : 55 56 56 57 57
+term                 : 65 66 67 69 70
 type                 : 7 15 16
-var_cte              : 33 34 62
+var_cte              : 33 34 71
 vars                 : 1 2 3 4 5 25 39
 
 Parsing method: LALR
@@ -193,14 +204,14 @@ state 4
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     INT             shift and go to state 6
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    FUNCTION        reduce using rule 68 (epsilon -> .)
-    MAIN            reduce using rule 68 (epsilon -> .)
+    FUNCTION        reduce using rule 77 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
 
     vars                           shift and go to state 5
     epsilon                        shift and go to state 10
@@ -210,10 +221,10 @@ state 5
     (1) program -> PROGRAM ID LCURLY_BRACKET vars . function main_function RCURLY_BRACKET
     (7) function -> . FUNCTION type ID OP_LPAREN parameters OP_RPAREN bloque function
     (8) function -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     FUNCTION        shift and go to state 12
-    MAIN            reduce using rule 68 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
 
     function                       shift and go to state 11
     epsilon                        shift and go to state 13
@@ -482,7 +493,7 @@ state 38
     (12) type -> . STRING
     (13) type -> . BOOLEAN
     (14) type -> . VOID
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     COMA            shift and go to state 47
     INT             shift and go to state 21
@@ -490,7 +501,7 @@ state 38
     STRING          shift and go to state 23
     BOOLEAN         shift and go to state 24
     VOID            shift and go to state 25
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
     type                           shift and go to state 45
     parameters                     shift and go to state 46
@@ -504,7 +515,7 @@ state 39
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -514,23 +525,23 @@ state 39
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    FUNCTION        reduce using rule 68 (epsilon -> .)
-    MAIN            reduce using rule 68 (epsilon -> .)
-    RCURLY_BRACKET  reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    IF              reduce using rule 68 (epsilon -> .)
-    PRINT           reduce using rule 68 (epsilon -> .)
-    FOR             reduce using rule 68 (epsilon -> .)
-    RETURN          reduce using rule 68 (epsilon -> .)
-    OP_LPAREN       reduce using rule 68 (epsilon -> .)
-    VAR_INT         reduce using rule 68 (epsilon -> .)
-    VAR_FLOAT       reduce using rule 68 (epsilon -> .)
-    VAR_STRING      reduce using rule 68 (epsilon -> .)
+    FUNCTION        reduce using rule 77 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
+    RCURLY_BRACKET  reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    IF              reduce using rule 77 (epsilon -> .)
+    PRINT           reduce using rule 77 (epsilon -> .)
+    FOR             reduce using rule 77 (epsilon -> .)
+    RETURN          reduce using rule 77 (epsilon -> .)
+    OP_LPAREN       reduce using rule 77 (epsilon -> .)
+    VAR_INT         reduce using rule 77 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 77 (epsilon -> .)
+    VAR_STRING      reduce using rule 77 (epsilon -> .)
 
-  ! INT             [ reduce using rule 68 (epsilon -> .) ]
-  ! FLOAT           [ reduce using rule 68 (epsilon -> .) ]
-  ! STRING          [ reduce using rule 68 (epsilon -> .) ]
-  ! BOOLEAN         [ reduce using rule 68 (epsilon -> .) ]
+  ! INT             [ reduce using rule 77 (epsilon -> .) ]
+  ! FLOAT           [ reduce using rule 77 (epsilon -> .) ]
+  ! STRING          [ reduce using rule 77 (epsilon -> .) ]
+  ! BOOLEAN         [ reduce using rule 77 (epsilon -> .) ]
 
     vars                           shift and go to state 49
     epsilon                        shift and go to state 10
@@ -543,7 +554,7 @@ state 40
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -553,23 +564,23 @@ state 40
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    FUNCTION        reduce using rule 68 (epsilon -> .)
-    MAIN            reduce using rule 68 (epsilon -> .)
-    RCURLY_BRACKET  reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    IF              reduce using rule 68 (epsilon -> .)
-    PRINT           reduce using rule 68 (epsilon -> .)
-    FOR             reduce using rule 68 (epsilon -> .)
-    RETURN          reduce using rule 68 (epsilon -> .)
-    OP_LPAREN       reduce using rule 68 (epsilon -> .)
-    VAR_INT         reduce using rule 68 (epsilon -> .)
-    VAR_FLOAT       reduce using rule 68 (epsilon -> .)
-    VAR_STRING      reduce using rule 68 (epsilon -> .)
+    FUNCTION        reduce using rule 77 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
+    RCURLY_BRACKET  reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    IF              reduce using rule 77 (epsilon -> .)
+    PRINT           reduce using rule 77 (epsilon -> .)
+    FOR             reduce using rule 77 (epsilon -> .)
+    RETURN          reduce using rule 77 (epsilon -> .)
+    OP_LPAREN       reduce using rule 77 (epsilon -> .)
+    VAR_INT         reduce using rule 77 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 77 (epsilon -> .)
+    VAR_STRING      reduce using rule 77 (epsilon -> .)
 
-  ! INT             [ reduce using rule 68 (epsilon -> .) ]
-  ! FLOAT           [ reduce using rule 68 (epsilon -> .) ]
-  ! STRING          [ reduce using rule 68 (epsilon -> .) ]
-  ! BOOLEAN         [ reduce using rule 68 (epsilon -> .) ]
+  ! INT             [ reduce using rule 77 (epsilon -> .) ]
+  ! FLOAT           [ reduce using rule 77 (epsilon -> .) ]
+  ! STRING          [ reduce using rule 77 (epsilon -> .) ]
+  ! BOOLEAN         [ reduce using rule 77 (epsilon -> .) ]
 
     vars                           shift and go to state 50
     epsilon                        shift and go to state 10
@@ -582,7 +593,7 @@ state 41
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -592,23 +603,23 @@ state 41
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    FUNCTION        reduce using rule 68 (epsilon -> .)
-    MAIN            reduce using rule 68 (epsilon -> .)
-    RCURLY_BRACKET  reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    IF              reduce using rule 68 (epsilon -> .)
-    PRINT           reduce using rule 68 (epsilon -> .)
-    FOR             reduce using rule 68 (epsilon -> .)
-    RETURN          reduce using rule 68 (epsilon -> .)
-    OP_LPAREN       reduce using rule 68 (epsilon -> .)
-    VAR_INT         reduce using rule 68 (epsilon -> .)
-    VAR_FLOAT       reduce using rule 68 (epsilon -> .)
-    VAR_STRING      reduce using rule 68 (epsilon -> .)
+    FUNCTION        reduce using rule 77 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
+    RCURLY_BRACKET  reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    IF              reduce using rule 77 (epsilon -> .)
+    PRINT           reduce using rule 77 (epsilon -> .)
+    FOR             reduce using rule 77 (epsilon -> .)
+    RETURN          reduce using rule 77 (epsilon -> .)
+    OP_LPAREN       reduce using rule 77 (epsilon -> .)
+    VAR_INT         reduce using rule 77 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 77 (epsilon -> .)
+    VAR_STRING      reduce using rule 77 (epsilon -> .)
 
-  ! INT             [ reduce using rule 68 (epsilon -> .) ]
-  ! FLOAT           [ reduce using rule 68 (epsilon -> .) ]
-  ! STRING          [ reduce using rule 68 (epsilon -> .) ]
-  ! BOOLEAN         [ reduce using rule 68 (epsilon -> .) ]
+  ! INT             [ reduce using rule 77 (epsilon -> .) ]
+  ! FLOAT           [ reduce using rule 77 (epsilon -> .) ]
+  ! STRING          [ reduce using rule 77 (epsilon -> .) ]
+  ! BOOLEAN         [ reduce using rule 77 (epsilon -> .) ]
 
     vars                           shift and go to state 51
     epsilon                        shift and go to state 10
@@ -621,7 +632,7 @@ state 42
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
   ! shift/reduce conflict for INT resolved as shift
   ! shift/reduce conflict for FLOAT resolved as shift
@@ -631,23 +642,23 @@ state 42
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    FUNCTION        reduce using rule 68 (epsilon -> .)
-    MAIN            reduce using rule 68 (epsilon -> .)
-    RCURLY_BRACKET  reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    IF              reduce using rule 68 (epsilon -> .)
-    PRINT           reduce using rule 68 (epsilon -> .)
-    FOR             reduce using rule 68 (epsilon -> .)
-    RETURN          reduce using rule 68 (epsilon -> .)
-    OP_LPAREN       reduce using rule 68 (epsilon -> .)
-    VAR_INT         reduce using rule 68 (epsilon -> .)
-    VAR_FLOAT       reduce using rule 68 (epsilon -> .)
-    VAR_STRING      reduce using rule 68 (epsilon -> .)
+    FUNCTION        reduce using rule 77 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
+    RCURLY_BRACKET  reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    IF              reduce using rule 77 (epsilon -> .)
+    PRINT           reduce using rule 77 (epsilon -> .)
+    FOR             reduce using rule 77 (epsilon -> .)
+    RETURN          reduce using rule 77 (epsilon -> .)
+    OP_LPAREN       reduce using rule 77 (epsilon -> .)
+    VAR_INT         reduce using rule 77 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 77 (epsilon -> .)
+    VAR_STRING      reduce using rule 77 (epsilon -> .)
 
-  ! INT             [ reduce using rule 68 (epsilon -> .) ]
-  ! FLOAT           [ reduce using rule 68 (epsilon -> .) ]
-  ! STRING          [ reduce using rule 68 (epsilon -> .) ]
-  ! BOOLEAN         [ reduce using rule 68 (epsilon -> .) ]
+  ! INT             [ reduce using rule 77 (epsilon -> .) ]
+  ! FLOAT           [ reduce using rule 77 (epsilon -> .) ]
+  ! STRING          [ reduce using rule 77 (epsilon -> .) ]
+  ! BOOLEAN         [ reduce using rule 77 (epsilon -> .) ]
 
     vars                           shift and go to state 52
     epsilon                        shift and go to state 10
@@ -664,18 +675,18 @@ state 44
     (18) bloque -> LCURLY_BRACKET . bloque_primo RCURLY_BRACKET
     (19) bloque_primo -> . bloque_primo statement
     (20) bloque_primo -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
-    RCURLY_BRACKET  reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    IF              reduce using rule 68 (epsilon -> .)
-    PRINT           reduce using rule 68 (epsilon -> .)
-    INT             reduce using rule 68 (epsilon -> .)
-    FLOAT           reduce using rule 68 (epsilon -> .)
-    STRING          reduce using rule 68 (epsilon -> .)
-    BOOLEAN         reduce using rule 68 (epsilon -> .)
-    FOR             reduce using rule 68 (epsilon -> .)
-    RETURN          reduce using rule 68 (epsilon -> .)
+    RCURLY_BRACKET  reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    IF              reduce using rule 77 (epsilon -> .)
+    PRINT           reduce using rule 77 (epsilon -> .)
+    INT             reduce using rule 77 (epsilon -> .)
+    FLOAT           reduce using rule 77 (epsilon -> .)
+    STRING          reduce using rule 77 (epsilon -> .)
+    BOOLEAN         reduce using rule 77 (epsilon -> .)
+    FOR             reduce using rule 77 (epsilon -> .)
+    RETURN          reduce using rule 77 (epsilon -> .)
 
     bloque_primo                   shift and go to state 53
     epsilon                        shift and go to state 54
@@ -819,8 +830,8 @@ state 53
     (27) statement -> . return
     (28) statement -> . function_call
     (29) assigment -> . ID OP_EQUALS mega_expression SEMICOLON
-    (30) if -> . IF OP_LPAREN mega_expression OP_RPAREN bloque
-    (31) if -> . IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque
+    (30) if -> . IF OP_LPAREN condition_mega_expression OP_RPAREN bloque
+    (31) if -> . IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque
     (32) printer -> . PRINT OP_LPAREN impression OP_RPAREN SEMICOLON
     (35) increment -> . ID OP_PLUS_EQUALS mega_expression SEMICOLON
     (36) increment -> . ID OP_MINUS_EQUALS mega_expression SEMICOLON
@@ -831,11 +842,11 @@ state 53
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (39) for -> . FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque
+    (39) for -> . FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque
     (40) return -> . RETURN ID SEMICOLON
     (41) return -> . RETURN mega_expression SEMICOLON
     (42) function_call -> . ID OP_LPAREN function_call_prime OP_RPAREN SEMICOLON
-    (68) epsilon -> .
+    (77) epsilon -> .
 
   ! shift/reduce conflict for RCURLY_BRACKET resolved as shift
   ! shift/reduce conflict for ID resolved as shift
@@ -858,16 +869,16 @@ state 53
     FOR             shift and go to state 71
     RETURN          shift and go to state 72
 
-  ! RCURLY_BRACKET  [ reduce using rule 68 (epsilon -> .) ]
-  ! ID              [ reduce using rule 68 (epsilon -> .) ]
-  ! IF              [ reduce using rule 68 (epsilon -> .) ]
-  ! PRINT           [ reduce using rule 68 (epsilon -> .) ]
-  ! INT             [ reduce using rule 68 (epsilon -> .) ]
-  ! FLOAT           [ reduce using rule 68 (epsilon -> .) ]
-  ! STRING          [ reduce using rule 68 (epsilon -> .) ]
-  ! BOOLEAN         [ reduce using rule 68 (epsilon -> .) ]
-  ! FOR             [ reduce using rule 68 (epsilon -> .) ]
-  ! RETURN          [ reduce using rule 68 (epsilon -> .) ]
+  ! RCURLY_BRACKET  [ reduce using rule 77 (epsilon -> .) ]
+  ! ID              [ reduce using rule 77 (epsilon -> .) ]
+  ! IF              [ reduce using rule 77 (epsilon -> .) ]
+  ! PRINT           [ reduce using rule 77 (epsilon -> .) ]
+  ! INT             [ reduce using rule 77 (epsilon -> .) ]
+  ! FLOAT           [ reduce using rule 77 (epsilon -> .) ]
+  ! STRING          [ reduce using rule 77 (epsilon -> .) ]
+  ! BOOLEAN         [ reduce using rule 77 (epsilon -> .) ]
+  ! FOR             [ reduce using rule 77 (epsilon -> .) ]
+  ! RETURN          [ reduce using rule 77 (epsilon -> .) ]
 
     statement                      shift and go to state 59
     assigment                      shift and go to state 60
@@ -907,7 +918,7 @@ state 55
     (12) type -> . STRING
     (13) type -> . BOOLEAN
     (14) type -> . VOID
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     COMA            shift and go to state 47
     INT             shift and go to state 21
@@ -915,7 +926,7 @@ state 55
     STRING          shift and go to state 23
     BOOLEAN         shift and go to state 24
     VOID            shift and go to state 25
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
     type                           shift and go to state 45
     parameters                     shift and go to state 73
@@ -1119,8 +1130,8 @@ state 68
 
 state 69
 
-    (30) if -> IF . OP_LPAREN mega_expression OP_RPAREN bloque
-    (31) if -> IF . OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque
+    (30) if -> IF . OP_LPAREN condition_mega_expression OP_RPAREN bloque
+    (31) if -> IF . OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque
 
     OP_LPAREN       shift and go to state 82
 
@@ -1134,7 +1145,7 @@ state 70
 
 state 71
 
-    (39) for -> FOR . OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque
+    (39) for -> FOR . OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque
 
     OP_LPAREN       shift and go to state 84
 
@@ -1143,28 +1154,28 @@ state 72
 
     (40) return -> RETURN . ID SEMICOLON
     (41) return -> RETURN . mega_expression SEMICOLON
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (55) mega_expression -> . super_expression
+    (56) mega_expression -> . super_expression AND super_expression
+    (57) mega_expression -> . super_expression OR super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     ID              shift and go to state 85
     OP_LPAREN       shift and go to state 92
@@ -1191,10 +1202,10 @@ state 74
     (7) function -> FUNCTION type ID OP_LPAREN parameters OP_RPAREN bloque . function
     (7) function -> . FUNCTION type ID OP_LPAREN parameters OP_RPAREN bloque function
     (8) function -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     FUNCTION        shift and go to state 12
-    MAIN            reduce using rule 68 (epsilon -> .)
+    MAIN            reduce using rule 77 (epsilon -> .)
 
     function                       shift and go to state 96
     epsilon                        shift and go to state 13
@@ -1210,7 +1221,7 @@ state 75
     (12) type -> . STRING
     (13) type -> . BOOLEAN
     (14) type -> . VOID
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     COMA            shift and go to state 47
     INT             shift and go to state 21
@@ -1218,7 +1229,7 @@ state 75
     STRING          shift and go to state 23
     BOOLEAN         shift and go to state 24
     VOID            shift and go to state 25
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
     type                           shift and go to state 45
     parameters                     shift and go to state 97
@@ -1227,28 +1238,28 @@ state 75
 state 76
 
     (29) assigment -> ID OP_EQUALS . mega_expression SEMICOLON
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (55) mega_expression -> . super_expression
+    (56) mega_expression -> . super_expression AND super_expression
+    (57) mega_expression -> . super_expression OR super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1266,28 +1277,28 @@ state 76
 state 77
 
     (35) increment -> ID OP_PLUS_EQUALS . mega_expression SEMICOLON
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (55) mega_expression -> . super_expression
+    (56) mega_expression -> . super_expression AND super_expression
+    (57) mega_expression -> . super_expression OR super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1305,28 +1316,28 @@ state 77
 state 78
 
     (36) increment -> ID OP_MINUS_EQUALS . mega_expression SEMICOLON
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (55) mega_expression -> . super_expression
+    (56) mega_expression -> . super_expression AND super_expression
+    (57) mega_expression -> . super_expression OR super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1361,41 +1372,40 @@ state 81
     (43) function_call_prime -> . ID function_call_prime
     (44) function_call_prime -> . COMA ID function_call_prime
     (45) function_call_prime -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     ID              shift and go to state 104
     COMA            shift and go to state 106
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
     function_call_prime            shift and go to state 105
     epsilon                        shift and go to state 107
 
 state 82
 
-    (30) if -> IF OP_LPAREN . mega_expression OP_RPAREN bloque
-    (31) if -> IF OP_LPAREN . mega_expression OP_RPAREN bloque ELSE bloque
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (30) if -> IF OP_LPAREN . condition_mega_expression OP_RPAREN bloque
+    (31) if -> IF OP_LPAREN . condition_mega_expression OP_RPAREN bloque ELSE bloque
+    (46) condition_mega_expression -> . condition_super_expression
+    (47) condition_mega_expression -> . condition_super_expression AND condition_super_expression
+    (48) condition_mega_expression -> . condition_super_expression OR condition_super_expression
+    (49) condition_super_expression -> . expression OP_GREATER_THAN expression
+    (50) condition_super_expression -> . expression OP_LESS_THAN expression
+    (51) condition_super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (52) condition_super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (53) condition_super_expression -> . expression OP_EQUALS_TWO expression
+    (54) condition_super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1403,9 +1413,9 @@ state 82
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    mega_expression                shift and go to state 108
-    super_expression               shift and go to state 87
-    expression                     shift and go to state 88
+    condition_mega_expression      shift and go to state 108
+    condition_super_expression     shift and go to state 109
+    expression                     shift and go to state 110
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
@@ -1415,193 +1425,193 @@ state 83
     (32) printer -> PRINT OP_LPAREN . impression OP_RPAREN SEMICOLON
     (33) impression -> . var_cte
     (34) impression -> . var_cte OP_PLUS impression
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     ID              shift and go to state 98
     VAR_INT         shift and go to state 93
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    impression                     shift and go to state 109
-    var_cte                        shift and go to state 110
+    impression                     shift and go to state 111
+    var_cte                        shift and go to state 112
 
 state 84
 
-    (39) for -> FOR OP_LPAREN . vars mega_expression SEMICOLON increment OP_RPAREN bloque
+    (39) for -> FOR OP_LPAREN . vars condition_super_expression SEMICOLON increment OP_RPAREN bloque
     (2) vars -> . INT ID OP_EQUALS VAR_INT SEMICOLON vars
     (3) vars -> . FLOAT ID OP_EQUALS VAR_FLOAT SEMICOLON vars
     (4) vars -> . STRING ID OP_EQUALS VAR_STRING SEMICOLON vars
     (5) vars -> . BOOLEAN ID OP_EQUALS VAR_BOOLEAN SEMICOLON vars
     (6) vars -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     INT             shift and go to state 6
     FLOAT           shift and go to state 7
     STRING          shift and go to state 8
     BOOLEAN         shift and go to state 9
-    OP_LPAREN       reduce using rule 68 (epsilon -> .)
-    ID              reduce using rule 68 (epsilon -> .)
-    VAR_INT         reduce using rule 68 (epsilon -> .)
-    VAR_FLOAT       reduce using rule 68 (epsilon -> .)
-    VAR_STRING      reduce using rule 68 (epsilon -> .)
+    OP_LPAREN       reduce using rule 77 (epsilon -> .)
+    ID              reduce using rule 77 (epsilon -> .)
+    VAR_INT         reduce using rule 77 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 77 (epsilon -> .)
+    VAR_STRING      reduce using rule 77 (epsilon -> .)
 
-    vars                           shift and go to state 111
+    vars                           shift and go to state 113
     epsilon                        shift and go to state 10
 
 state 85
 
     (40) return -> RETURN ID . SEMICOLON
-    (64) var_cte -> ID .
+    (73) var_cte -> ID .
 
   ! shift/reduce conflict for SEMICOLON resolved as shift
-    SEMICOLON       shift and go to state 112
-    OP_DIVISION     reduce using rule 64 (var_cte -> ID .)
-    OP_TIMES        reduce using rule 64 (var_cte -> ID .)
-    OP_PLUS         reduce using rule 64 (var_cte -> ID .)
-    OP_MINUS        reduce using rule 64 (var_cte -> ID .)
-    OP_GREATER_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_LESS_THAN    reduce using rule 64 (var_cte -> ID .)
-    OP_GREATER_EQUALS_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_LESS_EQUALS_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_EQUALS_TWO   reduce using rule 64 (var_cte -> ID .)
-    OP_NOT_EQUALS   reduce using rule 64 (var_cte -> ID .)
-    AND             reduce using rule 64 (var_cte -> ID .)
-    OR              reduce using rule 64 (var_cte -> ID .)
+    SEMICOLON       shift and go to state 114
+    OP_DIVISION     reduce using rule 73 (var_cte -> ID .)
+    OP_TIMES        reduce using rule 73 (var_cte -> ID .)
+    OP_PLUS         reduce using rule 73 (var_cte -> ID .)
+    OP_MINUS        reduce using rule 73 (var_cte -> ID .)
+    OP_GREATER_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_LESS_THAN    reduce using rule 73 (var_cte -> ID .)
+    OP_GREATER_EQUALS_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_LESS_EQUALS_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_EQUALS_TWO   reduce using rule 73 (var_cte -> ID .)
+    OP_NOT_EQUALS   reduce using rule 73 (var_cte -> ID .)
+    AND             reduce using rule 73 (var_cte -> ID .)
+    OR              reduce using rule 73 (var_cte -> ID .)
 
-  ! SEMICOLON       [ reduce using rule 64 (var_cte -> ID .) ]
+  ! SEMICOLON       [ reduce using rule 73 (var_cte -> ID .) ]
 
 
 state 86
 
     (41) return -> RETURN mega_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 113
+    SEMICOLON       shift and go to state 115
 
 
 state 87
 
-    (46) mega_expression -> super_expression .
-    (47) mega_expression -> super_expression . AND super_expression
-    (48) mega_expression -> super_expression . OR super_expression
+    (55) mega_expression -> super_expression .
+    (56) mega_expression -> super_expression . AND super_expression
+    (57) mega_expression -> super_expression . OR super_expression
 
-    SEMICOLON       reduce using rule 46 (mega_expression -> super_expression .)
-    OP_RPAREN       reduce using rule 46 (mega_expression -> super_expression .)
-    AND             shift and go to state 114
-    OR              shift and go to state 115
+    SEMICOLON       reduce using rule 55 (mega_expression -> super_expression .)
+    OP_RPAREN       reduce using rule 55 (mega_expression -> super_expression .)
+    AND             shift and go to state 116
+    OR              shift and go to state 117
 
 
 state 88
 
-    (49) super_expression -> expression .
-    (50) super_expression -> expression . OP_GREATER_THAN expression
-    (51) super_expression -> expression . OP_LESS_THAN expression
-    (52) super_expression -> expression . OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> expression . OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> expression . OP_EQUALS_TWO expression
-    (55) super_expression -> expression . OP_NOT_EQUALS expression
+    (58) super_expression -> expression .
+    (59) super_expression -> expression . OP_GREATER_THAN expression
+    (60) super_expression -> expression . OP_LESS_THAN expression
+    (61) super_expression -> expression . OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> expression . OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> expression . OP_EQUALS_TWO expression
+    (64) super_expression -> expression . OP_NOT_EQUALS expression
 
-    AND             reduce using rule 49 (super_expression -> expression .)
-    OR              reduce using rule 49 (super_expression -> expression .)
-    SEMICOLON       reduce using rule 49 (super_expression -> expression .)
-    OP_RPAREN       reduce using rule 49 (super_expression -> expression .)
-    OP_GREATER_THAN shift and go to state 116
-    OP_LESS_THAN    shift and go to state 117
-    OP_GREATER_EQUALS_THAN shift and go to state 118
-    OP_LESS_EQUALS_THAN shift and go to state 119
-    OP_EQUALS_TWO   shift and go to state 120
-    OP_NOT_EQUALS   shift and go to state 121
+    AND             reduce using rule 58 (super_expression -> expression .)
+    OR              reduce using rule 58 (super_expression -> expression .)
+    SEMICOLON       reduce using rule 58 (super_expression -> expression .)
+    OP_RPAREN       reduce using rule 58 (super_expression -> expression .)
+    OP_GREATER_THAN shift and go to state 118
+    OP_LESS_THAN    shift and go to state 119
+    OP_GREATER_EQUALS_THAN shift and go to state 120
+    OP_LESS_EQUALS_THAN shift and go to state 121
+    OP_EQUALS_TWO   shift and go to state 122
+    OP_NOT_EQUALS   shift and go to state 123
 
 
 state 89
 
-    (56) expression -> term .
-    (57) expression -> term . OP_PLUS expression
-    (58) expression -> term . OP_MINUS expression
+    (65) expression -> term .
+    (66) expression -> term . OP_PLUS expression
+    (67) expression -> term . OP_MINUS expression
 
-    OP_GREATER_THAN reduce using rule 56 (expression -> term .)
-    OP_LESS_THAN    reduce using rule 56 (expression -> term .)
-    OP_GREATER_EQUALS_THAN reduce using rule 56 (expression -> term .)
-    OP_LESS_EQUALS_THAN reduce using rule 56 (expression -> term .)
-    OP_EQUALS_TWO   reduce using rule 56 (expression -> term .)
-    OP_NOT_EQUALS   reduce using rule 56 (expression -> term .)
-    AND             reduce using rule 56 (expression -> term .)
-    OR              reduce using rule 56 (expression -> term .)
-    SEMICOLON       reduce using rule 56 (expression -> term .)
-    OP_RPAREN       reduce using rule 56 (expression -> term .)
-    OP_PLUS         shift and go to state 122
-    OP_MINUS        shift and go to state 123
+    OP_GREATER_THAN reduce using rule 65 (expression -> term .)
+    OP_LESS_THAN    reduce using rule 65 (expression -> term .)
+    OP_GREATER_EQUALS_THAN reduce using rule 65 (expression -> term .)
+    OP_LESS_EQUALS_THAN reduce using rule 65 (expression -> term .)
+    OP_EQUALS_TWO   reduce using rule 65 (expression -> term .)
+    OP_NOT_EQUALS   reduce using rule 65 (expression -> term .)
+    AND             reduce using rule 65 (expression -> term .)
+    OR              reduce using rule 65 (expression -> term .)
+    SEMICOLON       reduce using rule 65 (expression -> term .)
+    OP_RPAREN       reduce using rule 65 (expression -> term .)
+    OP_PLUS         shift and go to state 124
+    OP_MINUS        shift and go to state 125
 
 
 state 90
 
-    (59) term -> fact .
-    (60) term -> fact . OP_DIVISION term
-    (61) term -> fact . OP_TIMES term
+    (68) term -> fact .
+    (69) term -> fact . OP_DIVISION term
+    (70) term -> fact . OP_TIMES term
 
-    OP_PLUS         reduce using rule 59 (term -> fact .)
-    OP_MINUS        reduce using rule 59 (term -> fact .)
-    OP_GREATER_THAN reduce using rule 59 (term -> fact .)
-    OP_LESS_THAN    reduce using rule 59 (term -> fact .)
-    OP_GREATER_EQUALS_THAN reduce using rule 59 (term -> fact .)
-    OP_LESS_EQUALS_THAN reduce using rule 59 (term -> fact .)
-    OP_EQUALS_TWO   reduce using rule 59 (term -> fact .)
-    OP_NOT_EQUALS   reduce using rule 59 (term -> fact .)
-    AND             reduce using rule 59 (term -> fact .)
-    OR              reduce using rule 59 (term -> fact .)
-    SEMICOLON       reduce using rule 59 (term -> fact .)
-    OP_RPAREN       reduce using rule 59 (term -> fact .)
-    OP_DIVISION     shift and go to state 124
-    OP_TIMES        shift and go to state 125
+    OP_PLUS         reduce using rule 68 (term -> fact .)
+    OP_MINUS        reduce using rule 68 (term -> fact .)
+    OP_GREATER_THAN reduce using rule 68 (term -> fact .)
+    OP_LESS_THAN    reduce using rule 68 (term -> fact .)
+    OP_GREATER_EQUALS_THAN reduce using rule 68 (term -> fact .)
+    OP_LESS_EQUALS_THAN reduce using rule 68 (term -> fact .)
+    OP_EQUALS_TWO   reduce using rule 68 (term -> fact .)
+    OP_NOT_EQUALS   reduce using rule 68 (term -> fact .)
+    AND             reduce using rule 68 (term -> fact .)
+    OR              reduce using rule 68 (term -> fact .)
+    SEMICOLON       reduce using rule 68 (term -> fact .)
+    OP_RPAREN       reduce using rule 68 (term -> fact .)
+    OP_DIVISION     shift and go to state 126
+    OP_TIMES        shift and go to state 127
 
 
 state 91
 
-    (62) fact -> var_cte .
+    (71) fact -> var_cte .
 
-    OP_DIVISION     reduce using rule 62 (fact -> var_cte .)
-    OP_TIMES        reduce using rule 62 (fact -> var_cte .)
-    OP_PLUS         reduce using rule 62 (fact -> var_cte .)
-    OP_MINUS        reduce using rule 62 (fact -> var_cte .)
-    OP_GREATER_THAN reduce using rule 62 (fact -> var_cte .)
-    OP_LESS_THAN    reduce using rule 62 (fact -> var_cte .)
-    OP_GREATER_EQUALS_THAN reduce using rule 62 (fact -> var_cte .)
-    OP_LESS_EQUALS_THAN reduce using rule 62 (fact -> var_cte .)
-    OP_EQUALS_TWO   reduce using rule 62 (fact -> var_cte .)
-    OP_NOT_EQUALS   reduce using rule 62 (fact -> var_cte .)
-    AND             reduce using rule 62 (fact -> var_cte .)
-    OR              reduce using rule 62 (fact -> var_cte .)
-    SEMICOLON       reduce using rule 62 (fact -> var_cte .)
-    OP_RPAREN       reduce using rule 62 (fact -> var_cte .)
+    OP_DIVISION     reduce using rule 71 (fact -> var_cte .)
+    OP_TIMES        reduce using rule 71 (fact -> var_cte .)
+    OP_PLUS         reduce using rule 71 (fact -> var_cte .)
+    OP_MINUS        reduce using rule 71 (fact -> var_cte .)
+    OP_GREATER_THAN reduce using rule 71 (fact -> var_cte .)
+    OP_LESS_THAN    reduce using rule 71 (fact -> var_cte .)
+    OP_GREATER_EQUALS_THAN reduce using rule 71 (fact -> var_cte .)
+    OP_LESS_EQUALS_THAN reduce using rule 71 (fact -> var_cte .)
+    OP_EQUALS_TWO   reduce using rule 71 (fact -> var_cte .)
+    OP_NOT_EQUALS   reduce using rule 71 (fact -> var_cte .)
+    AND             reduce using rule 71 (fact -> var_cte .)
+    OR              reduce using rule 71 (fact -> var_cte .)
+    SEMICOLON       reduce using rule 71 (fact -> var_cte .)
+    OP_RPAREN       reduce using rule 71 (fact -> var_cte .)
 
 
 state 92
 
-    (63) fact -> OP_LPAREN . mega_expression OP_RPAREN
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (72) fact -> OP_LPAREN . mega_expression OP_RPAREN
+    (55) mega_expression -> . super_expression
+    (56) mega_expression -> . super_expression AND super_expression
+    (57) mega_expression -> . super_expression OR super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1609,7 +1619,7 @@ state 92
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    mega_expression                shift and go to state 126
+    mega_expression                shift and go to state 128
     super_expression               shift and go to state 87
     expression                     shift and go to state 88
     term                           shift and go to state 89
@@ -1618,62 +1628,62 @@ state 92
 
 state 93
 
-    (65) var_cte -> VAR_INT .
+    (74) var_cte -> VAR_INT .
 
-    OP_DIVISION     reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_TIMES        reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_PLUS         reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_MINUS        reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_GREATER_THAN reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_LESS_THAN    reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_GREATER_EQUALS_THAN reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_LESS_EQUALS_THAN reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_EQUALS_TWO   reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_NOT_EQUALS   reduce using rule 65 (var_cte -> VAR_INT .)
-    AND             reduce using rule 65 (var_cte -> VAR_INT .)
-    OR              reduce using rule 65 (var_cte -> VAR_INT .)
-    SEMICOLON       reduce using rule 65 (var_cte -> VAR_INT .)
-    OP_RPAREN       reduce using rule 65 (var_cte -> VAR_INT .)
+    OP_DIVISION     reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_TIMES        reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_PLUS         reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_MINUS        reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_GREATER_THAN reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_LESS_THAN    reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_GREATER_EQUALS_THAN reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_LESS_EQUALS_THAN reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_EQUALS_TWO   reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_NOT_EQUALS   reduce using rule 74 (var_cte -> VAR_INT .)
+    AND             reduce using rule 74 (var_cte -> VAR_INT .)
+    OR              reduce using rule 74 (var_cte -> VAR_INT .)
+    SEMICOLON       reduce using rule 74 (var_cte -> VAR_INT .)
+    OP_RPAREN       reduce using rule 74 (var_cte -> VAR_INT .)
 
 
 state 94
 
-    (66) var_cte -> VAR_FLOAT .
+    (75) var_cte -> VAR_FLOAT .
 
-    OP_DIVISION     reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_TIMES        reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_PLUS         reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_MINUS        reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_GREATER_THAN reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_LESS_THAN    reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_GREATER_EQUALS_THAN reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_LESS_EQUALS_THAN reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_EQUALS_TWO   reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_NOT_EQUALS   reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    AND             reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OR              reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    SEMICOLON       reduce using rule 66 (var_cte -> VAR_FLOAT .)
-    OP_RPAREN       reduce using rule 66 (var_cte -> VAR_FLOAT .)
+    OP_DIVISION     reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_TIMES        reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_PLUS         reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_MINUS        reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_GREATER_THAN reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_LESS_THAN    reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_GREATER_EQUALS_THAN reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_LESS_EQUALS_THAN reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_EQUALS_TWO   reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_NOT_EQUALS   reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    AND             reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OR              reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    SEMICOLON       reduce using rule 75 (var_cte -> VAR_FLOAT .)
+    OP_RPAREN       reduce using rule 75 (var_cte -> VAR_FLOAT .)
 
 
 state 95
 
-    (67) var_cte -> VAR_STRING .
+    (76) var_cte -> VAR_STRING .
 
-    OP_DIVISION     reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_TIMES        reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_PLUS         reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_MINUS        reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_GREATER_THAN reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_LESS_THAN    reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_GREATER_EQUALS_THAN reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_LESS_EQUALS_THAN reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_EQUALS_TWO   reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_NOT_EQUALS   reduce using rule 67 (var_cte -> VAR_STRING .)
-    AND             reduce using rule 67 (var_cte -> VAR_STRING .)
-    OR              reduce using rule 67 (var_cte -> VAR_STRING .)
-    SEMICOLON       reduce using rule 67 (var_cte -> VAR_STRING .)
-    OP_RPAREN       reduce using rule 67 (var_cte -> VAR_STRING .)
+    OP_DIVISION     reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_TIMES        reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_PLUS         reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_MINUS        reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_GREATER_THAN reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_LESS_THAN    reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_GREATER_EQUALS_THAN reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_LESS_EQUALS_THAN reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_EQUALS_TWO   reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_NOT_EQUALS   reduce using rule 76 (var_cte -> VAR_STRING .)
+    AND             reduce using rule 76 (var_cte -> VAR_STRING .)
+    OR              reduce using rule 76 (var_cte -> VAR_STRING .)
+    SEMICOLON       reduce using rule 76 (var_cte -> VAR_STRING .)
+    OP_RPAREN       reduce using rule 76 (var_cte -> VAR_STRING .)
 
 
 state 96
@@ -1692,57 +1702,57 @@ state 97
 
 state 98
 
-    (64) var_cte -> ID .
+    (73) var_cte -> ID .
 
-    OP_DIVISION     reduce using rule 64 (var_cte -> ID .)
-    OP_TIMES        reduce using rule 64 (var_cte -> ID .)
-    OP_PLUS         reduce using rule 64 (var_cte -> ID .)
-    OP_MINUS        reduce using rule 64 (var_cte -> ID .)
-    OP_GREATER_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_LESS_THAN    reduce using rule 64 (var_cte -> ID .)
-    OP_GREATER_EQUALS_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_LESS_EQUALS_THAN reduce using rule 64 (var_cte -> ID .)
-    OP_EQUALS_TWO   reduce using rule 64 (var_cte -> ID .)
-    OP_NOT_EQUALS   reduce using rule 64 (var_cte -> ID .)
-    AND             reduce using rule 64 (var_cte -> ID .)
-    OR              reduce using rule 64 (var_cte -> ID .)
-    SEMICOLON       reduce using rule 64 (var_cte -> ID .)
-    OP_RPAREN       reduce using rule 64 (var_cte -> ID .)
+    OP_DIVISION     reduce using rule 73 (var_cte -> ID .)
+    OP_TIMES        reduce using rule 73 (var_cte -> ID .)
+    OP_PLUS         reduce using rule 73 (var_cte -> ID .)
+    OP_MINUS        reduce using rule 73 (var_cte -> ID .)
+    OP_GREATER_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_LESS_THAN    reduce using rule 73 (var_cte -> ID .)
+    OP_GREATER_EQUALS_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_LESS_EQUALS_THAN reduce using rule 73 (var_cte -> ID .)
+    OP_EQUALS_TWO   reduce using rule 73 (var_cte -> ID .)
+    OP_NOT_EQUALS   reduce using rule 73 (var_cte -> ID .)
+    AND             reduce using rule 73 (var_cte -> ID .)
+    OR              reduce using rule 73 (var_cte -> ID .)
+    SEMICOLON       reduce using rule 73 (var_cte -> ID .)
+    OP_RPAREN       reduce using rule 73 (var_cte -> ID .)
 
 
 state 99
 
     (29) assigment -> ID OP_EQUALS mega_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 127
+    SEMICOLON       shift and go to state 129
 
 
 state 100
 
     (35) increment -> ID OP_PLUS_EQUALS mega_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 128
+    SEMICOLON       shift and go to state 130
 
 
 state 101
 
     (36) increment -> ID OP_MINUS_EQUALS mega_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 129
+    SEMICOLON       shift and go to state 131
 
 
 state 102
 
     (37) increment -> ID OP_PLUS OP_PLUS . SEMICOLON
 
-    SEMICOLON       shift and go to state 130
+    SEMICOLON       shift and go to state 132
 
 
 state 103
 
     (38) increment -> ID OP_MINUS OP_MINUS . SEMICOLON
 
-    SEMICOLON       shift and go to state 131
+    SEMICOLON       shift and go to state 133
 
 
 state 104
@@ -1751,27 +1761,27 @@ state 104
     (43) function_call_prime -> . ID function_call_prime
     (44) function_call_prime -> . COMA ID function_call_prime
     (45) function_call_prime -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     ID              shift and go to state 104
     COMA            shift and go to state 106
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
-    function_call_prime            shift and go to state 132
+    function_call_prime            shift and go to state 134
     epsilon                        shift and go to state 107
 
 state 105
 
     (42) function_call -> ID OP_LPAREN function_call_prime . OP_RPAREN SEMICOLON
 
-    OP_RPAREN       shift and go to state 133
+    OP_RPAREN       shift and go to state 135
 
 
 state 106
 
     (44) function_call_prime -> COMA . ID function_call_prime
 
-    ID              shift and go to state 134
+    ID              shift and go to state 136
 
 
 state 107
@@ -1783,53 +1793,77 @@ state 107
 
 state 108
 
-    (30) if -> IF OP_LPAREN mega_expression . OP_RPAREN bloque
-    (31) if -> IF OP_LPAREN mega_expression . OP_RPAREN bloque ELSE bloque
+    (30) if -> IF OP_LPAREN condition_mega_expression . OP_RPAREN bloque
+    (31) if -> IF OP_LPAREN condition_mega_expression . OP_RPAREN bloque ELSE bloque
 
-    OP_RPAREN       shift and go to state 135
+    OP_RPAREN       shift and go to state 137
 
 
 state 109
 
-    (32) printer -> PRINT OP_LPAREN impression . OP_RPAREN SEMICOLON
+    (46) condition_mega_expression -> condition_super_expression .
+    (47) condition_mega_expression -> condition_super_expression . AND condition_super_expression
+    (48) condition_mega_expression -> condition_super_expression . OR condition_super_expression
 
-    OP_RPAREN       shift and go to state 136
+    OP_RPAREN       reduce using rule 46 (condition_mega_expression -> condition_super_expression .)
+    AND             shift and go to state 138
+    OR              shift and go to state 139
 
 
 state 110
+
+    (49) condition_super_expression -> expression . OP_GREATER_THAN expression
+    (50) condition_super_expression -> expression . OP_LESS_THAN expression
+    (51) condition_super_expression -> expression . OP_GREATER_EQUALS_THAN expression
+    (52) condition_super_expression -> expression . OP_LESS_EQUALS_THAN expression
+    (53) condition_super_expression -> expression . OP_EQUALS_TWO expression
+    (54) condition_super_expression -> expression . OP_NOT_EQUALS expression
+
+    OP_GREATER_THAN shift and go to state 140
+    OP_LESS_THAN    shift and go to state 141
+    OP_GREATER_EQUALS_THAN shift and go to state 142
+    OP_LESS_EQUALS_THAN shift and go to state 143
+    OP_EQUALS_TWO   shift and go to state 144
+    OP_NOT_EQUALS   shift and go to state 145
+
+
+state 111
+
+    (32) printer -> PRINT OP_LPAREN impression . OP_RPAREN SEMICOLON
+
+    OP_RPAREN       shift and go to state 146
+
+
+state 112
 
     (33) impression -> var_cte .
     (34) impression -> var_cte . OP_PLUS impression
 
     OP_RPAREN       reduce using rule 33 (impression -> var_cte .)
-    OP_PLUS         shift and go to state 137
+    OP_PLUS         shift and go to state 147
 
 
-state 111
+state 113
 
-    (39) for -> FOR OP_LPAREN vars . mega_expression SEMICOLON increment OP_RPAREN bloque
-    (46) mega_expression -> . super_expression
-    (47) mega_expression -> . super_expression AND super_expression
-    (48) mega_expression -> . super_expression OR super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (39) for -> FOR OP_LPAREN vars . condition_super_expression SEMICOLON increment OP_RPAREN bloque
+    (49) condition_super_expression -> . expression OP_GREATER_THAN expression
+    (50) condition_super_expression -> . expression OP_LESS_THAN expression
+    (51) condition_super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (52) condition_super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (53) condition_super_expression -> . expression OP_EQUALS_TWO expression
+    (54) condition_super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1837,14 +1871,13 @@ state 111
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    mega_expression                shift and go to state 138
-    super_expression               shift and go to state 87
-    expression                     shift and go to state 88
+    condition_super_expression     shift and go to state 148
+    expression                     shift and go to state 110
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
-state 112
+state 114
 
     (40) return -> RETURN ID SEMICOLON .
 
@@ -1860,7 +1893,7 @@ state 112
     RETURN          reduce using rule 40 (return -> RETURN ID SEMICOLON .)
 
 
-state 113
+state 115
 
     (41) return -> RETURN mega_expression SEMICOLON .
 
@@ -1876,91 +1909,28 @@ state 113
     RETURN          reduce using rule 41 (return -> RETURN mega_expression SEMICOLON .)
 
 
-state 114
-
-    (47) mega_expression -> super_expression AND . super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
-
-    OP_LPAREN       shift and go to state 92
-    ID              shift and go to state 98
-    VAR_INT         shift and go to state 93
-    VAR_FLOAT       shift and go to state 94
-    VAR_STRING      shift and go to state 95
-
-    super_expression               shift and go to state 139
-    expression                     shift and go to state 88
-    term                           shift and go to state 89
-    fact                           shift and go to state 90
-    var_cte                        shift and go to state 91
-
-state 115
-
-    (48) mega_expression -> super_expression OR . super_expression
-    (49) super_expression -> . expression
-    (50) super_expression -> . expression OP_GREATER_THAN expression
-    (51) super_expression -> . expression OP_LESS_THAN expression
-    (52) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
-    (53) super_expression -> . expression OP_LESS_EQUALS_THAN expression
-    (54) super_expression -> . expression OP_EQUALS_TWO expression
-    (55) super_expression -> . expression OP_NOT_EQUALS expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
-
-    OP_LPAREN       shift and go to state 92
-    ID              shift and go to state 98
-    VAR_INT         shift and go to state 93
-    VAR_FLOAT       shift and go to state 94
-    VAR_STRING      shift and go to state 95
-
-    super_expression               shift and go to state 140
-    expression                     shift and go to state 88
-    term                           shift and go to state 89
-    fact                           shift and go to state 90
-    var_cte                        shift and go to state 91
-
 state 116
 
-    (50) super_expression -> expression OP_GREATER_THAN . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (56) mega_expression -> super_expression AND . super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1968,26 +1938,34 @@ state 116
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 141
+    super_expression               shift and go to state 149
+    expression                     shift and go to state 88
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 117
 
-    (51) super_expression -> expression OP_LESS_THAN . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (57) mega_expression -> super_expression OR . super_expression
+    (58) super_expression -> . expression
+    (59) super_expression -> . expression OP_GREATER_THAN expression
+    (60) super_expression -> . expression OP_LESS_THAN expression
+    (61) super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (62) super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (63) super_expression -> . expression OP_EQUALS_TWO expression
+    (64) super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -1995,26 +1973,27 @@ state 117
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 142
+    super_expression               shift and go to state 150
+    expression                     shift and go to state 88
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 118
 
-    (52) super_expression -> expression OP_GREATER_EQUALS_THAN . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (59) super_expression -> expression OP_GREATER_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2022,26 +2001,26 @@ state 118
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 143
+    expression                     shift and go to state 151
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 119
 
-    (53) super_expression -> expression OP_LESS_EQUALS_THAN . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (60) super_expression -> expression OP_LESS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2049,26 +2028,26 @@ state 119
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 144
+    expression                     shift and go to state 152
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 120
 
-    (54) super_expression -> expression OP_EQUALS_TWO . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (61) super_expression -> expression OP_GREATER_EQUALS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2076,26 +2055,26 @@ state 120
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 145
+    expression                     shift and go to state 153
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 121
 
-    (55) super_expression -> expression OP_NOT_EQUALS . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (62) super_expression -> expression OP_LESS_EQUALS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2103,26 +2082,26 @@ state 121
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    expression                     shift and go to state 146
+    expression                     shift and go to state 154
     term                           shift and go to state 89
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 122
 
-    (57) expression -> term OP_PLUS . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (63) super_expression -> expression OP_EQUALS_TWO . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2130,26 +2109,53 @@ state 122
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
+    expression                     shift and go to state 155
     term                           shift and go to state 89
-    expression                     shift and go to state 147
     fact                           shift and go to state 90
     var_cte                        shift and go to state 91
 
 state 123
 
-    (58) expression -> term OP_MINUS . expression
-    (56) expression -> . term
-    (57) expression -> . term OP_PLUS expression
-    (58) expression -> . term OP_MINUS expression
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (64) super_expression -> expression OP_NOT_EQUALS . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 156
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 124
+
+    (66) expression -> term OP_PLUS . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2158,45 +2164,49 @@ state 123
     VAR_STRING      shift and go to state 95
 
     term                           shift and go to state 89
-    expression                     shift and go to state 148
+    expression                     shift and go to state 157
     fact                           shift and go to state 90
-    var_cte                        shift and go to state 91
-
-state 124
-
-    (60) term -> fact OP_DIVISION . term
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
-
-    OP_LPAREN       shift and go to state 92
-    ID              shift and go to state 98
-    VAR_INT         shift and go to state 93
-    VAR_FLOAT       shift and go to state 94
-    VAR_STRING      shift and go to state 95
-
-    fact                           shift and go to state 90
-    term                           shift and go to state 149
     var_cte                        shift and go to state 91
 
 state 125
 
-    (61) term -> fact OP_TIMES . term
-    (59) term -> . fact
-    (60) term -> . fact OP_DIVISION term
-    (61) term -> . fact OP_TIMES term
-    (62) fact -> . var_cte
-    (63) fact -> . OP_LPAREN mega_expression OP_RPAREN
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (67) expression -> term OP_MINUS . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    term                           shift and go to state 89
+    expression                     shift and go to state 158
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 126
+
+    (69) term -> fact OP_DIVISION . term
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     OP_LPAREN       shift and go to state 92
     ID              shift and go to state 98
@@ -2205,17 +2215,40 @@ state 125
     VAR_STRING      shift and go to state 95
 
     fact                           shift and go to state 90
-    term                           shift and go to state 150
+    term                           shift and go to state 159
     var_cte                        shift and go to state 91
 
-state 126
-
-    (63) fact -> OP_LPAREN mega_expression . OP_RPAREN
-
-    OP_RPAREN       shift and go to state 151
-
-
 state 127
+
+    (70) term -> fact OP_TIMES . term
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    fact                           shift and go to state 90
+    term                           shift and go to state 160
+    var_cte                        shift and go to state 91
+
+state 128
+
+    (72) fact -> OP_LPAREN mega_expression . OP_RPAREN
+
+    OP_RPAREN       shift and go to state 161
+
+
+state 129
 
     (29) assigment -> ID OP_EQUALS mega_expression SEMICOLON .
 
@@ -2231,7 +2264,7 @@ state 127
     RETURN          reduce using rule 29 (assigment -> ID OP_EQUALS mega_expression SEMICOLON .)
 
 
-state 128
+state 130
 
     (35) increment -> ID OP_PLUS_EQUALS mega_expression SEMICOLON .
 
@@ -2248,7 +2281,7 @@ state 128
     OP_RPAREN       reduce using rule 35 (increment -> ID OP_PLUS_EQUALS mega_expression SEMICOLON .)
 
 
-state 129
+state 131
 
     (36) increment -> ID OP_MINUS_EQUALS mega_expression SEMICOLON .
 
@@ -2265,7 +2298,7 @@ state 129
     OP_RPAREN       reduce using rule 36 (increment -> ID OP_MINUS_EQUALS mega_expression SEMICOLON .)
 
 
-state 130
+state 132
 
     (37) increment -> ID OP_PLUS OP_PLUS SEMICOLON .
 
@@ -2282,7 +2315,7 @@ state 130
     OP_RPAREN       reduce using rule 37 (increment -> ID OP_PLUS OP_PLUS SEMICOLON .)
 
 
-state 131
+state 133
 
     (38) increment -> ID OP_MINUS OP_MINUS SEMICOLON .
 
@@ -2299,242 +2332,472 @@ state 131
     OP_RPAREN       reduce using rule 38 (increment -> ID OP_MINUS OP_MINUS SEMICOLON .)
 
 
-state 132
+state 134
 
     (43) function_call_prime -> ID function_call_prime .
 
     OP_RPAREN       reduce using rule 43 (function_call_prime -> ID function_call_prime .)
 
 
-state 133
+state 135
 
     (42) function_call -> ID OP_LPAREN function_call_prime OP_RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 152
+    SEMICOLON       shift and go to state 162
 
 
-state 134
+state 136
 
     (44) function_call_prime -> COMA ID . function_call_prime
     (43) function_call_prime -> . ID function_call_prime
     (44) function_call_prime -> . COMA ID function_call_prime
     (45) function_call_prime -> . epsilon
-    (68) epsilon -> .
+    (77) epsilon -> .
 
     ID              shift and go to state 104
     COMA            shift and go to state 106
-    OP_RPAREN       reduce using rule 68 (epsilon -> .)
+    OP_RPAREN       reduce using rule 77 (epsilon -> .)
 
-    function_call_prime            shift and go to state 153
+    function_call_prime            shift and go to state 163
     epsilon                        shift and go to state 107
 
-state 135
+state 137
 
-    (30) if -> IF OP_LPAREN mega_expression OP_RPAREN . bloque
-    (31) if -> IF OP_LPAREN mega_expression OP_RPAREN . bloque ELSE bloque
+    (30) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN . bloque
+    (31) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN . bloque ELSE bloque
     (18) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 44
 
-    bloque                         shift and go to state 154
+    bloque                         shift and go to state 164
 
-state 136
+state 138
+
+    (47) condition_mega_expression -> condition_super_expression AND . condition_super_expression
+    (49) condition_super_expression -> . expression OP_GREATER_THAN expression
+    (50) condition_super_expression -> . expression OP_LESS_THAN expression
+    (51) condition_super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (52) condition_super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (53) condition_super_expression -> . expression OP_EQUALS_TWO expression
+    (54) condition_super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    condition_super_expression     shift and go to state 165
+    expression                     shift and go to state 110
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 139
+
+    (48) condition_mega_expression -> condition_super_expression OR . condition_super_expression
+    (49) condition_super_expression -> . expression OP_GREATER_THAN expression
+    (50) condition_super_expression -> . expression OP_LESS_THAN expression
+    (51) condition_super_expression -> . expression OP_GREATER_EQUALS_THAN expression
+    (52) condition_super_expression -> . expression OP_LESS_EQUALS_THAN expression
+    (53) condition_super_expression -> . expression OP_EQUALS_TWO expression
+    (54) condition_super_expression -> . expression OP_NOT_EQUALS expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    condition_super_expression     shift and go to state 166
+    expression                     shift and go to state 110
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 140
+
+    (49) condition_super_expression -> expression OP_GREATER_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 167
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 141
+
+    (50) condition_super_expression -> expression OP_LESS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 168
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 142
+
+    (51) condition_super_expression -> expression OP_GREATER_EQUALS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 169
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 143
+
+    (52) condition_super_expression -> expression OP_LESS_EQUALS_THAN . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 170
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 144
+
+    (53) condition_super_expression -> expression OP_EQUALS_TWO . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 171
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 145
+
+    (54) condition_super_expression -> expression OP_NOT_EQUALS . expression
+    (65) expression -> . term
+    (66) expression -> . term OP_PLUS expression
+    (67) expression -> . term OP_MINUS expression
+    (68) term -> . fact
+    (69) term -> . fact OP_DIVISION term
+    (70) term -> . fact OP_TIMES term
+    (71) fact -> . var_cte
+    (72) fact -> . OP_LPAREN mega_expression OP_RPAREN
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
+
+    OP_LPAREN       shift and go to state 92
+    ID              shift and go to state 98
+    VAR_INT         shift and go to state 93
+    VAR_FLOAT       shift and go to state 94
+    VAR_STRING      shift and go to state 95
+
+    expression                     shift and go to state 172
+    term                           shift and go to state 89
+    fact                           shift and go to state 90
+    var_cte                        shift and go to state 91
+
+state 146
 
     (32) printer -> PRINT OP_LPAREN impression OP_RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 155
+    SEMICOLON       shift and go to state 173
 
 
-state 137
+state 147
 
     (34) impression -> var_cte OP_PLUS . impression
     (33) impression -> . var_cte
     (34) impression -> . var_cte OP_PLUS impression
-    (64) var_cte -> . ID
-    (65) var_cte -> . VAR_INT
-    (66) var_cte -> . VAR_FLOAT
-    (67) var_cte -> . VAR_STRING
+    (73) var_cte -> . ID
+    (74) var_cte -> . VAR_INT
+    (75) var_cte -> . VAR_FLOAT
+    (76) var_cte -> . VAR_STRING
 
     ID              shift and go to state 98
     VAR_INT         shift and go to state 93
     VAR_FLOAT       shift and go to state 94
     VAR_STRING      shift and go to state 95
 
-    var_cte                        shift and go to state 110
-    impression                     shift and go to state 156
-
-state 138
-
-    (39) for -> FOR OP_LPAREN vars mega_expression . SEMICOLON increment OP_RPAREN bloque
-
-    SEMICOLON       shift and go to state 157
-
-
-state 139
-
-    (47) mega_expression -> super_expression AND super_expression .
-
-    SEMICOLON       reduce using rule 47 (mega_expression -> super_expression AND super_expression .)
-    OP_RPAREN       reduce using rule 47 (mega_expression -> super_expression AND super_expression .)
-
-
-state 140
-
-    (48) mega_expression -> super_expression OR super_expression .
-
-    SEMICOLON       reduce using rule 48 (mega_expression -> super_expression OR super_expression .)
-    OP_RPAREN       reduce using rule 48 (mega_expression -> super_expression OR super_expression .)
-
-
-state 141
-
-    (50) super_expression -> expression OP_GREATER_THAN expression .
-
-    AND             reduce using rule 50 (super_expression -> expression OP_GREATER_THAN expression .)
-    OR              reduce using rule 50 (super_expression -> expression OP_GREATER_THAN expression .)
-    SEMICOLON       reduce using rule 50 (super_expression -> expression OP_GREATER_THAN expression .)
-    OP_RPAREN       reduce using rule 50 (super_expression -> expression OP_GREATER_THAN expression .)
-
-
-state 142
-
-    (51) super_expression -> expression OP_LESS_THAN expression .
-
-    AND             reduce using rule 51 (super_expression -> expression OP_LESS_THAN expression .)
-    OR              reduce using rule 51 (super_expression -> expression OP_LESS_THAN expression .)
-    SEMICOLON       reduce using rule 51 (super_expression -> expression OP_LESS_THAN expression .)
-    OP_RPAREN       reduce using rule 51 (super_expression -> expression OP_LESS_THAN expression .)
-
-
-state 143
-
-    (52) super_expression -> expression OP_GREATER_EQUALS_THAN expression .
-
-    AND             reduce using rule 52 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
-    OR              reduce using rule 52 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
-    SEMICOLON       reduce using rule 52 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
-    OP_RPAREN       reduce using rule 52 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
-
-
-state 144
-
-    (53) super_expression -> expression OP_LESS_EQUALS_THAN expression .
-
-    AND             reduce using rule 53 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
-    OR              reduce using rule 53 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
-    SEMICOLON       reduce using rule 53 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
-    OP_RPAREN       reduce using rule 53 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
-
-
-state 145
-
-    (54) super_expression -> expression OP_EQUALS_TWO expression .
-
-    AND             reduce using rule 54 (super_expression -> expression OP_EQUALS_TWO expression .)
-    OR              reduce using rule 54 (super_expression -> expression OP_EQUALS_TWO expression .)
-    SEMICOLON       reduce using rule 54 (super_expression -> expression OP_EQUALS_TWO expression .)
-    OP_RPAREN       reduce using rule 54 (super_expression -> expression OP_EQUALS_TWO expression .)
-
-
-state 146
-
-    (55) super_expression -> expression OP_NOT_EQUALS expression .
-
-    AND             reduce using rule 55 (super_expression -> expression OP_NOT_EQUALS expression .)
-    OR              reduce using rule 55 (super_expression -> expression OP_NOT_EQUALS expression .)
-    SEMICOLON       reduce using rule 55 (super_expression -> expression OP_NOT_EQUALS expression .)
-    OP_RPAREN       reduce using rule 55 (super_expression -> expression OP_NOT_EQUALS expression .)
-
-
-state 147
-
-    (57) expression -> term OP_PLUS expression .
-
-    OP_GREATER_THAN reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_LESS_THAN    reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_GREATER_EQUALS_THAN reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_LESS_EQUALS_THAN reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_EQUALS_TWO   reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_NOT_EQUALS   reduce using rule 57 (expression -> term OP_PLUS expression .)
-    AND             reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OR              reduce using rule 57 (expression -> term OP_PLUS expression .)
-    SEMICOLON       reduce using rule 57 (expression -> term OP_PLUS expression .)
-    OP_RPAREN       reduce using rule 57 (expression -> term OP_PLUS expression .)
-
+    var_cte                        shift and go to state 112
+    impression                     shift and go to state 174
 
 state 148
 
-    (58) expression -> term OP_MINUS expression .
+    (39) for -> FOR OP_LPAREN vars condition_super_expression . SEMICOLON increment OP_RPAREN bloque
 
-    OP_GREATER_THAN reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_LESS_THAN    reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_GREATER_EQUALS_THAN reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_LESS_EQUALS_THAN reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_EQUALS_TWO   reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_NOT_EQUALS   reduce using rule 58 (expression -> term OP_MINUS expression .)
-    AND             reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OR              reduce using rule 58 (expression -> term OP_MINUS expression .)
-    SEMICOLON       reduce using rule 58 (expression -> term OP_MINUS expression .)
-    OP_RPAREN       reduce using rule 58 (expression -> term OP_MINUS expression .)
+    SEMICOLON       shift and go to state 175
 
 
 state 149
 
-    (60) term -> fact OP_DIVISION term .
+    (56) mega_expression -> super_expression AND super_expression .
 
-    OP_PLUS         reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_MINUS        reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_GREATER_THAN reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_LESS_THAN    reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_GREATER_EQUALS_THAN reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_LESS_EQUALS_THAN reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_EQUALS_TWO   reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_NOT_EQUALS   reduce using rule 60 (term -> fact OP_DIVISION term .)
-    AND             reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OR              reduce using rule 60 (term -> fact OP_DIVISION term .)
-    SEMICOLON       reduce using rule 60 (term -> fact OP_DIVISION term .)
-    OP_RPAREN       reduce using rule 60 (term -> fact OP_DIVISION term .)
+    SEMICOLON       reduce using rule 56 (mega_expression -> super_expression AND super_expression .)
+    OP_RPAREN       reduce using rule 56 (mega_expression -> super_expression AND super_expression .)
 
 
 state 150
 
-    (61) term -> fact OP_TIMES term .
+    (57) mega_expression -> super_expression OR super_expression .
 
-    OP_PLUS         reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_MINUS        reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_GREATER_THAN reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_LESS_THAN    reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_GREATER_EQUALS_THAN reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_LESS_EQUALS_THAN reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_EQUALS_TWO   reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_NOT_EQUALS   reduce using rule 61 (term -> fact OP_TIMES term .)
-    AND             reduce using rule 61 (term -> fact OP_TIMES term .)
-    OR              reduce using rule 61 (term -> fact OP_TIMES term .)
-    SEMICOLON       reduce using rule 61 (term -> fact OP_TIMES term .)
-    OP_RPAREN       reduce using rule 61 (term -> fact OP_TIMES term .)
+    SEMICOLON       reduce using rule 57 (mega_expression -> super_expression OR super_expression .)
+    OP_RPAREN       reduce using rule 57 (mega_expression -> super_expression OR super_expression .)
 
 
 state 151
 
-    (63) fact -> OP_LPAREN mega_expression OP_RPAREN .
+    (59) super_expression -> expression OP_GREATER_THAN expression .
 
-    OP_DIVISION     reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_TIMES        reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_PLUS         reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_MINUS        reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_GREATER_THAN reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_LESS_THAN    reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_GREATER_EQUALS_THAN reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_LESS_EQUALS_THAN reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_EQUALS_TWO   reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_NOT_EQUALS   reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    AND             reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OR              reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    SEMICOLON       reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
-    OP_RPAREN       reduce using rule 63 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    AND             reduce using rule 59 (super_expression -> expression OP_GREATER_THAN expression .)
+    OR              reduce using rule 59 (super_expression -> expression OP_GREATER_THAN expression .)
+    SEMICOLON       reduce using rule 59 (super_expression -> expression OP_GREATER_THAN expression .)
+    OP_RPAREN       reduce using rule 59 (super_expression -> expression OP_GREATER_THAN expression .)
 
 
 state 152
+
+    (60) super_expression -> expression OP_LESS_THAN expression .
+
+    AND             reduce using rule 60 (super_expression -> expression OP_LESS_THAN expression .)
+    OR              reduce using rule 60 (super_expression -> expression OP_LESS_THAN expression .)
+    SEMICOLON       reduce using rule 60 (super_expression -> expression OP_LESS_THAN expression .)
+    OP_RPAREN       reduce using rule 60 (super_expression -> expression OP_LESS_THAN expression .)
+
+
+state 153
+
+    (61) super_expression -> expression OP_GREATER_EQUALS_THAN expression .
+
+    AND             reduce using rule 61 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    OR              reduce using rule 61 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    SEMICOLON       reduce using rule 61 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    OP_RPAREN       reduce using rule 61 (super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+
+
+state 154
+
+    (62) super_expression -> expression OP_LESS_EQUALS_THAN expression .
+
+    AND             reduce using rule 62 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    OR              reduce using rule 62 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    SEMICOLON       reduce using rule 62 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    OP_RPAREN       reduce using rule 62 (super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+
+
+state 155
+
+    (63) super_expression -> expression OP_EQUALS_TWO expression .
+
+    AND             reduce using rule 63 (super_expression -> expression OP_EQUALS_TWO expression .)
+    OR              reduce using rule 63 (super_expression -> expression OP_EQUALS_TWO expression .)
+    SEMICOLON       reduce using rule 63 (super_expression -> expression OP_EQUALS_TWO expression .)
+    OP_RPAREN       reduce using rule 63 (super_expression -> expression OP_EQUALS_TWO expression .)
+
+
+state 156
+
+    (64) super_expression -> expression OP_NOT_EQUALS expression .
+
+    AND             reduce using rule 64 (super_expression -> expression OP_NOT_EQUALS expression .)
+    OR              reduce using rule 64 (super_expression -> expression OP_NOT_EQUALS expression .)
+    SEMICOLON       reduce using rule 64 (super_expression -> expression OP_NOT_EQUALS expression .)
+    OP_RPAREN       reduce using rule 64 (super_expression -> expression OP_NOT_EQUALS expression .)
+
+
+state 157
+
+    (66) expression -> term OP_PLUS expression .
+
+    OP_GREATER_THAN reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_LESS_THAN    reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_GREATER_EQUALS_THAN reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_LESS_EQUALS_THAN reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_EQUALS_TWO   reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_NOT_EQUALS   reduce using rule 66 (expression -> term OP_PLUS expression .)
+    AND             reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OR              reduce using rule 66 (expression -> term OP_PLUS expression .)
+    SEMICOLON       reduce using rule 66 (expression -> term OP_PLUS expression .)
+    OP_RPAREN       reduce using rule 66 (expression -> term OP_PLUS expression .)
+
+
+state 158
+
+    (67) expression -> term OP_MINUS expression .
+
+    OP_GREATER_THAN reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_LESS_THAN    reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_GREATER_EQUALS_THAN reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_LESS_EQUALS_THAN reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_EQUALS_TWO   reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_NOT_EQUALS   reduce using rule 67 (expression -> term OP_MINUS expression .)
+    AND             reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OR              reduce using rule 67 (expression -> term OP_MINUS expression .)
+    SEMICOLON       reduce using rule 67 (expression -> term OP_MINUS expression .)
+    OP_RPAREN       reduce using rule 67 (expression -> term OP_MINUS expression .)
+
+
+state 159
+
+    (69) term -> fact OP_DIVISION term .
+
+    OP_PLUS         reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_MINUS        reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_GREATER_THAN reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_LESS_THAN    reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_GREATER_EQUALS_THAN reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_LESS_EQUALS_THAN reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_EQUALS_TWO   reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_NOT_EQUALS   reduce using rule 69 (term -> fact OP_DIVISION term .)
+    AND             reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OR              reduce using rule 69 (term -> fact OP_DIVISION term .)
+    SEMICOLON       reduce using rule 69 (term -> fact OP_DIVISION term .)
+    OP_RPAREN       reduce using rule 69 (term -> fact OP_DIVISION term .)
+
+
+state 160
+
+    (70) term -> fact OP_TIMES term .
+
+    OP_PLUS         reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_MINUS        reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_GREATER_THAN reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_LESS_THAN    reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_GREATER_EQUALS_THAN reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_LESS_EQUALS_THAN reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_EQUALS_TWO   reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_NOT_EQUALS   reduce using rule 70 (term -> fact OP_TIMES term .)
+    AND             reduce using rule 70 (term -> fact OP_TIMES term .)
+    OR              reduce using rule 70 (term -> fact OP_TIMES term .)
+    SEMICOLON       reduce using rule 70 (term -> fact OP_TIMES term .)
+    OP_RPAREN       reduce using rule 70 (term -> fact OP_TIMES term .)
+
+
+state 161
+
+    (72) fact -> OP_LPAREN mega_expression OP_RPAREN .
+
+    OP_DIVISION     reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_TIMES        reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_PLUS         reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_MINUS        reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_GREATER_THAN reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_LESS_THAN    reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_GREATER_EQUALS_THAN reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_LESS_EQUALS_THAN reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_EQUALS_TWO   reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_NOT_EQUALS   reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    AND             reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OR              reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    SEMICOLON       reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+    OP_RPAREN       reduce using rule 72 (fact -> OP_LPAREN mega_expression OP_RPAREN .)
+
+
+state 162
 
     (42) function_call -> ID OP_LPAREN function_call_prime OP_RPAREN SEMICOLON .
 
@@ -2550,32 +2813,106 @@ state 152
     RETURN          reduce using rule 42 (function_call -> ID OP_LPAREN function_call_prime OP_RPAREN SEMICOLON .)
 
 
-state 153
+state 163
 
     (44) function_call_prime -> COMA ID function_call_prime .
 
     OP_RPAREN       reduce using rule 44 (function_call_prime -> COMA ID function_call_prime .)
 
 
-state 154
+state 164
 
-    (30) if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .
-    (31) if -> IF OP_LPAREN mega_expression OP_RPAREN bloque . ELSE bloque
+    (30) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .
+    (31) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque . ELSE bloque
 
-    RCURLY_BRACKET  reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    ID              reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    IF              reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    PRINT           reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    INT             reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    FLOAT           reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    STRING          reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    BOOLEAN         reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    FOR             reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    RETURN          reduce using rule 30 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque .)
-    ELSE            shift and go to state 158
+    RCURLY_BRACKET  reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    ID              reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    IF              reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    PRINT           reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    INT             reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    FLOAT           reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    STRING          reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    BOOLEAN         reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    FOR             reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    RETURN          reduce using rule 30 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque .)
+    ELSE            shift and go to state 176
 
 
-state 155
+state 165
+
+    (47) condition_mega_expression -> condition_super_expression AND condition_super_expression .
+
+    OP_RPAREN       reduce using rule 47 (condition_mega_expression -> condition_super_expression AND condition_super_expression .)
+
+
+state 166
+
+    (48) condition_mega_expression -> condition_super_expression OR condition_super_expression .
+
+    OP_RPAREN       reduce using rule 48 (condition_mega_expression -> condition_super_expression OR condition_super_expression .)
+
+
+state 167
+
+    (49) condition_super_expression -> expression OP_GREATER_THAN expression .
+
+    AND             reduce using rule 49 (condition_super_expression -> expression OP_GREATER_THAN expression .)
+    OR              reduce using rule 49 (condition_super_expression -> expression OP_GREATER_THAN expression .)
+    OP_RPAREN       reduce using rule 49 (condition_super_expression -> expression OP_GREATER_THAN expression .)
+    SEMICOLON       reduce using rule 49 (condition_super_expression -> expression OP_GREATER_THAN expression .)
+
+
+state 168
+
+    (50) condition_super_expression -> expression OP_LESS_THAN expression .
+
+    AND             reduce using rule 50 (condition_super_expression -> expression OP_LESS_THAN expression .)
+    OR              reduce using rule 50 (condition_super_expression -> expression OP_LESS_THAN expression .)
+    OP_RPAREN       reduce using rule 50 (condition_super_expression -> expression OP_LESS_THAN expression .)
+    SEMICOLON       reduce using rule 50 (condition_super_expression -> expression OP_LESS_THAN expression .)
+
+
+state 169
+
+    (51) condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression .
+
+    AND             reduce using rule 51 (condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    OR              reduce using rule 51 (condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    OP_RPAREN       reduce using rule 51 (condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+    SEMICOLON       reduce using rule 51 (condition_super_expression -> expression OP_GREATER_EQUALS_THAN expression .)
+
+
+state 170
+
+    (52) condition_super_expression -> expression OP_LESS_EQUALS_THAN expression .
+
+    AND             reduce using rule 52 (condition_super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    OR              reduce using rule 52 (condition_super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    OP_RPAREN       reduce using rule 52 (condition_super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+    SEMICOLON       reduce using rule 52 (condition_super_expression -> expression OP_LESS_EQUALS_THAN expression .)
+
+
+state 171
+
+    (53) condition_super_expression -> expression OP_EQUALS_TWO expression .
+
+    AND             reduce using rule 53 (condition_super_expression -> expression OP_EQUALS_TWO expression .)
+    OR              reduce using rule 53 (condition_super_expression -> expression OP_EQUALS_TWO expression .)
+    OP_RPAREN       reduce using rule 53 (condition_super_expression -> expression OP_EQUALS_TWO expression .)
+    SEMICOLON       reduce using rule 53 (condition_super_expression -> expression OP_EQUALS_TWO expression .)
+
+
+state 172
+
+    (54) condition_super_expression -> expression OP_NOT_EQUALS expression .
+
+    AND             reduce using rule 54 (condition_super_expression -> expression OP_NOT_EQUALS expression .)
+    OR              reduce using rule 54 (condition_super_expression -> expression OP_NOT_EQUALS expression .)
+    OP_RPAREN       reduce using rule 54 (condition_super_expression -> expression OP_NOT_EQUALS expression .)
+    SEMICOLON       reduce using rule 54 (condition_super_expression -> expression OP_NOT_EQUALS expression .)
+
+
+state 173
 
     (32) printer -> PRINT OP_LPAREN impression OP_RPAREN SEMICOLON .
 
@@ -2591,42 +2928,42 @@ state 155
     RETURN          reduce using rule 32 (printer -> PRINT OP_LPAREN impression OP_RPAREN SEMICOLON .)
 
 
-state 156
+state 174
 
     (34) impression -> var_cte OP_PLUS impression .
 
     OP_RPAREN       reduce using rule 34 (impression -> var_cte OP_PLUS impression .)
 
 
-state 157
+state 175
 
-    (39) for -> FOR OP_LPAREN vars mega_expression SEMICOLON . increment OP_RPAREN bloque
+    (39) for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON . increment OP_RPAREN bloque
     (35) increment -> . ID OP_PLUS_EQUALS mega_expression SEMICOLON
     (36) increment -> . ID OP_MINUS_EQUALS mega_expression SEMICOLON
     (37) increment -> . ID OP_PLUS OP_PLUS SEMICOLON
     (38) increment -> . ID OP_MINUS OP_MINUS SEMICOLON
 
-    ID              shift and go to state 160
+    ID              shift and go to state 178
 
-    increment                      shift and go to state 159
+    increment                      shift and go to state 177
 
-state 158
+state 176
 
-    (31) if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE . bloque
+    (31) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE . bloque
     (18) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 44
 
-    bloque                         shift and go to state 161
+    bloque                         shift and go to state 179
 
-state 159
+state 177
 
-    (39) for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment . OP_RPAREN bloque
+    (39) for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment . OP_RPAREN bloque
 
-    OP_RPAREN       shift and go to state 162
+    OP_RPAREN       shift and go to state 180
 
 
-state 160
+state 178
 
     (35) increment -> ID . OP_PLUS_EQUALS mega_expression SEMICOLON
     (36) increment -> ID . OP_MINUS_EQUALS mega_expression SEMICOLON
@@ -2639,45 +2976,45 @@ state 160
     OP_MINUS        shift and go to state 80
 
 
-state 161
+state 179
 
-    (31) if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .
+    (31) if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .
 
-    RCURLY_BRACKET  reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    ID              reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    IF              reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    PRINT           reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    INT             reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    FLOAT           reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    STRING          reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    BOOLEAN         reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    FOR             reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
-    RETURN          reduce using rule 31 (if -> IF OP_LPAREN mega_expression OP_RPAREN bloque ELSE bloque .)
+    RCURLY_BRACKET  reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    ID              reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    IF              reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    PRINT           reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    INT             reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    FLOAT           reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    STRING          reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    BOOLEAN         reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    FOR             reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
+    RETURN          reduce using rule 31 (if -> IF OP_LPAREN condition_mega_expression OP_RPAREN bloque ELSE bloque .)
 
 
-state 162
+state 180
 
-    (39) for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN . bloque
+    (39) for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN . bloque
     (18) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 44
 
-    bloque                         shift and go to state 163
+    bloque                         shift and go to state 181
 
-state 163
+state 181
 
-    (39) for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .
+    (39) for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .
 
-    RCURLY_BRACKET  reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    ID              reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    IF              reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    PRINT           reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    INT             reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    FLOAT           reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    STRING          reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    BOOLEAN         reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    FOR             reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
-    RETURN          reduce using rule 39 (for -> FOR OP_LPAREN vars mega_expression SEMICOLON increment OP_RPAREN bloque .)
+    RCURLY_BRACKET  reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    ID              reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    IF              reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    PRINT           reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    INT             reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    FLOAT           reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    STRING          reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    BOOLEAN         reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    FOR             reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
+    RETURN          reduce using rule 39 (for -> FOR OP_LPAREN vars condition_super_expression SEMICOLON increment OP_RPAREN bloque .)
 
 WARNING: 
 WARNING: Conflicts:
