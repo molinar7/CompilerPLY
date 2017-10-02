@@ -1,12 +1,15 @@
 ##Fallas en la sintaxis
 #1. Las mega expressiones en las condiciones ARREGLADO!!
 #2. Se le puede hacer returns a bloques que no deben de tener retrun
-#3. Se pueden declarar vparametros en las funciones de tipo void
+#3. Se pueden hacer returns de tipo de valores erroneos
+#4. Se pueden mandar parametros en llamadas a funciones donde no se deben mandar parametros
 program perro{
 
     function int gato(){
 
         int j =9;
+
+        return sd;
 
     }
 

@@ -38,8 +38,8 @@ def p_type(p):
 	'''
 def p_parameters(p):
 	'''
-	parameters	:	type	ID	parameters
-				|	COMA	type	ID		parameters
+	parameters	:	type		ID			parameters
+				|	COMA		type		ID				parameters
 				|	epsilon
 	'''
 
@@ -77,7 +77,7 @@ def p_assigment(p):
 def p_if (p):
 	'''
 	if	:	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque
-		|	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque	ELSE	bloque	
+		|	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque		ELSE	bloque	
 			
 	'''
 
@@ -95,10 +95,10 @@ def	p_impression(p):
 	'''
 def p_increment(p):
 	'''
-	increment	:	ID	OP_PLUS_EQUALS mega_expression	SEMICOLON
-				|	ID	OP_MINUS_EQUALS mega_expression	SEMICOLON
-				|	ID	OP_PLUS		OP_PLUS		SEMICOLON
-				|	ID	OP_MINUS	OP_MINUS	SEMICOLON
+	increment	:	ID	OP_PLUS_EQUALS 		mega_expression		SEMICOLON
+				|	ID	OP_MINUS_EQUALS	 	mega_expression		SEMICOLON
+				|	ID	OP_PLUS				OP_PLUS				SEMICOLON
+				|	ID	OP_MINUS			OP_MINUS			SEMICOLON
 	'''
 def p_for(p):
 	'''
@@ -107,8 +107,7 @@ def p_for(p):
 
 def p_return(p):
 	'''
-	return	:	RETURN	ID SEMICOLON
-			|	RETURN mega_expression SEMICOLON
+	return	:	RETURN 	mega_expression 	SEMICOLON
 	'''
 def p_function_call(p):
 	'''
@@ -116,8 +115,8 @@ def p_function_call(p):
 	'''
 def p_function_call_prime(p):
 	'''
-	function_call_prime	:	ID	function_call_prime
-						|	COMA	ID	function_call_prime
+	function_call_prime	:	ID		function_call_prime
+						|	COMA	ID						function_call_prime
 						|	epsilon
 	'''
 def p_condition_mega_expression(p):
@@ -171,7 +170,7 @@ def p_term(p):
 def p_fact(p):
 	'''
 	fact	:	var_cte
-			|	OP_LPAREN	mega_expression	OP_RPAREN	
+			|	OP_LPAREN		mega_expression		OP_RPAREN	
 	'''
 def p_var_cte(p):
 	'''
@@ -193,7 +192,7 @@ def p_error(p):
 
 ##### Reading the input from a file#################3
 parser = yacc.yacc()
-f = open('test.txt', 'r').read()
+f = open('test2.txt', 'r').read()
 result = parser.parse(f)	
 print(result)
 
