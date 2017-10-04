@@ -22,6 +22,7 @@ def p_vars(p):
 def p_function(p):
 	'''
 	function	:	FUNCTION	type	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
+				|	FUNCTION	VOID	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
 				|	epsilon
 	'''
 def p_main_function(p):
@@ -34,7 +35,7 @@ def p_type(p):
 			|	FLOAT
 			|	STRING
 			|	BOOLEAN
-			|	VOID
+			
 	'''
 def p_parameters(p):
 	'''
@@ -71,7 +72,7 @@ def	p_statement(p):
 
 def p_assigment(p):
 	'''
-	assigment	:	ID	OP_EQUALS	mega_expression		SEMICOLON
+	assigment	:	ID	OP_EQUALS	single_expression	SEMICOLON
 
 	'''
 def p_if (p):
@@ -89,25 +90,26 @@ def p_printer(p):
 	'''
 def	p_impression(p):
 	'''
-	impression	:	var_cte
-				|	var_cte		OP_PLUS		impression
+	impression	:	mega_expression
+				|	mega_expression		OP_PLUS		impression
 	
 	'''
 def p_increment(p):
 	'''
-	increment	:	ID	OP_PLUS_EQUALS 		mega_expression		SEMICOLON
-				|	ID	OP_MINUS_EQUALS	 	mega_expression		SEMICOLON
+	increment	:	ID	OP_PLUS_EQUALS 		single_expression		SEMICOLON
+				|	ID	OP_MINUS_EQUALS	 	single_expression		SEMICOLON
 				|	ID	OP_PLUS				OP_PLUS				SEMICOLON
 				|	ID	OP_MINUS			OP_MINUS			SEMICOLON
 	'''
+	
 def p_for(p):
 	'''
-	for	:	FOR		OP_LPAREN	vars	condition_super_expression	SEMICOLON	increment	OP_RPAREN	bloque	
+	for	:	FOR		OP_LPAREN	assigment	condition_super_expression	SEMICOLON	increment	OP_RPAREN	bloque	
 	'''
 
 def p_return(p):
 	'''
-	return	:	RETURN 	mega_expression 	SEMICOLON
+	return	:	RETURN 	single_expression 	SEMICOLON
 	'''
 def p_function_call(p):
 	'''
@@ -133,6 +135,25 @@ def p_condition_super_expression(p):
 								|	expression	OP_LESS_EQUALS_THAN		 expression
 								|	expression	OP_EQUALS_TWO			 expression
 								|	expression	OP_NOT_EQUALS			 expression
+	'''
+	# Estos single_ son usadas en assigments e increments para evitar operadores no deseados e. <=
+def p_single_expression(p): 
+	'''
+	single_expression 	:	single_term
+						|	single_term		OP_PLUS		single_expression	
+						|	single_term		OP_MINUS	single_expression				
+	'''
+def p_single_term(p):
+	'''
+	single_term	:	single_fact
+				|	single_fact	OP_DIVISION		single_term	
+				|	single_fact	OP_TIMES		single_term	
+
+	'''
+def p_single_fact(p):
+	'''
+	single_fact	:	var_cte
+				|	OP_LPAREN		single_expression		OP_RPAREN	
 	'''
 def p_mega_expression(p):
 	'''
@@ -192,7 +213,7 @@ def p_error(p):
 
 ##### Reading the input from a file#################3
 parser = yacc.yacc()
-f = open('test2.txt', 'r').read()
+f = open('test.txt', 'r').read()
 result = parser.parse(f)	
 print(result)
 
