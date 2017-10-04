@@ -13,10 +13,28 @@ def p_program(p):
 
 def p_vars(p):
 	'''
-	vars	:		INT	 	 ID		OP_EQUALS	VAR_INT	 	SEMICOLON	vars
-			|		FLOAT	 ID		OP_EQUALS	VAR_FLOAT 	SEMICOLON	vars
-			|		STRING	 ID		OP_EQUALS	VAR_STRING	SEMICOLON	vars
-			|		BOOLEAN	 ID		OP_EQUALS	VAR_BOOLEAN	SEMICOLON	vars
+	vars	:	type	 ID	 vars_prime2	SEMICOLON vars
+			|	epsilon
+	'''
+def p_vars_prime2(p):
+	'''
+	vars_prime2		:	OP_EQUALS	VAR_INT vars_prime
+					|	vars_prime
+					|	epsilon
+	'''
+def p_vars_prime(p):
+	'''
+	vars_prime	:	COMA 	ID		vars_prime2		vars_prime	
+				|	epsilon
+	'''
+
+
+def p_vars2(p):
+	'''
+	vars2	:		INT	 	 ID		OP_EQUALS	VAR_INT	 	SEMICOLON	vars2
+			|		FLOAT	 ID		OP_EQUALS	VAR_FLOAT 	SEMICOLON	vars2
+			|		STRING	 ID		OP_EQUALS	VAR_STRING	SEMICOLON	vars2
+			|		BOOLEAN	 ID		OP_EQUALS	VAR_BOOLEAN	SEMICOLON	vars2
 			|		epsilon
 	'''
 def p_function(p):
@@ -63,7 +81,6 @@ def	p_statement(p):
 				|	if
 				|	printer
 				|	increment
-				|	vars
 				|	for
 				|	return
 				|	function_call
@@ -213,7 +230,7 @@ def p_error(p):
 
 ##### Reading the input from a file#################3
 parser = yacc.yacc()
-f = open('test.txt', 'r').read()
+f = open('test2.txt', 'r').read()
 result = parser.parse(f)	
 print(result)
 

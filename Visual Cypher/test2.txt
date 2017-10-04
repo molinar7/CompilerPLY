@@ -5,9 +5,16 @@
 #4. Se pueden mandar parametros en llamadas a funciones donde no se deben mandar parametros
 program perro{
 
+   
+    int perro = 90;
+    float gatito = 43;
+    
+    
+
+
     function int gato(){
 
-        int j =9;
+        gato = 56;
 
         return sd;
 
@@ -15,9 +22,14 @@ program perro{
 
     main(){
         
-        for (int a = 8; lol > 23; i ++;){
+        perro ++;
 
-        }
+        perro = 56;
+
+         perro =9;
+
+
+
       
     }
 }

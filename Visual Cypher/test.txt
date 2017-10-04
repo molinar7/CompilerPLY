@@ -7,13 +7,13 @@ program patito{
         boolean maestro = true;
       
 
-        function int gatas (int david, float gato){
+        function void gatas (int david, float gato){
         
             perro = 34; 
             fs = 34;
 
             if(3 +3 >0){
-                int gato = 34; # vars
+                gato = 34; # vars
                 peroo ++; # Increment
                 gato += 3; # Increment
             }
