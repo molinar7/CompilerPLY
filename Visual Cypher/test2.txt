@@ -6,27 +6,28 @@
 program perro{
 
    
-    int perro = 90;
-    float gatito = 43;
+    int perro = 90, gata = 34;
+    float gatito , gatp, perro = 34;
+    int pe, ja, asda;
     
     
 
 
     function int gato(){
 
-        gato = 56;
+        int gato = 56;
 
         return sd;
 
     }
 
     main(){
-        
-        perro ++;
+        figure triangulo : line possess {
+            vector nose : (a, 23);
+            color : negro;
+            size : 23;
+        }
 
-        perro = 56;
-
-         perro =9;
 
 
 

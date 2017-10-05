@@ -13,30 +13,27 @@ def p_program(p):
 
 def p_vars(p):
 	'''
-	vars	:	type	 ID	 vars_prime2	SEMICOLON vars
+	vars	:	type	ID		vars_prime		SEMICOLON	vars	
 			|	epsilon
-	'''
-def p_vars_prime2(p):
-	'''
-	vars_prime2		:	OP_EQUALS	VAR_INT vars_prime
-					|	vars_prime
-					|	epsilon
 	'''
 def p_vars_prime(p):
 	'''
-	vars_prime	:	COMA 	ID		vars_prime2		vars_prime	
+	vars_prime	:	OP_EQUALS		var_cte		vars_prime1
+				|	vars_prime1
+				|	epsilon
+	'''
+def p_vars_prime1(p):
+	'''
+	vars_prime1	:	COMA			ID			vars_prime2		vars_prime1
+				|	epsilon
+	'''
+def p_vars_prime2(p):
+	'''
+	vars_prime2	:	OP_EQUALS	var_cte		
 				|	epsilon
 	'''
 
 
-def p_vars2(p):
-	'''
-	vars2	:		INT	 	 ID		OP_EQUALS	VAR_INT	 	SEMICOLON	vars2
-			|		FLOAT	 ID		OP_EQUALS	VAR_FLOAT 	SEMICOLON	vars2
-			|		STRING	 ID		OP_EQUALS	VAR_STRING	SEMICOLON	vars2
-			|		BOOLEAN	 ID		OP_EQUALS	VAR_BOOLEAN	SEMICOLON	vars2
-			|		epsilon
-	'''
 def p_function(p):
 	'''
 	function	:	FUNCTION	type	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
@@ -84,6 +81,7 @@ def	p_statement(p):
 				|	for
 				|	return
 				|	function_call
+				|	fun_esp
 				
 	'''
 
@@ -217,7 +215,45 @@ def p_var_cte(p):
 			|	VAR_FLOAT
 			|	VAR_STRING
 	'''
+def p_fun_esp(p):
+	'''
+	fun_esp		:	figure_creation
+	'''
+def p_figure_creation(p):
+	'''
+	figure_creation		:	FIGURE	ID	OP_TWO_POINTS	figure	POSSESS		bloque_figura
+	'''
+def p_figure(p):
+	'''
+	figure	:	POINT
+			|	LINE
+			|	SQUARE
+			|	RECTANGLE
+			|	TRIANGLE
+			|	CIRCLE
+	'''
+def p_bloque_figura(p):
+	'''
+	bloque_figura	:	LCURLY_BRACKET	bloque_figura_primo	RCURLY_BRACKET	
+	
+	'''
 
+def p_bloque_figura_primo(p):
+	'''
+	bloque_figura_primo	:	bloque_figura_primo		figura_attr
+						|	epsilon
+			
+	'''	
+def p_figura_attr(p):
+	'''
+	figura_attr	:	vector
+				|	COLOR	OP_TWO_POINTS	ID	SEMICOLON
+				|	SIZE	OP_TWO_POINTS	single_expression	SEMICOLON
+	'''
+def p_vector(p):
+	'''
+	vector	:	VECTOR		ID		OP_TWO_POINTS		OP_LPAREN	single_expression	COMA	single_expression	OP_RPAREN	SEMICOLON
+	'''
 def p_epsilon(p):
 	'epsilon : '
 	p[0] = None

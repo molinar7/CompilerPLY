@@ -19,7 +19,6 @@ tokens = [
 
 #Symbols
 'CARET',
-'POINT',
 'COMA',
 
 ##Operadores###
@@ -32,6 +31,7 @@ tokens = [
 'OP_LPAREN',
 'OP_RPAREN',
 'OP_EQUALS',
+'OP_TWO_POINTS',
 'OP_LESS_THAN',
 'OP_LESS_EQUALS_THAN',
 'OP_GREATER_THAN',
@@ -52,7 +52,18 @@ tokens = [
 'FUNCTION',
 'MAIN',
 'FOR',
-'VOID'
+'VOID',
+'VECTOR',
+'POINT',
+'LINE',
+'SQUARE',
+'RECTANGLE',
+'TRIANGLE',
+'CIRCLE',
+'FIGURE',
+'POSSESS',
+'COLOR',
+'SIZE'
 
 
 
@@ -70,6 +81,9 @@ reserved = {
     'function' : 'FUNCTION',
     'main'  :   'MAIN',
     'void'  :   'VOID',
+    'vector': 'VECTOR',
+    'figure':   'FIGURE',
+    'possess'   :  'POSSESS',
 
 
     # Condition tokens
@@ -89,9 +103,19 @@ reserved = {
     'float'     : 'FLOAT',
     'String'    :  'STRING',
     'true'      : 'VAR_BOOLEAN',
-    'false'     : 'VAR_BOOLEAN'
+    'false'     : 'VAR_BOOLEAN',
 
-    # Type of Variables
+    # Type of Figures
+    'point'     : 'POINT',
+    'line'      : 'LINE',
+    'triangle'  : 'TRIANGLE',
+    'square'    : 'SQUARE',
+    'rectangle' : 'RECTANGLE',
+    'circle'    : 'CIRCLE',
+
+    #Figure attributes
+    'color' : 'COLOR',
+    'size'  :  'SIZE'
 
    
 }
@@ -123,6 +147,7 @@ t_LCURLY_BRACKET = r'\{'
 t_RCURLY_BRACKET = r'\}'
 t_OP_PLUS_EQUALS = r'\+='
 t_OP_MINUS_EQUALS = r'\-='
+t_OP_TWO_POINTS = r'\:'
 
 
 ############## A regular expression rule with some action code########################
