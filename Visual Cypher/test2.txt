@@ -15,7 +15,7 @@ program perro{
 
     function int gato(){
 
-        int gato = 56;
+        gato = 56;
 
         return sd;
 

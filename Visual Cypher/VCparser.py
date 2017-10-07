@@ -263,12 +263,21 @@ def p_error(p):
 	print ("Syntax error at line " + str(p.lexer.lineno) + " Unexpected token  " + str(p.value))
 	sys.exit(0)
 
+def parsing():
+	##### Reading the input from a file#################3
+	parser = yacc.yacc()
+	f = open('test2.txt', 'r').read()
+	result = parser.parse(f)	
+	print(result)
 
-##### Reading the input from a file#################3
-parser = yacc.yacc()
-f = open('test2.txt', 'r').read()
-result = parser.parse(f)	
-print(result)
+def main():
+	parsing()
+	
+
+
+
+if __name__ == '__main__':
+      main()
 
 
 
