@@ -1,0 +1,1 @@
+To program in Vicual Cypher you can write your code in test.txt and then run python VCparser.py
