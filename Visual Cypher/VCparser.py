@@ -1,6 +1,7 @@
 import VCscanner as lexer
 import ply.yacc as yacc
 import sys
+import VCsemantics
 
 tokens = lexer.tokens
 
@@ -36,13 +37,18 @@ def p_vars_prime2(p):
 
 def p_function(p):
 	'''
-	function	:	FUNCTION	type	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
-				|	FUNCTION	VOID	ID		OP_LPAREN	parameters OP_RPAREN	bloque	function
+	function	:	FUNCTION	type	ID		add_function_id		OP_LPAREN		parameters OP_RPAREN	bloque	function
+				|	FUNCTION	VOID	ID		add_function_id		OP_LPAREN		parameters OP_RPAREN	bloque	function
 				|	epsilon
 	'''
+def p_add_function_id(p):
+	'''
+	add_function_id	:	epsilon
+	'''
+	VCsemantics.addToProcedureDir(p[-1])
 def p_main_function(p):
 	'''
-	main_function	:	MAIN	OP_LPAREN	OP_RPAREN	bloque	
+	main_function	:	MAIN	add_function_id OP_LPAREN	OP_RPAREN	bloque	
 	'''
 def p_type(p):
 	'''
@@ -266,12 +272,14 @@ def p_error(p):
 def parsing():
 	##### Reading the input from a file#################3
 	parser = yacc.yacc()
-	f = open('test2.txt', 'r').read()
+	f = open('test.txt', 'r').read()
 	result = parser.parse(f)	
 	print(result)
 
 def main():
 	parsing()
+	print (VCsemantics.procedureDir)
+
 	
 
 

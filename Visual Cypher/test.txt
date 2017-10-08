@@ -4,7 +4,7 @@ program patito{
       int maestro =  -763423432432;
         float maestro = -765.120;
         String maestro = "765";
-        boolean maestro = true;
+       # boolean maestro = true; Aqui me marca error
       
 
         function void gatas (int david, float gato){
@@ -28,6 +28,14 @@ program patito{
 
           return david;
         }
+
+        function void perro (int david, float gato){
+        
+        
+          return david;
+        }
+       
+
 
 
          main (){
