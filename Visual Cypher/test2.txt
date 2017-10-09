@@ -22,7 +22,7 @@ program perro{
     }
 
     main(){
-        figure triangulo : line possess {
+        figure triangulo2 : triangle possess {
             vector nose : (a, 23);
             color : negro;
             size : 23;

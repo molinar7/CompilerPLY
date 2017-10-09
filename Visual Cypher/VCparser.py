@@ -37,18 +37,19 @@ def p_vars_prime2(p):
 
 def p_function(p):
 	'''
-	function	:	FUNCTION	type	ID		add_function_id		OP_LPAREN		parameters OP_RPAREN	bloque	function
-				|	FUNCTION	VOID	ID		add_function_id		OP_LPAREN		parameters OP_RPAREN	bloque	function
+	function	:	FUNCTION	type	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	bloque	function
+				|	FUNCTION	VOID	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	bloque	function
 				|	epsilon
 	'''
-def p_add_function_id(p):
+def p_pushTo_FunctionDir(p):
 	'''
-	add_function_id	:	epsilon
+	pushTo_FunctionDir	:	epsilon
 	'''
-	VCsemantics.addToProcedureDir(p[-1])
+	VCsemantics.pushTo_FunctionDir(p[-1],p[-2])
+
 def p_main_function(p):
 	'''
-	main_function	:	MAIN	add_function_id OP_LPAREN	OP_RPAREN	bloque	
+	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN	bloque	
 	'''
 def p_type(p):
 	'''
@@ -58,6 +59,7 @@ def p_type(p):
 			|	BOOLEAN
 			
 	'''
+	p[0] = p[1]
 def p_parameters(p):
 	'''
 	parameters	:	type		ID			parameters
@@ -278,7 +280,9 @@ def parsing():
 
 def main():
 	parsing()
-	print (VCsemantics.procedureDir)
+	print (VCsemantics.functionDir)
+
+	
 
 	
 

@@ -7,7 +7,7 @@ program patito{
        # boolean maestro = true; Aqui me marca error
       
 
-        function void gatas (int david, float gato){
+        function int gatas (int david, float gato){
         
             perro = 34; 
             fs = 34;
@@ -29,13 +29,15 @@ program patito{
           return david;
         }
 
-        function void perro (int david, float gato){
+        function float perro (int david, float gato){
         
         
           return david;
         }
        
+        function int perro(){
 
+        }
 
 
          main (){

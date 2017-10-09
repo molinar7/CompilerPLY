@@ -20,11 +20,11 @@ Rule 7     vars_prime1 -> COMA ID vars_prime2 vars_prime1
 Rule 8     vars_prime1 -> epsilon
 Rule 9     vars_prime2 -> OP_EQUALS var_cte
 Rule 10    vars_prime2 -> epsilon
-Rule 11    function -> FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-Rule 12    function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+Rule 11    function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+Rule 12    function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
 Rule 13    function -> epsilon
-Rule 14    add_function_id -> epsilon
-Rule 15    main_function -> MAIN add_function_id OP_LPAREN OP_RPAREN bloque
+Rule 14    pushTo_FunctionDir -> epsilon
+Rule 15    main_function -> MAIN pushTo_FunctionDir OP_LPAREN OP_RPAREN bloque
 Rule 16    type -> INT
 Rule 17    type -> FLOAT
 Rule 18    type -> STRING
@@ -175,7 +175,6 @@ error                :
 
 Nonterminals, with rules where they appear
 
-add_function_id      : 11 12 15
 assigment            : 26 44
 bloque               : 11 12 15 35 36 36 44
 bloque_figura        : 90
@@ -202,6 +201,7 @@ mega_expression      : 38 39 84
 parameters           : 11 12 20 21
 printer              : 28
 program              : 0
+pushTo_FunctionDir   : 11 12 15
 return               : 31
 single_expression    : 34 40 41 45 60 61 66 102 103 103
 single_fact          : 62 63 64
@@ -273,8 +273,8 @@ state 4
 state 5
 
     (1) program -> PROGRAM ID LCURLY_BRACKET vars . function main_function RCURLY_BRACKET
-    (11) function -> . FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (12) function -> . FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (11) function -> . FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> . FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
     (13) function -> . epsilon
     (104) epsilon -> .
 
@@ -330,7 +330,7 @@ state 11
 state 12
 
     (1) program -> PROGRAM ID LCURLY_BRACKET vars function . main_function RCURLY_BRACKET
-    (15) main_function -> . MAIN add_function_id OP_LPAREN OP_RPAREN bloque
+    (15) main_function -> . MAIN pushTo_FunctionDir OP_LPAREN OP_RPAREN bloque
 
     MAIN            shift and go to state 17
 
@@ -338,8 +338,8 @@ state 12
 
 state 13
 
-    (11) function -> FUNCTION . type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (12) function -> FUNCTION . VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (11) function -> FUNCTION . type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> FUNCTION . VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
     (16) type -> . INT
     (17) type -> . FLOAT
     (18) type -> . STRING
@@ -387,25 +387,25 @@ state 16
 
 state 17
 
-    (15) main_function -> MAIN . add_function_id OP_LPAREN OP_RPAREN bloque
-    (14) add_function_id -> . epsilon
+    (15) main_function -> MAIN . pushTo_FunctionDir OP_LPAREN OP_RPAREN bloque
+    (14) pushTo_FunctionDir -> . epsilon
     (104) epsilon -> .
 
     OP_LPAREN       reduce using rule 104 (epsilon -> .)
 
-    add_function_id                shift and go to state 26
+    pushTo_FunctionDir             shift and go to state 26
     epsilon                        shift and go to state 27
 
 state 18
 
-    (11) function -> FUNCTION type . ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (11) function -> FUNCTION type . ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
 
     ID              shift and go to state 28
 
 
 state 19
 
-    (12) function -> FUNCTION VOID . ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> FUNCTION VOID . ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
 
     ID              shift and go to state 29
 
@@ -466,38 +466,38 @@ state 25
 
 state 26
 
-    (15) main_function -> MAIN add_function_id . OP_LPAREN OP_RPAREN bloque
+    (15) main_function -> MAIN pushTo_FunctionDir . OP_LPAREN OP_RPAREN bloque
 
     OP_LPAREN       shift and go to state 37
 
 
 state 27
 
-    (14) add_function_id -> epsilon .
+    (14) pushTo_FunctionDir -> epsilon .
 
-    OP_LPAREN       reduce using rule 14 (add_function_id -> epsilon .)
+    OP_LPAREN       reduce using rule 14 (pushTo_FunctionDir -> epsilon .)
 
 
 state 28
 
-    (11) function -> FUNCTION type ID . add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (14) add_function_id -> . epsilon
+    (11) function -> FUNCTION type ID . pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (14) pushTo_FunctionDir -> . epsilon
     (104) epsilon -> .
 
     OP_LPAREN       reduce using rule 104 (epsilon -> .)
 
-    add_function_id                shift and go to state 38
+    pushTo_FunctionDir             shift and go to state 38
     epsilon                        shift and go to state 27
 
 state 29
 
-    (12) function -> FUNCTION VOID ID . add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (14) add_function_id -> . epsilon
+    (12) function -> FUNCTION VOID ID . pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (14) pushTo_FunctionDir -> . epsilon
     (104) epsilon -> .
 
     OP_LPAREN       reduce using rule 104 (epsilon -> .)
 
-    add_function_id                shift and go to state 39
+    pushTo_FunctionDir             shift and go to state 39
     epsilon                        shift and go to state 27
 
 state 30
@@ -635,21 +635,21 @@ state 36
 
 state 37
 
-    (15) main_function -> MAIN add_function_id OP_LPAREN . OP_RPAREN bloque
+    (15) main_function -> MAIN pushTo_FunctionDir OP_LPAREN . OP_RPAREN bloque
 
     OP_RPAREN       shift and go to state 46
 
 
 state 38
 
-    (11) function -> FUNCTION type ID add_function_id . OP_LPAREN parameters OP_RPAREN bloque function
+    (11) function -> FUNCTION type ID pushTo_FunctionDir . OP_LPAREN parameters OP_RPAREN bloque function
 
     OP_LPAREN       shift and go to state 47
 
 
 state 39
 
-    (12) function -> FUNCTION VOID ID add_function_id . OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir . OP_LPAREN parameters OP_RPAREN bloque function
 
     OP_LPAREN       shift and go to state 48
 
@@ -714,7 +714,7 @@ state 45
 
 state 46
 
-    (15) main_function -> MAIN add_function_id OP_LPAREN OP_RPAREN . bloque
+    (15) main_function -> MAIN pushTo_FunctionDir OP_LPAREN OP_RPAREN . bloque
     (23) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 52
@@ -723,7 +723,7 @@ state 46
 
 state 47
 
-    (11) function -> FUNCTION type ID add_function_id OP_LPAREN . parameters OP_RPAREN bloque function
+    (11) function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN . parameters OP_RPAREN bloque function
     (20) parameters -> . type ID parameters
     (21) parameters -> . COMA type ID parameters
     (22) parameters -> . epsilon
@@ -746,7 +746,7 @@ state 47
 
 state 48
 
-    (12) function -> FUNCTION VOID ID add_function_id OP_LPAREN . parameters OP_RPAREN bloque function
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN . parameters OP_RPAREN bloque function
     (20) parameters -> . type ID parameters
     (21) parameters -> . COMA type ID parameters
     (22) parameters -> . epsilon
@@ -784,9 +784,9 @@ state 50
 
 state 51
 
-    (15) main_function -> MAIN add_function_id OP_LPAREN OP_RPAREN bloque .
+    (15) main_function -> MAIN pushTo_FunctionDir OP_LPAREN OP_RPAREN bloque .
 
-    RCURLY_BRACKET  reduce using rule 15 (main_function -> MAIN add_function_id OP_LPAREN OP_RPAREN bloque .)
+    RCURLY_BRACKET  reduce using rule 15 (main_function -> MAIN pushTo_FunctionDir OP_LPAREN OP_RPAREN bloque .)
 
 
 state 52
@@ -816,7 +816,7 @@ state 53
 
 state 54
 
-    (11) function -> FUNCTION type ID add_function_id OP_LPAREN parameters . OP_RPAREN bloque function
+    (11) function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters . OP_RPAREN bloque function
 
     OP_RPAREN       shift and go to state 61
 
@@ -845,7 +845,7 @@ state 56
 
 state 57
 
-    (12) function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters . OP_RPAREN bloque function
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters . OP_RPAREN bloque function
 
     OP_RPAREN       shift and go to state 63
 
@@ -933,7 +933,7 @@ state 60
 
 state 61
 
-    (11) function -> FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN . bloque function
+    (11) function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN . bloque function
     (23) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 52
@@ -949,7 +949,7 @@ state 62
 
 state 63
 
-    (12) function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN . bloque function
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN . bloque function
     (23) bloque -> . LCURLY_BRACKET bloque_primo RCURLY_BRACKET
 
     LCURLY_BRACKET  shift and go to state 52
@@ -1184,9 +1184,9 @@ state 81
 
 state 82
 
-    (11) function -> FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque . function
-    (11) function -> . FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (12) function -> . FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (11) function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque . function
+    (11) function -> . FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> . FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
     (13) function -> . epsilon
     (104) epsilon -> .
 
@@ -1221,9 +1221,9 @@ state 83
 
 state 84
 
-    (12) function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque . function
-    (11) function -> . FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
-    (12) function -> . FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque . function
+    (11) function -> . FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
+    (12) function -> . FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function
     (13) function -> . epsilon
     (104) epsilon -> .
 
@@ -1517,9 +1517,9 @@ state 99
 
 state 100
 
-    (11) function -> FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function .
+    (11) function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function .
 
-    MAIN            reduce using rule 11 (function -> FUNCTION type ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function .)
+    MAIN            reduce using rule 11 (function -> FUNCTION type ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function .)
 
 
 state 101
@@ -1531,9 +1531,9 @@ state 101
 
 state 102
 
-    (12) function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function .
+    (12) function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function .
 
-    MAIN            reduce using rule 12 (function -> FUNCTION VOID ID add_function_id OP_LPAREN parameters OP_RPAREN bloque function .)
+    MAIN            reduce using rule 12 (function -> FUNCTION VOID ID pushTo_FunctionDir OP_LPAREN parameters OP_RPAREN bloque function .)
 
 
 state 103

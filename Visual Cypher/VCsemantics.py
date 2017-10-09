@@ -1,16 +1,19 @@
-procedureDir = ['global']
+functionDir = [[1,'global', None]]
+varTable = []
 
-def addToProcedureDir(n):
-        procedureDir.append(n)
-   
+def pushTo_FunctionDir(n,t):
+    if checkIfFunctionExists(n):
+        functionDir.append([ len(functionDir) + 1, n, t])
+    else:
+        print('The function',n, 'is already defined')
     
 
-def checkIfProcedureExists(x):
-    for i in range (0,len(procedureDir)):
-        if procedureDir[i] == x:
-            return True
-        else:
-            return False
-   
+
+
+def checkIfFunctionExists(n): # check that functions do not repeat
+    for nombre in functionDir:
+       if n == nombre[1]:
+           return False     
+    return True   
 
 
