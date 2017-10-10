@@ -63,7 +63,10 @@ tokens = [
 'FIGURE',
 'POSSESS',
 'COLOR',
-'SIZE'
+'SIZE',
+'OP_LSQUARE_PAREN',
+'OP_RSQUARE_PAREN',
+'ARC'
 
 
 
@@ -112,6 +115,7 @@ reserved = {
     'square'    : 'SQUARE',
     'rectangle' : 'RECTANGLE',
     'circle'    : 'CIRCLE',
+    'arc'       :  'ARC',
 
     #Figure attributes
     'color' : 'COLOR',
@@ -148,7 +152,8 @@ t_RCURLY_BRACKET = r'\}'
 t_OP_PLUS_EQUALS = r'\+='
 t_OP_MINUS_EQUALS = r'\-='
 t_OP_TWO_POINTS = r'\:'
-
+t_OP_LSQUARE_PAREN= r'\['
+t_OP_RSQUARE_PAREN = r'\]'
 
 ############## A regular expression rule with some action code########################
 def t_ID(t):

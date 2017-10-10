@@ -25,7 +25,7 @@ program perro{
         figure triangulo2 : triangle possess {
             vector nose : (a, 23);
             color : negro;
-            size : 23;
+            int size : 23;
         }
 
 

@@ -4,6 +4,7 @@ import sys
 import VCsemantics
 
 tokens = lexer.tokens
+tmp_type = ''
 
 def p_program(p):
 	'''
@@ -12,33 +13,41 @@ def p_program(p):
 	'''
 	p[0] = "Syntax Accepted!"
 
+
 def p_vars(p):
 	'''
-	vars	:	type	ID		vars_prime		SEMICOLON	vars	
+	vars	:	type	save_type	ID		OP_EQUALS			var_cte			pushTo_varsTable_WithCTE	SEMICOLON		vars
+			|	type	save_type	ID		pushTo_varsTable	vars_prime		SEMICOLON					vars
 			|	epsilon
 	'''
 def p_vars_prime(p):
 	'''
-	vars_prime	:	OP_EQUALS		var_cte		vars_prime1
-				|	vars_prime1
-				|	epsilon
+	vars_prime		:	COMA	ID	pushTo_varsTable	vars_prime
+					|	epsilon
 	'''
-def p_vars_prime1(p):
-	'''
-	vars_prime1	:	COMA			ID			vars_prime2		vars_prime1
-				|	epsilon
-	'''
-def p_vars_prime2(p):
-	'''
-	vars_prime2	:	OP_EQUALS	var_cte		
-				|	epsilon
-	'''
+
+
+
+def p_pushTo_varsTable_WithCTE(p):
+	'pushTo_varsTable_WithCTE	:	epsilon'
+	VCsemantics.pushTo_varsTable_WithCTE(p[-3], tmp_type, p[-1])
+
+def p_pushTo_varsTable(p):
+	'pushTo_varsTable	:	epsilon'
+	VCsemantics.pushTo_varsTable(p[-1], tmp_type)
+	
+
+def p_save_type(p):
+	'save_type	:	epsilon'
+	global tmp_type
+	tmp_type = p[-1]
+	
 
 
 def p_function(p):
 	'''
-	function	:	FUNCTION	type	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	bloque	function
-				|	FUNCTION	VOID	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	bloque	function
+	function	:	FUNCTION	type	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	function_bloque	function
+				|	FUNCTION	VOID	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	function_bloque	function
 				|	epsilon
 	'''
 def p_pushTo_FunctionDir(p):
@@ -49,7 +58,7 @@ def p_pushTo_FunctionDir(p):
 
 def p_main_function(p):
 	'''
-	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN	bloque	
+	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN	function_bloque	
 	'''
 def p_type(p):
 	'''
@@ -66,8 +75,30 @@ def p_parameters(p):
 				|	COMA		type		ID				parameters
 				|	epsilon
 	'''
-
-
+def p_function_bloque(p):
+	'''
+	function_bloque	:	LCURLY_BRACKET	function_bloque_primo	RCURLY_BRACKET	
+	
+	'''
+def p_function_bloque_primo(p):
+	'''
+	function_bloque_primo	:	function_bloque_primo	function_statement 
+							|	epsilon
+			
+	'''
+def	p_function_statement(p):# Para prevenir la creacion de vars  en los bloques de los ciclos
+	'''
+	function_statement	:	assigment
+						|	if
+						|	printer
+						|	increment
+						|	for
+						|	return
+						|	function_call
+						|	fun_esp
+						|	vars
+				
+	'''	
 def p_bloque(p):
 	'''
 	bloque	:	LCURLY_BRACKET	bloque_primo	RCURLY_BRACKET	
@@ -96,6 +127,7 @@ def	p_statement(p):
 def p_assigment(p):
 	'''
 	assigment	:	ID	OP_EQUALS	single_expression	SEMICOLON
+				|	ID	OP_LSQUARE_PAREN	VAR_INT		OP_RSQUARE_PAREN	OP_EQUALS	single_expression	
 
 	'''
 def p_if (p):
@@ -223,6 +255,7 @@ def p_var_cte(p):
 			|	VAR_FLOAT
 			|	VAR_STRING
 	'''
+	p[0] = p[1]
 def p_fun_esp(p):
 	'''
 	fun_esp		:	figure_creation
@@ -239,6 +272,7 @@ def p_figure(p):
 			|	RECTANGLE
 			|	TRIANGLE
 			|	CIRCLE
+			|	ARC
 	'''
 def p_bloque_figura(p):
 	'''
@@ -281,6 +315,7 @@ def parsing():
 def main():
 	parsing()
 	print (VCsemantics.functionDir)
+	print(VCsemantics.varsTable)
 
 	
 

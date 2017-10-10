@@ -1,16 +1,17 @@
 
 program patito{
 
-      int maestro =  -763423432432;
-        float maestro = -765.120;
-        String maestro = "765";
+      int maestro =  6;
+      float gato, gata,maestro;
+    
        # boolean maestro = true; Aqui me marca error
       
 
         function int gatas (int david, float gato){
         
-            perro = 34; 
+            int perro = 34; 
             fs = 34;
+            int gato = 10;
 
             if(3 +3 >0){
                 gato = 34; # vars
@@ -31,7 +32,8 @@ program patito{
 
         function float perro (int david, float gato){
         
-        
+            int x ;
+            int zz =90;
           return david;
         }
        
@@ -43,6 +45,7 @@ program patito{
          main (){
 
             perro += 1;
+            p[3] = 34.3
 
             gato(perro, lala, yayaya, asda);
           
