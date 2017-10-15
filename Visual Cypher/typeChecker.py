@@ -1,3 +1,5 @@
+import VCsemantics
+
 def isInt(x):
     if isinstance(x,int):
         return True
@@ -16,5 +18,9 @@ def isString(x):
     else: 
         return False
 
-
+def isBoolean(x):
+    if x == 'True' or x == 'False':
+        return True
+    else: 
+        return False
         

@@ -1,20 +1,27 @@
 program patito {
+int a,b;
+float kaka ;
 
-int b,c;
-int a =90;
-
-
+int i;
 
 function void test(){
-    int c;
-    a = 12;
+    
+
+    for(i = b + kaka ; i<20; i++;){
+
+    }
+   
+
+    
+    
+
     
 }
 
 
 
 main(){
-    int a =1;
+    
 }
 
 

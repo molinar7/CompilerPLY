@@ -2,6 +2,8 @@ import VCscanner as lexer
 import ply.yacc as yacc
 import sys
 import VCsemantics
+from VCquadruples import * # con esto ya no es necesario poner el nombre de la clase
+
 
 tokens = lexer.tokens
 tmp_type = ''
@@ -30,17 +32,18 @@ def p_vars_prime(p):
 
 def p_pushTo_varsTable_WithCTE(p):
 	'pushTo_varsTable_WithCTE	:	epsilon'
-	VCsemantics.pushTo_varsTable_WithCTE(p[-3], tmp_type, p[-1])
+	VCsemantics.pushTo_varsTable_WithCTE(p[-3], tmp_type, p[-1], str(p.lexer.lineno))
 
 def p_pushTo_varsTable(p):
 	'pushTo_varsTable	:	epsilon'
-	VCsemantics.pushTo_varsTable(p[-1], tmp_type)
+	VCsemantics.pushTo_varsTable(p[-1], tmp_type, str(p.lexer.lineno))
 	
 
 def p_save_type(p):
 	'save_type	:	epsilon'
 	global tmp_type
 	tmp_type = p[-1]
+	
 	
 
 
@@ -54,7 +57,7 @@ def p_pushTo_FunctionDir(p):
 	'''
 	pushTo_FunctionDir	:	epsilon
 	'''
-	VCsemantics.pushTo_FunctionDir(p[-1],p[-2])
+	VCsemantics.pushTo_FunctionDir(p[-1],p[-2], str(p.lexer.lineno))
 
 def p_main_function(p):
 	'''
@@ -126,13 +129,11 @@ def	p_statement(p):
 
 def p_assigment(p):
 	'''
-	assigment	:	ID	pushIdVar			OP_EQUALS	single_expression	SEMICOLON
+	assigment	:	ID	OP_EQUALS	single_expression	SEMICOLON
 				|	ID	OP_LSQUARE_PAREN	VAR_INT		OP_RSQUARE_PAREN	OP_EQUALS	single_expression	
 	'''
 
-def p_pushIdVar(p):
-	'pushIdVar	:	epsilon'
-	VCsemantics.reciveID(p[-1])
+
 def p_if (p):
 	'''
 	if	:	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque
@@ -148,8 +149,8 @@ def p_printer(p):
 	'''
 def	p_impression(p):
 	'''
-	impression	:	mega_expression
-				|	mega_expression		OP_PLUS		impression
+	impression	:	single_expression
+				|	single_expression		OP_PLUS		impression
 	
 	'''
 def p_increment(p):
@@ -197,22 +198,67 @@ def p_condition_super_expression(p):
 	# Estos single_ son usadas en assigments e increments para evitar operadores no deseados e. <=
 def p_single_expression(p): 
 	'''
-	single_expression 	:	single_term
-						|	single_term		OP_PLUS		single_expression	
-						|	single_term		OP_MINUS	single_expression				
+	single_expression 	:	single_term		check_symbol_exp
+						|	single_term		check_symbol_exp		OP_PLUS		push_symbol		single_expression	
+						|	single_term		check_symbol_exp		OP_MINUS	push_symbol		single_expression				
 	'''
+def p_check_symbol_exp(p):
+	'check_symbol_exp	:	epsilon'
+	if stackSymbol: # Si el stack no esta vacio
+		if stackSymbol[-1] == '+' or stackSymbol[-1] == '-':
+			right_op = stackOP.pop()
+			right_type = stackType.pop()
+			left_op = stackOP.pop()
+			left_type = stackType.pop()
+			operator = stackSymbol.pop()
+			if VCsemantics.validate_termCube(left_type, right_type): # Valida con el cubo semantico
+				quadruples.append([operator,left_op, right_op, 0])
+				stackOP.append(0)
+				stackType.append('int')
+			else:
+				print ("Type mismatch error at line  " + str(p.lexer.lineno))
+				quit()
+			
+			
+
 def p_single_term(p):
 	'''
-	single_term	:	single_fact
-				|	single_fact	OP_DIVISION		single_term	
-				|	single_fact	OP_TIMES		single_term	
-
+	single_term	:	single_fact		check_symbol_term
+				|	single_fact		check_symbol_term	OP_DIVISION		push_symbol		single_term	
+				|	single_fact		check_symbol_term	OP_TIMES		push_symbol		single_term	
 	'''
+def p_check_symbol_term(p):
+	'check_symbol_term	:	epsilon'
+	if stackSymbol: # Si el stack no esta vacio
+		if stackSymbol[-1] == '*' or stackSymbol[-1] == '/':
+			right_op = stackOP.pop()
+			right_type = stackType.pop()
+			left_op = stackOP.pop()
+			left_type = stackType.pop()
+			operator = stackSymbol.pop()
+			if VCsemantics.validate_factCube(left_type, right_type): #Valida con el cubo semantico
+				quadruples.append([operator,left_op, right_op, 0])
+				stackOP.append(0)
+				stackType.append('int')
+			else:
+				print ("Type mismatch error at line  " + str(p.lexer.lineno))
+				quit()
+
+def p_push_symbol(p):
+	'push_symbol	:	epsilon'
+	stackSymbol.append(p[-1])
 def p_single_fact(p):
 	'''
-	single_fact	:	var_cte
+	single_fact	:	var_cte 		push_var_cte
 				|	OP_LPAREN		single_expression		OP_RPAREN	
 	'''
+def p_push_var_cte(p):
+	'push_var_cte	:	epsilon'
+	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
+	varName, varType, varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
+	stackOP.append(varName) # cambiar a varMemIndex para  meter index en lugar de name
+	stackType.append(varType)
+
 def p_mega_expression(p):
 	'''
 	mega_expression	:	super_expression
@@ -319,17 +365,16 @@ def main():
 	parsing()
 	print (VCsemantics.functionDir)
 	print(VCsemantics.varsTable)
+	print(quadruples)
+	#print(stackType)
+	#print(stackOP)
+	#print(stackSymbol)
 
 	
 
-lista =[['a','b','c'],['d','e','f'], ['g', 'h', 'i']]	
 
-def example():
-	for var in lista:
-		print (var)
 
 if __name__ == '__main__':
-	#example()
     main()
 	
 

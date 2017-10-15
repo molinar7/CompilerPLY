@@ -1,0 +1,4 @@
+quadruples = []
+stackOP = []
+stackType = []
+stackSymbol = []
