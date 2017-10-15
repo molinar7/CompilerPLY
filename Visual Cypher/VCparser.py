@@ -322,13 +322,16 @@ def main():
 
 	
 
-	
+lista =[['a','b','c'],['d','e','f'], ['g', 'h', 'i']]	
 
-
+def example():
+	for var in lista:
+		print (var)
 
 if __name__ == '__main__':
-      main()
-
+	#example()
+    main()
+	
 
 
 '''

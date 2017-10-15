@@ -1,18 +1,20 @@
 program patito {
 
-int a,b,c;
+int b,c;
+int a =90;
+
 
 
 function void test(){
-    int b;
-    b = 34;
-
+    int c;
+    a = 12;
+    
 }
 
 
 
 main(){
-    int a,b,c,d,e;
+    int a =1;
 }
 
 
