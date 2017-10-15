@@ -126,10 +126,13 @@ def	p_statement(p):
 
 def p_assigment(p):
 	'''
-	assigment	:	ID	OP_EQUALS	single_expression	SEMICOLON
+	assigment	:	ID	pushIdVar			OP_EQUALS	single_expression	SEMICOLON
 				|	ID	OP_LSQUARE_PAREN	VAR_INT		OP_RSQUARE_PAREN	OP_EQUALS	single_expression	
-
 	'''
+
+def p_pushIdVar(p):
+	'pushIdVar	:	epsilon'
+	VCsemantics.reciveID(p[-1])
 def p_if (p):
 	'''
 	if	:	IF	OP_LPAREN	condition_mega_expression	OP_RPAREN	bloque

@@ -1,59 +1,19 @@
+program patito {
 
-program patito{
-
-      int maestro =  6;
-      float gato, gata,maestro;
-    
-       # boolean maestro = true; Aqui me marca error
-      
-
-        function int gatas (int david, float gato){
-        
-            int perro = 34; 
-            fs = 34;
-            int gato = 10;
-
-            if(3 +3 >0){
-                gato = 34; # vars
-                peroo ++; # Increment
-                gato += 3; # Increment
-            }
-            else{
-                print("objeto: " + gato + " no valido" );
-
-                
-                for( pepe = 1; k< 10; kaka ++;){
-                perro = 50 +50;
-            }
-            }
-
-          return david;
-        }
-
-        function float perro (int david, float gato){
-        
-            int x ;
-            int zz =90;
-          return david;
-        }
-       
-        function int perro(){
-
-        }
+int a,b,c;
 
 
-         main (){
+function void test(){
+    int b;
+    b = 34;
 
-            perro += 1;
-            p[3] = 34.3
+}
 
-            gato(perro, lala, yayaya, asda);
-          
 
-            for( kk = 23; k< 10; kaka += ab;){ #Error en el incremento
-                perro = 50 +50;
-            }
-        }
-    
-    
+
+main(){
+    int a,b,c,d,e;
+}
+
+
 }
