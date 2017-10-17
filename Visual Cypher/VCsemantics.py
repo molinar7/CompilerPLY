@@ -1,17 +1,16 @@
 import typeChecker
 import VCquadruples
 
-# Semantic Cube for the + and -
-termCube = [['int','int', True],['int','float', True],['int','String', False],['int', 'boolean', False],
-            ['float', 'int', True], ['float','float', True], ['float', 'String', False], ['float', 'boolean', False],
-            ['String' , 'int', False],['String', 'float', False], ['String', 'String', False], ['String', 'boolean', False],
-            ['boolean', 'int', False], ['boolean', 'float', False], ['boolean', 'String', False],['boolean', 'boolean', False]]
+#SemanticCube
 
- # Semantic cube for the * and /
-factCube = [['int','int', True],['int','float', False],['int','String', False],['int', 'boolean', False],
-            ['float', 'int', False], ['float','float', True], ['float', 'String', False], ['float', 'boolean', False],
-            ['String' , 'int', False],['String', 'float', False], ['String', 'String', False], ['String', 'boolean', False],
-            ['boolean', 'int', False], ['boolean', 'float', False], ['boolean', 'String', False],['boolean', 'boolean', False]]
+cuboSemantico = [['int','int','+','int'],['int','int','-','int'],['int','int','/','int'],['int','int','and','error'], ['int','int','or','error'],
+                 ['int','float','+','int'],['int','float','-','int'],['int','float','/','int'],['int','float','and','error'], ['int','float','or','error'],
+                 ['int','String','+','int'],['int','String','-','int'],['int','String','/','int'],['int','String','and','error'], ['int','String','or','error'],
+                 ['int','boolean','+','int'],['int','boolean','-','int'],['int','boolean','/','int'],['int','boolean','and','error'], ['int','boolean','or','error'],
+
+                 ['float', 'int', '+', 'float'], ['float', 'int', '-', 'float'], # Aqui siguele broo
+
+                ]
 
 #len(functionDir) nos ayuda a saber en que scope nos ubicamos :)
 
