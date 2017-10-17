@@ -211,10 +211,12 @@ def p_check_symbol_exp(p):
 			left_op = stackOP.pop()
 			left_type = stackType.pop()
 			operator = stackSymbol.pop()
-			if VCsemantics.validate_termCube(left_type, right_type): # Valida con el cubo semantico
+
+			typeResult = VCsemantics.validateSemanticCube(left_type, right_type, operator)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
+			if typeResult != 'error': # si sumas un entero con un string typeresult seria = a 'error'
 				quadruples.append([operator,left_op, right_op, 0])
 				stackOP.append(0)
-				stackType.append('int')
+				stackType.append(operator)
 			else:
 				print ("Type mismatch error at line  " + str(p.lexer.lineno))
 				quit()
@@ -236,10 +238,12 @@ def p_check_symbol_term(p):
 			left_op = stackOP.pop()
 			left_type = stackType.pop()
 			operator = stackSymbol.pop()
-			if VCsemantics.validate_factCube(left_type, right_type): #Valida con el cubo semantico
+
+			typeResult = VCsemantics.validateSemanticCube(left_type, right_type, operator)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
+			if typeResult != 'error': # si sumas un entero con un string typeresult seria = a 'error'
 				quadruples.append([operator,left_op, right_op, 0])
 				stackOP.append(0)
-				stackType.append('int')
+				stackType.append(operator)
 			else:
 				print ("Type mismatch error at line  " + str(p.lexer.lineno))
 				quit()

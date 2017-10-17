@@ -7,9 +7,9 @@ int i;
 function void test(){
     
 
-    for(i = b + kaka ; i<20; i++;){
+    a = a *kaka;
 
-    }
+    
    
 
     

@@ -5,10 +5,10 @@ import VCquadruples
 
 cuboSemantico = [['int','int','+','int'],['int','int','-','int'],['int','int','/','int'],['int','int','and','error'], ['int','int','or','error'],
                  ['int','float','+','int'],['int','float','-','int'],['int','float','/','int'],['int','float','and','error'], ['int','float','or','error'],
-                 ['int','String','+','int'],['int','String','-','int'],['int','String','/','int'],['int','String','and','error'], ['int','String','or','error'],
-                 ['int','boolean','+','int'],['int','boolean','-','int'],['int','boolean','/','int'],['int','boolean','and','error'], ['int','boolean','or','error'],
+                 ['int','String','+','error'],['int','String','-','error'],['int','String','/','error'],['int','String','and','error'], ['int','String','or','error'],
+                 ['int','boolean','+','error'],['int','boolean','-','error'],['int','boolean','/','error'],['int','boolean','and','error'], ['int','boolean','or','error'],
 
-                 ['float', 'int', '+', 'float'], ['float', 'int', '-', 'float'], # Aqui siguele broo
+                 ['float', 'int', '+', 'float'], ['float', 'int', '-', 'float'] # Aqui siguele broo
 
                 ]
 
@@ -23,15 +23,11 @@ indexGlobalFloat = 130001
 indexGlobalString = 160001
 indexGlobalBoolean = 180001
 
-def validate_termCube(x,y):
-    for elements in termCube:
-        if x == elements[0] and y == elements[1]:
-            return elements[2]
+def validateSemanticCube(left_op, right_op, operator): # esta funcion comprueba las operaciones entre tipos
+    for element in cuboSemantico:
+        if element[0] == left_op and element [1] == right_op and element [2] == operator:
+            return element[3] # Regresamos el tipo de dato de la operacion resultante 
 
-def validate_factCube(x,y):
-    for elements in factCube:
-        if x == elements[0] and y == elements[1]:
-            return elements[2]
 
 def pushTo_FunctionDir(n,t, lineno):
     if not checkIfFunctionExists(n):
