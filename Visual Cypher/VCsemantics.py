@@ -3,10 +3,10 @@ import VCquadruples
 
 #SemanticCube
 
-cuboSemantico = [['int','int','+','int'],['int','int','-','int'],['int','int','/','int'],['int','int','and','error'], ['int','int','or','error'],
-                 ['int','float','+','int'],['int','float','-','int'],['int','float','/','int'],['int','float','and','error'], ['int','float','or','error'],
-                 ['int','String','+','error'],['int','String','-','error'],['int','String','/','error'],['int','String','and','error'], ['int','String','or','error'],
-                 ['int','boolean','+','error'],['int','boolean','-','error'],['int','boolean','/','error'],['int','boolean','and','error'], ['int','boolean','or','error'],
+cuboSemantico = [['int','int','+','int'],['int','int','-','int'],['int','int','*','int'],['int','int','/','int'],['int','int','and','error'], ['int','int','or','error'],
+                 ['int','float','+','int'],['int','float','-','int'],['int','float','*','int'],['int','float','/','int'],['int','float','and','error'], ['int','float','or','error'],
+                 ['int','String','+','error'],['int','String','-','error'],['int','String','*','error'],['int','String','/','error'],['int','String','and','error'], ['int','String','or','error'],
+                 ['int','boolean','+','error'],['int','boolean','-','error'],['int','boolean','*','error'],['int','boolean','/','error'],['int','boolean','and','error'], ['int','boolean','or','error'],
 
                  ['float','int','+','float'], ['float','int','-','float'], ['float','int','*','int'], ['float','int','/','int'], ['float','int','and','error'], ['float','int','or','error'],
                  ['float','float','+','float'], ['float','float','-','float'], ['float','float','*','float'], ['float','float','/','float'], ['float','float','and','error'], ['float','float','or','error'],
@@ -156,13 +156,17 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
 def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tiene la id
 
     if checkIfVarIdExistsOnModule(v): # Se checa si existe primero en el modulo
-        print(v,'exist on module')
+        #print(v,'exist on module')
+        for id in varsTable:
+                if id[0] == len(functionDir): # si es igual a uno sabemos que es global
+                    if id[1] == v:
+                        return id[1], id[2],id[4] #  = varName, varType, varMemIndex
 
     else:
         if checkIfVarIdExistsOnGlobal(v):# Se checa si existe despues en las variables globales
-            print(v,'exist on global')
+           # print(v,'exist on global')
             for id in varsTable:
-                if id[0] == 1:
+                if id[0] == 1: # si es igual a uno sabemos que es global
                     if id[1] == v:
                         return id[1], id[2],id[4] #  = varName, varType, varMemIndex
 

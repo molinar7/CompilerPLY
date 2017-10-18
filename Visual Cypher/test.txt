@@ -1,17 +1,17 @@
 program patito {
-int a,b;
+int a,b,c,d,e, f;
 float kaka ;
 
 int i;
 
 function void test(){
-    
-
-    a = a *kaka;
-
+   
     
    
 
+   print(a * (b + c) - d * (e + f));
+
+ 
     
     
 
