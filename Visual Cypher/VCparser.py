@@ -226,7 +226,7 @@ def p_check_symbol_exp(p):
 			left_type = stackType.pop()
 			operator = stackSymbol.pop()
 
-			typeResult = VCsemantics.validateSemanticCube(left_type, right_type, operator)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
+			typeResult = VCsemantics.validateSemanticCube(operator ,left_type, right_type)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
 			if typeResult != 'error': # si sumas un entero con un string typeresult seria = a 'error'
 				quadruples.append([operator,left_op, right_op, 't'])
 				stackOP.append('t')
@@ -258,7 +258,7 @@ def p_check_symbol_term(p):
 
 			operator = stackSymbol.pop()
 
-			typeResult = VCsemantics.validateSemanticCube(left_type, right_type, operator)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
+			typeResult = VCsemantics.validateSemanticCube(operator,left_type, right_type)  # si al sumar dos enteros se regresa un entero typeresult es = 'int'
 			if typeResult != 'error': # si sumas un entero con un string typeresult seria = a 'error'
 				quadruples.append([operator,left_op, right_op, 't' ])
 				stackOP.append('t' )
