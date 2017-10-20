@@ -1,27 +1,20 @@
 program patito {
-int a,b,c,d,e, f;
-float kaka ;
-
-int i;
-
+int a,b,c,d,e;
+String lala = 'lol';
 function void test(){
-   
-    
-   
 
-   print(a * (b + c) - d * (e + f));
+  print(a + b > d and  d < (a + b));
+  a = 45 + b + c;
 
- 
-    
-    
-
-    
+  
 }
 
-
+function int lala (){
+   
+}
 
 main(){
-    
+  
 }
 
 

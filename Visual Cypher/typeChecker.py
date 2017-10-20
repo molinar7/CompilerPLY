@@ -27,6 +27,7 @@ def isInt(x):
         return True
     else: 
         return False
+        
 
 def isFloat(x):
     if isinstance(x, float):
@@ -41,7 +42,7 @@ def isString(x):
         return False
 
 def isBoolean(x):
-    if x == 'True' or x == 'False':
+    if x == 'true' or x == 'false':
         return True
     else: 
         return False
