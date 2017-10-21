@@ -1,34 +1,16 @@
-##Fallas en la sintaxis
-#1. Las mega expressiones en las condiciones ARREGLADO!!
-#2. Se le puede hacer returns a bloques que no deben de tener retrun
-#3. Se pueden hacer returns de tipo de valores erroneos
-#4. Se pueden mandar parametros en llamadas a funciones donde no se deben mandar parametros
-program perro{
-
-   
-    int perro = 90, gata = 34;
-    float gatito , gatp, perro = 34;
-    int pe, ja, asda;
-    
-    
-
-
-    function int gato(){
-
-        gato = 56;
-
-        return sd;
-
+function int lala (){
+    if(a + b > d){
+      if(a<b){
+        a = 0;
+        b = b + d;
+      }else{
+        c = a + b;
+      }
+    }else{
+      a = b + c;
     }
-
-    main(){
-        figure triangulo2 : triangle possess {
-            vector nose : (a, 23);
-            color : negro;
-            int size : 23;
-        }
-
-
+    d = b + a * c;
+}
 
 
       

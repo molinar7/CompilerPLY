@@ -87,6 +87,8 @@ def p_function_bloque_primo(p):
 							|	epsilon
 			
 	'''
+
+#Statement de las funciones	
 def	p_function_statement(p):# Para prevenir la creacion de vars  en los bloques de los ciclos
 	'''
 	function_statement	:	assigment
@@ -98,6 +100,7 @@ def	p_function_statement(p):# Para prevenir la creacion de vars  en los bloques 
 						|	function_call
 						|	fun_esp
 						|	vars
+						|	while_loop
 				
 	'''	
 def p_bloque(p):
@@ -122,6 +125,7 @@ def	p_statement(p):
 				|	return
 				|	function_call
 				|	fun_esp
+				|	while_loop
 				
 	'''
 
@@ -151,12 +155,42 @@ def p_equals_quadruple(p):
 
 def p_if (p):
 	'''
-	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque
-		|	IF	OP_LPAREN	mega_expression	OP_RPAREN	bloque		ELSE	bloque	
+	if	:	IF	OP_LPAREN	mega_expression	OP_RPAREN 	if_gotoF_quadruple	bloque	fill_if_gotoF1
+		|	IF	OP_LPAREN	mega_expression	OP_RPAREN	if_gotoF_quadruple	bloque 	fill_if_gotoF2	if_goto_quadruple	ELSE	bloque	fill_if_goto
 			
 	'''
+def p_if_gotoF_quadruple(p):
+	' if_gotoF_quadruple	:	epsilon'
+	exp_type = stackType.pop()
+	if exp_type == 'boolean':
+		result = stackOP.pop()
+		quadruples.append(['gotoF', result, '', ''])
+		stackJumps.append(len(quadruples) -1) # el -1 porque el primer elemnto del quadruplo esta en el index 0
+	else:
+		print ("Type mismatch error at line  " + str(p.lexer.lineno), ', if without a boolean parameter')
+		quit()
 
 
+def p_fill_if_gotoF1(p):
+	'fill_if_gotoF1	:	epsilon'
+	if_end = stackJumps.pop()
+	quadruples[if_end][3] = len(quadruples) 	
+
+# Se le suma mas uno porque cuando un if lleva un else se genera un cuadruplo goto y es un brinco mas ( +1)
+def p_fill_if_gotoF2(p):
+	'fill_if_gotoF2	:	epsilon'
+	if_end = stackJumps.pop()
+	quadruples[if_end][3] = len(quadruples) + 1 # Este mas uno fue el motivo de que sean dos gotoF
+
+def p_fill_if_goto(p):
+	'fill_if_goto	:	epsilon'
+	if_end = stackJumps.pop()
+	quadruples[if_end][3] = len(quadruples) 
+
+def p_if_goto_quadruple(p):
+	'if_goto_quadruple	:	epsilon'
+	quadruples.append(['goto', '','',''])
+	stackJumps.append(len(quadruples)-1)
 def p_printer(p):
 	'''
 	printer	:	PRINT	OP_LPAREN	impression	OP_RPAREN	 SEMICOLON
@@ -220,9 +254,34 @@ def p_increment_equals(p):
 
 def p_for(p):
 	'''
-	for	:	FOR		OP_LPAREN	assigment	mega_expression	SEMICOLON	increment	OP_RPAREN	bloque	
+	for	:	FOR		OP_LPAREN	assigment loop_jumpCount		mega_expression	SEMICOLON loop_gotoF	increment	OP_RPAREN	bloque	loop_fill
 	'''
 
+def p_while_loop(p):
+	'''
+	while_loop		:	WHILE	loop_jumpCount		OP_LPAREN	mega_expression OP_RPAREN  loop_gotoF	bloque		loop_fill
+
+	'''
+def p_loop_jumpCount(p):
+	'loop_jumpCount	:	epsilon'
+	stackJumps.append(len(quadruples) -1)
+	
+def p_loop_gotoF(p):
+	'loop_gotoF	:	epsilon'
+	type_result = stackType.pop()
+	if type_result == 'boolean':
+		result = stackOP.pop()
+		quadruples.append(['gotoF', result, '',''])
+		stackJumps.append(len(quadruples)-1)
+	else:
+		print ("Type mismatch error at line  " + str(p.lexer.lineno), ', if without a boolean parameter')
+		quit()
+def p_loop_fill(p):
+	'loop_fill		:	epsilon'
+	end = stackJumps.pop()
+	retorno = stackJumps.pop()
+	quadruples.append(['goto', '','',retorno + 1]) # regresa a la condicion de while
+	quadruples[end][3]= len(quadruples) # rellena el gotoF del while
 def p_return(p):
 	'''
 	return	:	RETURN 	mega_expression 	SEMICOLON
@@ -373,7 +432,8 @@ def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
 	varName, varType, varValue, varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
-	stackOP.append(varName) # cambiar a varMemIndex para  meter index en lugar de name
+	stackOP.append(varMemIndex) # quitar comments para mostrar memindex
+	#stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
 
 
@@ -399,7 +459,8 @@ def p_push_cte_toTable(p):
 	'push_cte_toTable	:	epsilon'
 	
 	cteValue, cteType, cteIndexMem = VCsemantics.push_cte_toTable(p[-1], str(p.lexer.lineno))
-	stackOP.append(cteIndexMem)# cambiar a cteIndexMem para anexar el indice al quadruplo
+	stackOP.append(cteIndexMem)# muestra memIndex
+	#stackOP.append(cteValue)# muestra los valores, mas facil para debugear
 	stackType.append(cteType) 
 def p_fun_esp(p):
 	'''
@@ -470,14 +531,16 @@ def parsing():
 
 def printing_quadruples():
 	print('Quadruples:')
+	index = 0
 	for quadruple in quadruples:
-		print(quadruple)
+		print(index, quadruple)
+		index +=1
 
 def main():
 	parsing()
 	print ('FunctionDir:', VCsemantics.functionDir)
 	print('VarTable:', VCsemantics.varsTable)
-	#print('cteTable:', VCsemantics.cteTable)
+	print('cteTable:', VCsemantics.cteTable)
 	printing_quadruples()
 	print('pila Operadores:' , stackOP)
 	print('pila de tipos:' ,stackType)

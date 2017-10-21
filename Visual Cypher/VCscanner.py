@@ -66,7 +66,8 @@ tokens = [
 'SIZE',
 'OP_LSQUARE_PAREN',
 'OP_RSQUARE_PAREN',
-'ARC'
+'ARC',
+'WHILE'
 
 
 

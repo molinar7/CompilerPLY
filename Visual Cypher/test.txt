@@ -3,18 +3,28 @@ int a,b,c,d,e;
 String lala = 'lol';
 function void test(){
 
-  print(a + b > d and  d < (a + b));
-  a = 45 + b + c;
+ # print(a + b > d and  d < (a + b));
+ a = 45 + b + c;
 
   
 }
 
-function int lala (){
-   
-}
+
 
 main(){
-  
+
+  for( a =0; a> b; a++;){
+      b = c + 2.0;
+      while(b>30){
+           if (b ==30){
+              print('yeah');
+              }
+          a =4;
+      }
+      a ++;
+  }
+ 
+ a = c + b * d;
 }
 
 
