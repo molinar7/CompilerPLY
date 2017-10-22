@@ -1,0 +1,3 @@
+You need python 3.6
+
+To program in Vicual Cypher you can write your code in test.txt and then run python3 VCparser.py
