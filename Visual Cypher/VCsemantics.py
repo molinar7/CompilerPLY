@@ -29,13 +29,13 @@ def pushTo_FunctionDir(n,t, lineno):
         print('ERROR:', 'The function',n, 'at line:', lineno, 'is already defined')
 
 
-def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when defining a var with value
+def pushTo_varsTable_WithCTE(n, t, v, lineno): # Se agrega a la varTable cuando se define una var con valor
     if not checkIfVarIdExistsOnModule(n): # Checa que la vairable no este ya definida en el modulo actual
 
         if t == 'int':
             global indexGlobalInt
             if typeChecker.isInt(v):
-                if len(functionDir) == 1: # We know that is global if the index is 1
+                if len(functionDir) == 1: # Se sabe que es global si es index = 1
                     
                     varsTable.append([len(functionDir), n, t, v, indexGlobalInt])
                     indexGlobalInt += 1
@@ -45,13 +45,13 @@ def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when d
             else:# Basicamente este else es por si la asignacion es una id en ves de una cte
                 varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
                 if varType == 'int':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
+                    if len(functionDir) == 1: # Se sabe que es global si es index = 1
                         varsTable.append([len(functionDir), n, varType, varValue, indexGlobalInt])
                         indexGlobalInt += 1
                     else:
                          varsTable.append([len(functionDir), n,varType, varValue, indexLocalInt]) 
                 else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
+                    print('ERROR:','The variable',n,'at line', lineno, 'is not a',t)
                     quit()
 
 
@@ -64,10 +64,10 @@ def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when d
                 else:
                     varsTable.append([len(functionDir), n, t, v, indexLocalFloat])
 
-            else:# Basicamente este else es por si la asignacion es una id en ves de una cte
+            else:# Basicamente este else es por si la asignacion es una id en vez de una cte
                 varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
                 if varType == 'float':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
+                    if len(functionDir) == 1: # Se sabe que es global si es index = 1
                         varsTable.append([len(functionDir), n, varType, varValue, indexGlobalFloat])
                         indexGlobalInt += 1
                     else:
@@ -89,7 +89,7 @@ def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when d
             else:# Basicamente este else es por si la asignacion es una id en ves de una cte
                 varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
                 if varType == 'String':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
+                    if len(functionDir) == 1: # Se sabe que es global si es index = 1
                         varsTable.append([len(functionDir), n, varType, varValue, indexGlobalString])
                         indexGlobalInt += 1
                     else:
@@ -111,13 +111,13 @@ def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when d
             else:# Basicamente este else es por si la asignacion es una id en ves de una cte
                 varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
                 if varType == 'boolean':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
+                    if len(functionDir) == 1: # Se sabe que es global si es index = 1
                         varsTable.append([len(functionDir), n, varType, varValue, indexGlobalBoolean])
                         indexGlobalInt += 1
                     else:
                          varsTable.append([len(functionDir), n,varType, varValue, indexLocalBoolean]) 
                 else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
+                    print('ERROR:','The variable',n,'at line', lineno, 'is not a',t)
                     quit()
 
     else:
@@ -125,17 +125,15 @@ def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when d
         quit()
 
 
-def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a var with NOT value
+def pushTo_varsTable(n, t, lineno ): # Se agrega a la varTable cuando se declara una var sIN valor
 
     if not checkIfVarIdExistsOnModule(n): # Checa que no exista en el modulo actual la variable
 
         if t == 'int':
-            
             global indexGlobalInt
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t, '', indexGlobalInt])
                 indexGlobalInt +=1
-                
             else:
                 varsTable.append([len(functionDir), n, t, '',indexLocalInt])
 
