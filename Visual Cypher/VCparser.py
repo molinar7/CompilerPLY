@@ -14,7 +14,7 @@ functionIndex_onCall = 0
 
 def p_program(p):
 	'''
-	program		:	PROGRAM  ID  LCURLY_BRACKET  vars   function 	main_function	 RCURLY_BRACKET	
+	program		:	PROGRAM  ID  LCURLY_BRACKET  vars   add_NumVars_Main_Global function 	main_function	 RCURLY_BRACKET	
 
 	'''
 	p[0] = "Syntax Accepted!"
@@ -22,8 +22,7 @@ def p_program(p):
 
 def p_vars(p):
 	'''
-	vars	:	type	save_type	ID		OP_EQUALS			var_cte_VARS	pushTo_varsTable_WithCTE	SEMICOLON		vars
-			|	type	save_type	ID		pushTo_varsTable	vars_prime		SEMICOLON					vars
+	vars	:	type	save_type	ID		pushTo_varsTable	vars_prime		SEMICOLON		vars
 			|	epsilon
 	'''
 def p_vars_prime(p):
@@ -34,9 +33,7 @@ def p_vars_prime(p):
 
 
 
-def p_pushTo_varsTable_WithCTE(p):
-	'pushTo_varsTable_WithCTE	:	epsilon'
-	VCsemantics.pushTo_varsTable_WithCTE(p[-3], tmp_type, p[-1], str(p.lexer.lineno))
+
 
 def p_pushTo_varsTable(p):
 	'pushTo_varsTable	:	epsilon'
@@ -60,19 +57,21 @@ def p_pushTo_FunctionDir(p):
 	'''
 	VCsemantics.pushTo_FunctionDir(p[-1],p[-2], str(p.lexer.lineno))
 
-def p_pushTo_functionSignature(p): #Se encarga de generar la lista de la estructura de los aprametros
+def p_pushTo_functionSignature(p): #Se encarga de generar la lista de la estructura de los parametros
 	'pushTo_functionSignature	:	epsilon'
 	index = len(VCsemantics.functionDir)
+
 	# este if sirve par que ponga unicamente indices en funciones con parametros
 	if VCsemantics.varsTable[-1][0] == index:
 		VCsemantics.functionSignature.append([index])
 	numberOfParameters = 0
+
 	for elements in VCsemantics.varsTable:
 		if elements[0] == index:
-			VCsemantics.functionSignature[-1].append([elements[2], elements[4]]) # cambiar el 4 a 1 si quieres saber el nombre de la var
+			VCsemantics.functionSignature[-1].append([elements[2], elements[3]]) # cambiar el 3 a 1 si quieres saber el nombre de la var
 			numberOfParameters += 1
 
-	VCsemantics.functionDir[-1].append(numberOfParameters)# le ponemos al directorio de funciones la cantidad de aprametros
+	VCsemantics.functionDir[-1].append(numberOfParameters)# le ponemos al directorio de funciones la cantidad de parametros
 		
 def p_add_NumVars(p):
 	' add_NumVars	:	epsilon'
@@ -88,6 +87,7 @@ def p_add_NumVars(p):
 	VCsemantics.functionDir[-1].append(numVars)# metemos la cantidad de variables definidad a functiondir
 
 	quadruples.append(['ENDPROC', '', '', ''])
+
 def p_add_Function_FirstQuadruple(p):
 	'add_Function_FirstQuadruple	:	epsilon'
 	quadrupleCount = len(quadruples) 
@@ -95,13 +95,35 @@ def p_add_Function_FirstQuadruple(p):
 
 def p_main_function(p):
 	'''
-	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN 	fill_firstQuadruple		function_bloque	 push_end_quadruple
+	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN 	fill_firstQuadruple		function_bloque	add_NumVars_Main_Global push_end_quadruple
 	'''
 
 def p_fill_firstQuadruple(p):
 	' fill_firstQuadruple	:	epsilon'
-	quadrupleCount = len(quadruples) 
+	quadrupleCount = len(quadruples)
 	quadruples[0][3] = quadrupleCount # pone el counter en el primer quadruplo del main
+	VCsemantics.functionDir[-1].append(len(quadruples))# pone el cuadruplo donde empieza el main en la function dir
+	index = len(VCsemantics.functionDir)
+
+def p_add_NumVars_Main_Global(p):
+	' add_NumVars_Main_Global	:	epsilon'
+	index = len(VCsemantics.functionDir)
+
+	numVars = 0
+
+	for elements in VCsemantics.varsTable:
+		if elements[0] == index:
+			numVars +=1
+
+	# este if llena el cuadruplo donde empieza la funcion global porque el de main ya lo llenamos con 'p_fill_firstQuadruple'
+	if VCsemantics.functionDir[-1][1] == 'global':# Empieza global en el cuadruplo 0
+		VCsemantics.functionDir[-1].append(0)# pone el cuadruplo donde empieza  global en function dir
+
+	
+	VCsemantics.functionDir[-1].append(0) # le ponemos siempre 0 porque main y global tiene 0 parametros
+	numVars = numVars - VCsemantics.functionDir[-1][4] # Le restamos la cantidad de parametros ya que los parametros ya los tenemos contados
+	VCsemantics.functionDir[-1].append(numVars)# metemos la cantidad de variables definidad a functiondir
+
 
 def p_push_end_quadruple(p):
 	'push_end_quadruple	: epsilon'
@@ -194,10 +216,10 @@ def p_equals_quadruple(p):
 
 	operator = stackSymbol.pop()
 
+
 	if left_type == right_type:
 		quadruples.append([operator,right_op,'',left_op])
-		#stackOP.append(left_op) 
-		#stackType.append(left_type)
+		
 	else:
 		print ("Type mismatch error at line  " + str(p.lexer.lineno))
 		quit()
@@ -545,7 +567,7 @@ def p_fact(p):
 def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
-	varName, varType, varValue, varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
+	varName, varType,  varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
 	#stackOP.append(varMemIndex) # quitar comments para mostrar memindex
 	stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
@@ -565,7 +587,7 @@ def p_var_cte(p):
 			| 	VAR_INT		push_cte_toTable
 			|	VAR_FLOAT	push_cte_toTable
 			|	VAR_STRING	push_cte_toTable
-			|	VAR_BOOLEAN
+			|	VAR_BOOLEAN	push_cte_toTable
 	'''
 	p[0] = p[1]
 
@@ -616,15 +638,7 @@ def p_vector(p):
 	'''
 	vector	:	VECTOR		ID		OP_TWO_POINTS		OP_LPAREN	mega_expression	COMA	mega_expression	OP_RPAREN	SEMICOLON
 	'''
-def p_var_cte_VARS(p): # Esta regla nomas se usa para la asignacion al definir variables
-	'''
-	var_cte_VARS 	: 	ID			
-					| 	VAR_INT		
-					|	VAR_FLOAT	
-					|	VAR_STRING	
-					|	VAR_BOOLEAN
-	'''
-	p[0] = p[1]
+
 
 def p_epsilon(p):
 	'epsilon : '
@@ -651,7 +665,7 @@ def printing_quadruples():
 		index +=1
 
 def printing_varTable():
-	print('VarTable: [index, name, Type, Value, memIndex]')
+	print('VarTable: [index, name, Type,  memIndex]')
 	for element in VCsemantics.varsTable:
 		print(element)
 
@@ -662,12 +676,12 @@ def printFunctionDir():
 		print(element)
 
 def printfunctionSignature():
-	print('Function Signature:')
+	print('Function Signature:  ')
 	for element in VCsemantics.functionSignature:
 		print(element)
 
 def printCteTable():
-	print('CTE Table:')
+	print('CTE Table: [index, value, Type, memIndex]')
 	for element in VCsemantics.cteTable:
 		print(element)
 

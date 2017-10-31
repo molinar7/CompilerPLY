@@ -32,113 +32,6 @@ def pushTo_FunctionDir(n,t, lineno):
         quit()
 
 
-def pushTo_varsTable_WithCTE(n, t, v, lineno): #Append it to the varTable when defining a var with value
-    if not checkIfVarIdExistsOnModule(n): # Checa que la vairable no este ya definida en el modulo actual
-
-        if t == 'int':
-            global indexGlobalInt, indexLocalInt
-            if typeChecker.isInt(v):
-                if len(functionDir) == 1: # We know that is global if the index is 1
-                    
-                    varsTable.append([len(functionDir), n, t, v, indexGlobalInt])
-                    indexGlobalInt += 1
-                else:
-                    varsTable.append([len(functionDir), n, t, v, indexLocalInt]) 
-                    indexLocalInt += 1
-                    
-                # Basicamente este else es por si la asignacion es una id en ves de una cte
-            else:
-                varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
-                if varType == 'int':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
-                        varsTable.append([len(functionDir), n, varType, varValue, indexGlobalInt])
-                        indexGlobalInt += 1
-                    else:
-                         varsTable.append([len(functionDir), n,varType, varValue, indexLocalInt])
-                         indexLocalInt += 1 
-                else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
-                    quit()
-
-
-        if t == 'float':
-            if typeChecker.isFloat(v):
-                if len(functionDir) == 1:
-                    global indexGlobalFloat, indexLocalFloat
-                    varsTable.append([len(functionDir), n, t, v, indexGlobalFloat])
-                    indexGlobalFloat += 1
-                else:
-                    varsTable.append([len(functionDir), n, t, v, indexLocalFloat])
-                    indexLocalFloat += 1
-
-            # Basicamente este else es por si la asignacion es una id en ves de una cte
-            else:
-                varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
-                if varType == 'float':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
-                        varsTable.append([len(functionDir), n, varType, varValue, indexGlobalFloat])
-                        indexGlobalInt += 1
-                    else:
-                         varsTable.append([len(functionDir), n,varType, varValue, indexLocalFloat])
-                         indexLocalFloat += 1 
-                else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
-                    quit()
-
-
-        if t == 'String':
-            if typeChecker.isString(v):
-                if len(functionDir) == 1:
-                    global indexGlobalString, indexLocalString
-                    varsTable.append([len(functionDir), n, t, v, indexGlobalString])
-                    indexGlobalString += 1
-                else:
-                    varsTable.append([len(functionDir), n, t, v, indexLocalString])
-                    indexLocalString += 1
-
-                # Basicamente este else es por si la asignacion es una id en ves de una cte
-            else:
-                varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
-                if varType == 'String':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
-                        varsTable.append([len(functionDir), n, varType, varValue, indexGlobalString])
-                        indexGlobalInt += 1
-                    else:
-                         varsTable.append([len(functionDir), n,varType, varValue, indexLocalString]) 
-                         indexLocalString += 1
-                else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
-                    quit()
-
-
-        if t == 'boolean':
-            if typeChecker.isBoolean(v):
-                if len(functionDir) == 1:
-                    global indexGlobalBoolean
-                    varsTable.append([len(functionDir), n, t, v, indexGlobalBoolean])
-                    indexGlobalBoolean += 1
-                else:
-                    varsTable.append([len(functionDir), n, t, v, indexLocalBoolean])
-                    indexLocalBoolean += 1
-
-
-                # Basicamente este else es por si la asignacion es una id en ves de una cte
-            else:
-                varName, varType, varValue, varMemIndex = validateIDScope(v, lineno)
-                if varType == 'boolean':
-                    if len(functionDir) == 1: # We know that is global if the index is 1
-                        varsTable.append([len(functionDir), n, varType, varValue, indexGlobalBoolean])
-                        indexGlobalInt += 1
-                    else:
-                         varsTable.append([len(functionDir), n,varType, varValue, indexLocalBoolean])
-                         indexLocalBoolean += 1 
-                else:
-                    print('ERROOR:','The variable',n,'at line', lineno, 'is not a',t)
-                    quit()
-
-    else:
-        print('ERROR:', 'The variable',n, 'at line', lineno, 'is already defined')
-        quit()
 
 
 def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a var with NOT value
@@ -149,38 +42,38 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             
             global indexGlobalInt, indexLocalInt
             if len(functionDir) == 1:
-                varsTable.append([len(functionDir), n, t, '', indexGlobalInt])
+                varsTable.append([len(functionDir), n, t,  indexGlobalInt])
                 indexGlobalInt +=1
                 
             else:
-                varsTable.append([len(functionDir), n, t, '',indexLocalInt])
+                varsTable.append([len(functionDir), n, t, indexLocalInt])
                 indexLocalInt += 1
 
         if t == 'float':
             global indexGlobalFloat, indexLocalFloat
             if len(functionDir) == 1:
-                varsTable.append([len(functionDir), n, t,'', indexGlobalFloat])
+                varsTable.append([len(functionDir), n, t, indexGlobalFloat])
                 indexGlobalFloat +=1
             else:
-                varsTable.append([len(functionDir), n, t, '',indexLocalFloat])
+                varsTable.append([len(functionDir), n, t, indexLocalFloat])
                 indexLocalFloat += 1
 
         if t == 'String':
             global indexGlobalString, indexLocalString
             if len(functionDir) == 1:
-                varsTable.append([len(functionDir), n, t,'', indexGlobalString])
+                varsTable.append([len(functionDir), n, t,indexGlobalString])
                 indexGlobalString +=1
             else:
-                varsTable.append([len(functionDir), n, t, '',indexLocalString])
+                varsTable.append([len(functionDir), n, t, indexLocalString])
                 indexLocalString += 1
 
         if t == 'boolean':
             global indexGlobalBoolean, indexLocalBoolean
             if len(functionDir) == 1:
-                varsTable.append([len(functionDir), n, t,'', indexGlobalBoolean])
+                varsTable.append([len(functionDir), n, t, indexGlobalBoolean])
                 indexGlobalBoolean +=1
             else:
-                varsTable.append([len(functionDir), n, t, '',indexLocalBoolean])
+                varsTable.append([len(functionDir), n, t, indexLocalBoolean])
                 indexLocalBoolean += 1
 
 
@@ -191,7 +84,7 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
 
 def push_cte_toTable(cte, lineno):
     #cteTable = [scope, cteValue, cteType, memIndex]
-    global indexCtelInt, indexCteFloat, indexCteString
+    global indexCtelInt, indexCteFloat, indexCteBoolean,  indexCteString
     if typeChecker.isInt(cte):
         cteTable.append([len(functionDir), cte, 'int', indexCtelInt])
         indexCtelInt += 1
@@ -202,13 +95,18 @@ def push_cte_toTable(cte, lineno):
             indexCteFloat +=1
             return cte, 'float', indexCteFloat -1
         else:
-            if typeChecker.isString(cte):
-                cteTable.append([len(functionDir), cte,'String',  indexCteString])
-                indexCteString +=1
-                return cte,'String', indexCteString -1 # menos 1 porque ya le sumamos uno arriba
+            if typeChecker.isBoolean(cte):
+                cteTable.append([len(functionDir), cte,'Boolean',  indexCteBoolean])
+                indexCteBoolean +=1
+                return cte,'boolean', indexCteBoolean -1 # menos 1 porque ya le sumamos uno arriba
             else:
-                print('ERROR: al line: ',lineno, ',', cte, 'is not a valid constant')
-                quit()
+                if typeChecker.isString(cte):
+                    cteTable.append([len(functionDir), cte,'String',  indexCteString])
+                    indexCteString +=1
+                    return cte,'String', indexCteString -1 # menos 1 porque ya le sumamos uno arriba
+                else:
+                    print('ERROR: al line: ',lineno, ',', cte, 'is not a valid constant')
+                    quit()
         
 
 def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tiene la id
@@ -218,7 +116,7 @@ def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tien
         for id in varsTable:
                 if id[0] == len(functionDir): # si es igual a uno sabemos que es global
                     if id[1] == v:
-                        return id[1], id[2], id[3], id[4] #  = varName, varType, varValue, varMemIndex
+                        return id[1], id[2], id[3] #  = varName, varType,  varMemIndex
 
     else:
         if checkIfVarIdExistsOnGlobal(v):# Se checa si existe despues en las variables globales
@@ -226,7 +124,7 @@ def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tien
             for id in varsTable:
                 if id[0] == 1: # si es igual a uno sabemos que es global
                     if id[1] == v:
-                        return id[1], id[2], id[3], id[4] #  = varName, varType, varValue, varMemIndex
+                        return id[1], id[2], id[3] #  = varName, varType, varMemIndex
 
 
 
