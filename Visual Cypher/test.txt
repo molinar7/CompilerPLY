@@ -1,30 +1,32 @@
-program patito {
-int a,b,c,d,e;
-String lala = 'lol';
-function void test(){
+program patito{
 
- # print(a + b > d and  d < (a + b));
- a = 45 + b + c;
+int a,b;
 
-  
+float y;
+
+function void uno (float a){
+     b = 10;
+     a = -50.0;
+     int hh;
+     hh = 56;
+     
+
 }
 
 
+function void dos (int a, int b, float g){
+     g = y;
+     a = 4214;
+     b = 555;
+     boolean jh;
+     jh = false;
+    String kk;
+    kk = 'false';
+}
 
 main(){
-
-  for( a =0; a> b; a++;){
-      b = c + 2.0;
-      while(b>30){
-           if (b ==30){
-              print('yeah');
-              }
-          a =4;
-      }
-      a ++;
-  }
- 
- a = c + b * d;
+    boolean lll;
+uno(3.5 + 6.0);
 }
 
 

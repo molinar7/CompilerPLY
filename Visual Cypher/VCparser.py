@@ -9,9 +9,12 @@ import VCmemory
 tokens = lexer.tokens
 tmp_type = ''
 
+param_counter = 0
+functionIndex_onCall = 0
+
 def p_program(p):
 	'''
-	program		:	PROGRAM  ID  LCURLY_BRACKET  vars   function 	main_function	 RCURLY_BRACKET	
+	program		:	PROGRAM  ID  LCURLY_BRACKET  vars   add_NumVars_Main_Global function 	main_function	 RCURLY_BRACKET	
 
 	'''
 	p[0] = "Syntax Accepted!"
@@ -19,8 +22,7 @@ def p_program(p):
 
 def p_vars(p):
 	'''
-	vars	:	type	save_type	ID		OP_EQUALS			var_cte_VARS	pushTo_varsTable_WithCTE	SEMICOLON		vars
-			|	type	save_type	ID		pushTo_varsTable	vars_prime		SEMICOLON					vars
+	vars	:	type	save_type	ID		pushTo_varsTable	vars_prime		SEMICOLON		vars
 			|	epsilon
 	'''
 def p_vars_prime(p):
@@ -31,9 +33,7 @@ def p_vars_prime(p):
 
 
 
-def p_pushTo_varsTable_WithCTE(p):
-	'pushTo_varsTable_WithCTE	:	epsilon'
-	VCsemantics.pushTo_varsTable_WithCTE(p[-3], tmp_type, p[-1], str(p.lexer.lineno))
+
 
 def p_pushTo_varsTable(p):
 	'pushTo_varsTable	:	epsilon'
@@ -47,8 +47,8 @@ def p_save_type(p):
 	
 def p_function(p):
 	'''
-	function	:	FUNCTION	type	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	function_bloque	function
-				|	FUNCTION	VOID	ID		pushTo_FunctionDir		OP_LPAREN		parameters OP_RPAREN	function_bloque	function
+	function	:	FUNCTION	type	ID		pushTo_FunctionDir		OP_LPAREN		function_parameters OP_RPAREN	add_Function_FirstQuadruple		pushTo_functionSignature			function_bloque		add_NumVars		function
+				|	FUNCTION	VOID	ID		pushTo_FunctionDir		OP_LPAREN		function_parameters OP_RPAREN	add_Function_FirstQuadruple		pushTo_functionSignature			function_bloque		add_NumVars		function
 				|	epsilon
 	'''
 def p_pushTo_FunctionDir(p):
@@ -57,10 +57,77 @@ def p_pushTo_FunctionDir(p):
 	'''
 	VCsemantics.pushTo_FunctionDir(p[-1],p[-2], str(p.lexer.lineno))
 
+def p_pushTo_functionSignature(p): #Se encarga de generar la lista de la estructura de los parametros
+	'pushTo_functionSignature	:	epsilon'
+	index = len(VCsemantics.functionDir)
+
+	# este if sirve par que ponga unicamente indices en funciones con parametros
+	if VCsemantics.varsTable[-1][0] == index:
+		VCsemantics.functionSignature.append([index])
+	numberOfParameters = 0
+
+	for elements in VCsemantics.varsTable:
+		if elements[0] == index:
+			VCsemantics.functionSignature[-1].append([elements[2], elements[3]]) # cambiar el 3 a 1 si quieres saber el nombre de la var
+			numberOfParameters += 1
+
+	VCsemantics.functionDir[-1].append(numberOfParameters)# le ponemos al directorio de funciones la cantidad de parametros
+		
+def p_add_NumVars(p):
+	' add_NumVars	:	epsilon'
+	index = len(VCsemantics.functionDir)
+
+	numVars = 0
+
+	for elements in VCsemantics.varsTable:
+		if elements[0] == index:
+			numVars +=1
+
+	numVars = numVars - VCsemantics.functionDir[-1][4] # Le restamos la cantidad de parametros ya que los parametros ya los tenemos contados
+	VCsemantics.functionDir[-1].append(numVars)# metemos la cantidad de variables definidad a functiondir
+
+	quadruples.append(['ENDPROC', '', '', ''])
+
+def p_add_Function_FirstQuadruple(p):
+	'add_Function_FirstQuadruple	:	epsilon'
+	quadrupleCount = len(quadruples) 
+	VCsemantics.functionDir[-1].append(quadrupleCount) # El cuadruplo que dice cuando se acaba una funcion
+
 def p_main_function(p):
 	'''
-	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN	function_bloque	
+	main_function	:	MAIN	pushTo_FunctionDir OP_LPAREN	OP_RPAREN 	fill_firstQuadruple		function_bloque	add_NumVars_Main_Global push_end_quadruple
 	'''
+
+def p_fill_firstQuadruple(p):
+	' fill_firstQuadruple	:	epsilon'
+	quadrupleCount = len(quadruples)
+	quadruples[0][3] = quadrupleCount # pone el counter en el primer quadruplo del main
+	VCsemantics.functionDir[-1].append(len(quadruples))# pone el cuadruplo donde empieza el main en la function dir
+	index = len(VCsemantics.functionDir)
+
+def p_add_NumVars_Main_Global(p):
+	' add_NumVars_Main_Global	:	epsilon'
+	index = len(VCsemantics.functionDir)
+
+	numVars = 0
+
+	for elements in VCsemantics.varsTable:
+		if elements[0] == index:
+			numVars +=1
+
+	# este if llena el cuadruplo donde empieza la funcion global porque el de main ya lo llenamos con 'p_fill_firstQuadruple'
+	if VCsemantics.functionDir[-1][1] == 'global':# Empieza global en el cuadruplo 0
+		VCsemantics.functionDir[-1].append(0)# pone el cuadruplo donde empieza  global en function dir
+
+	
+	VCsemantics.functionDir[-1].append(0) # le ponemos siempre 0 porque main y global tiene 0 parametros
+	numVars = numVars - VCsemantics.functionDir[-1][4] # Le restamos la cantidad de parametros ya que los parametros ya los tenemos contados
+	VCsemantics.functionDir[-1].append(numVars)# metemos la cantidad de variables definidad a functiondir
+
+
+def p_push_end_quadruple(p):
+	'push_end_quadruple	: epsilon'
+	quadruples.append(['END', '', '',''])# cuadruplo que dice cuando acaba el programa
 def p_type(p):
 	'''
 	type	:	INT
@@ -70,11 +137,15 @@ def p_type(p):
 			
 	'''
 	p[0] = p[1]
-def p_parameters(p):
+def p_function_parameters(p):
 	'''
-	parameters	:	type		ID			parameters
-				|	COMA		type		ID				parameters
-				|	epsilon
+	function_parameters	:	type	save_type	ID		pushTo_varsTable	function_parameters_prime
+						|	epsilon
+	'''
+def p_function_parameters_prime(p):
+	'''
+	function_parameters_prime	:	COMA	type	save_type	ID	pushTo_varsTable	function_parameters_prime
+								|	epsilon
 	'''
 def p_function_bloque(p):
 	'''
@@ -145,10 +216,10 @@ def p_equals_quadruple(p):
 
 	operator = stackSymbol.pop()
 
+
 	if left_type == right_type:
 		quadruples.append([operator,right_op,'',left_op])
-		#stackOP.append(left_op) 
-		#stackType.append(left_type)
+		
 	else:
 		print ("Type mismatch error at line  " + str(p.lexer.lineno))
 		quit()
@@ -284,18 +355,83 @@ def p_loop_fill(p):
 	quadruples[end][3]= len(quadruples) # rellena el gotoF del while
 def p_return(p):
 	'''
-	return	:	RETURN 	mega_expression 	SEMICOLON
+	return	:	RETURN 	mega_expression  return_quadruple	SEMICOLON
 	'''
+
+def p_return_quadruple(p):
+	'return_quadruple	:	epsilon'
+
+	functionType = VCsemantics.getFunctionType(len(VCsemantics.functionDir))
+	param = stackOP.pop()
+	paramType = stackType.pop()
+	
+	if functionType == 'void':
+		print ("ERROR: A return in a void function at line  " + str(p.lexer.lineno))
+		quit()
+	elif functionType != paramType:
+		print ("ERROR: return type is diferent from function type  " + str(p.lexer.lineno))
+		quit()
+	else:
+		quadruples.append(['return', param, '',''])
+
+
 def p_function_call(p):
 	'''
-	function_call :	ID	OP_LPAREN	function_call_prime		OP_RPAREN	SEMICOLON
+	function_call :	ID	create_era	OP_LPAREN	function_call_parameters	OP_RPAREN  create_gosub	SEMICOLON
 	'''
-def p_function_call_prime(p):
+def p_function_call_parameters(p):
 	'''
-	function_call_prime	:	ID		function_call_prime
-						|	COMA	ID		function_call_prime
-						|	epsilon
+	function_call_parameters	:	mega_expression	create_param	function_call_parameters_prime
+								|	epsilon
 	'''
+
+def p_function_call_parameters_prime(p):
+	'''
+	function_call_parameters_prime		:	COMA	mega_expression create_param  function_call_parameters_prime
+										|	epsilon
+	'''
+
+def p_create_era(p):
+	'create_era		:	epsilon'
+	global functionIndex_onCall 
+	if VCsemantics.checkIfFunctionExists(p[-1]): 
+		quadruples.append(['era', p[-1], '',''])
+		functionIndex_onCall = VCsemantics.returnFunctionIndex(p[-1])
+	else: 
+		print('The function', p[-1], 'at line', str(p.lexer.lineno), 'does not exist')
+		quit()
+
+def p_create_param(p):
+	'create_param	:	epsilon'
+	global param_counter, functionIndex_onCall
+	param_counter += 1
+
+	param = stackOP.pop() 
+	paramType = stackType.pop()
+	if VCsemantics.validateFunctionParams(functionIndex_onCall, param_counter, paramType,  str(p.lexer.lineno)):
+		quadruples.append(['param', param, '', 'param' + str(param_counter)])
+	else:
+		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
+		quit()
+		
+def p_create_gosub(p):
+	'create_gosub	:	epsilon'
+	global param_counter, functionIndex_onCall
+
+	functionName = VCsemantics.getFunctionName(functionIndex_onCall)
+	functionParamas = VCsemantics.returnFunctionParamNumbers(functionIndex_onCall)
+
+	if param_counter != functionParamas:
+		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
+		quit()
+	else:
+		quadruples.append(['gosub', functionName, '', ''])
+
+		#resetear las variables globales
+		param_counter = 0
+		functionIndex_onCall = 0
+
+
 
 
 def p_mega_expression(p):
@@ -431,9 +567,9 @@ def p_fact(p):
 def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
-	varName, varType, varValue, varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
-	stackOP.append(varMemIndex) # quitar comments para mostrar memindex
-	#stackOP.append(varName) # quitar comments para mostrar nombre de var
+	varName, varType,  varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
+	#stackOP.append(varMemIndex) # quitar comments para mostrar memindex
+	stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
 
 
@@ -451,7 +587,7 @@ def p_var_cte(p):
 			| 	VAR_INT		push_cte_toTable
 			|	VAR_FLOAT	push_cte_toTable
 			|	VAR_STRING	push_cte_toTable
-			|	VAR_BOOLEAN
+			|	VAR_BOOLEAN	push_cte_toTable
 	'''
 	p[0] = p[1]
 
@@ -459,8 +595,8 @@ def p_push_cte_toTable(p):
 	'push_cte_toTable	:	epsilon'
 	
 	cteValue, cteType, cteIndexMem = VCsemantics.push_cte_toTable(p[-1], str(p.lexer.lineno))
-	stackOP.append(cteIndexMem)# muestra memIndex
-	#stackOP.append(cteValue)# muestra los valores, mas facil para debugear
+	#stackOP.append(cteIndexMem)# muestra memIndex
+	stackOP.append(cteValue)# muestra los valores, mas facil para debugear
 	stackType.append(cteType) 
 def p_fun_esp(p):
 	'''
@@ -502,15 +638,7 @@ def p_vector(p):
 	'''
 	vector	:	VECTOR		ID		OP_TWO_POINTS		OP_LPAREN	mega_expression	COMA	mega_expression	OP_RPAREN	SEMICOLON
 	'''
-def p_var_cte_VARS(p): # Esta regla nomas se usa para la asignacion al definir variables
-	'''
-	var_cte_VARS 	: 	ID			
-					| 	VAR_INT		
-					|	VAR_FLOAT	
-					|	VAR_STRING	
-					|	VAR_BOOLEAN
-	'''
-	p[0] = p[1]
+
 
 def p_epsilon(p):
 	'epsilon : '
@@ -536,15 +664,44 @@ def printing_quadruples():
 		print(index, quadruple)
 		index +=1
 
+def printing_varTable():
+	print('VarTable: [index, name, Type,  memIndex]')
+	for element in VCsemantics.varsTable:
+		print(element)
+
+def printFunctionDir():
+	print('Function Directory:  [index, name, returnType, firstQuadruple, #parameters, #variables]')
+	
+	for element in VCsemantics.functionDir:
+		print(element)
+
+def printfunctionSignature():
+	print('Function Signature:  ')
+	for element in VCsemantics.functionSignature:
+		print(element)
+
+def printCteTable():
+	print('CTE Table: [index, value, Type, memIndex]')
+	for element in VCsemantics.cteTable:
+		print(element)
+
 def main():
+	print('')
 	parsing()
-	print ('FunctionDir:', VCsemantics.functionDir)
-	print('VarTable:', VCsemantics.varsTable)
-	print('cteTable:', VCsemantics.cteTable)
+	print('')
+	printFunctionDir()
+	print('')
+	printfunctionSignature()
+	print('')
+	printing_varTable()
+	print('')
+	printCteTable()
+	print('')
 	printing_quadruples()
-	print('pila Operadores:' , stackOP)
-	print('pila de tipos:' ,stackType)
-	print('pila de simbolos:' ,stackSymbol)
+	print('')
+	#print('pila Operadores:' , stackOP)
+	#print('pila de tipos:' ,stackType)
+	#print('pila de simbolos:' ,stackSymbol)
 
 	
 

@@ -21,8 +21,9 @@ indexTemporalBoolean = 38001
 
 #Constantes
 indexCtelInt = 40001
-indexCteFloat = 44001
-indexCteString = 47001
+indexCteFloat = 43001
+indexCteString = 46001
+indexCteBoolean = 48001
 
 
 def resetScopeIndexs():
@@ -39,8 +40,9 @@ def resetScopeIndexs():
     indexTemporalBoolean = 38001
 
     VCsemantics.indexCtelInt = 40001
-    VCsemantics.indexCteFloat = 44001
-    VCsemantics.indexCteString = 47001
+    VCsemantics.indexCteFloat = 43001
+    VCsemantics.indexCteString = 46001
+    VCsemantics.indexCteBoolean = 48001
 
 def getTempIndex (typeResult):
     global indexTemporalInt, indexTemporalFloat, indexTemporalString, indexTemporalBoolean
