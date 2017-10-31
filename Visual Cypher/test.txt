@@ -1,4 +1,5 @@
 program patito{
+    #La estas cagandooo
 
 int a,b;
 
@@ -16,7 +17,7 @@ function void uno (float a){
 
 function void dos (int a, int b, float g){
      g = y;
-     a = 4214;
+     a = 4244;
      b = 555;
      boolean jh;
      jh = false;
