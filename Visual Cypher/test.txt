@@ -16,7 +16,7 @@ function void uno (float a){
 
 function void dos (int a, int b, float g){
      g = y;
-     a = 4244;
+     a = 4214;
      b = 555;
      boolean jh;
      jh = false;
