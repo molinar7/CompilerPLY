@@ -1,6 +1,9 @@
 import VCsemantics
 import VCparser
 
+globalMemory = ['GLOBAL', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
+localMemory = ['LOCAL', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
+
 #Variables globales
 indexGlobalInt = 100001 
 indexGlobalFloat = 130001

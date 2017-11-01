@@ -1,33 +1,23 @@
 program patito{
-    #La estas cagandooo
 
-int a,b;
-
-float y;
-
+int a, b, c, d, e;
+float cc;
+String ac, fdfd;
+boolean lo, ka, losa;
+int jhjh;
 function void uno (float a){
-     b = 10;
-     a = -50.0;
-     int hh;
-     hh = 56;
-     
+
 
 }
 
 
-function void dos (int a, int b, float g){
-     g = y;
-     a = 4244;
-     b = 555;
-     boolean jh;
-     jh = false;
-    String kk;
-    kk = 'false';
+function void dos (int a, int b){
+ a = 40;
 }
 
 main(){
-    boolean lll;
-uno(3.5 + 6.0);
+    dos(3, 5);
+
 }
 
 

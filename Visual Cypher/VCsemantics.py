@@ -43,6 +43,7 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalInt, indexLocalInt
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t,  indexGlobalInt])
+                globalMemory[1][1] +=  1
                 indexGlobalInt +=1
                 
             else:
@@ -53,6 +54,7 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalFloat, indexLocalFloat
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t, indexGlobalFloat])
+                globalMemory[2][1] +=  1
                 indexGlobalFloat +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalFloat])
@@ -62,6 +64,7 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalString, indexLocalString
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t,indexGlobalString])
+                globalMemory[3][1] +=  1
                 indexGlobalString +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalString])
@@ -71,6 +74,7 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalBoolean, indexLocalBoolean
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t, indexGlobalBoolean])
+                globalMemory[4][1] +=  1
                 indexGlobalBoolean +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalBoolean])
