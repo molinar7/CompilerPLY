@@ -13,7 +13,7 @@ varsTable = [] #LA tabla de variables
 cteTable = [] # Tabla de constantes para no perder el valor
 functionSignature = [] # Esta lista nos ayuda a saber de que tipo son los aprametros de cada funcion
 
-
+localMemTemp = ['', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
 
 
 def validateSemanticCube(operator,left_op, right_op): # esta funcion comprueba las operaciones entre tipos
@@ -43,7 +43,6 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalInt, indexLocalInt
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t,  indexGlobalInt])
-                globalMemory[1][1] +=  1
                 indexGlobalInt +=1
                 
             else:
@@ -54,7 +53,6 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalFloat, indexLocalFloat
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t, indexGlobalFloat])
-                globalMemory[2][1] +=  1
                 indexGlobalFloat +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalFloat])
@@ -64,7 +62,6 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalString, indexLocalString
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t,indexGlobalString])
-                globalMemory[3][1] +=  1
                 indexGlobalString +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalString])
@@ -74,7 +71,6 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
             global indexGlobalBoolean, indexLocalBoolean
             if len(functionDir) == 1:
                 varsTable.append([len(functionDir), n, t, indexGlobalBoolean])
-                globalMemory[4][1] +=  1
                 indexGlobalBoolean +=1
             else:
                 varsTable.append([len(functionDir), n, t, indexLocalBoolean])
@@ -87,25 +83,30 @@ def pushTo_varsTable(n, t, lineno ): #Append it to the varTable when defining a 
 
 
 def push_cte_toTable(cte, lineno):
-    #cteTable = [scope, cteValue, cteType, memIndex]
+    #cteTable = [ cteValue, cteType, memIndex]
     global indexCtelInt, indexCteFloat, indexCteBoolean,  indexCteString
+
+    for ctes in cteTable:# Sirve para no agregar constantes repetidas
+        if ctes[0] == cte: 
+            return ctes[0], ctes[1], ctes[2] # regresa la constante ya existente y no hace lo de abajo
+  
     if typeChecker.isInt(cte):
-        cteTable.append([len(functionDir), cte, 'int', indexCtelInt])
+        cteTable.append([ cte, 'int', indexCtelInt])
         indexCtelInt += 1
         return cte, 'int', indexCtelInt -1
     else:
         if typeChecker.isFloat(cte):
-            cteTable.append([len(functionDir), cte, 'float', indexCteFloat])
+            cteTable.append([cte, 'float', indexCteFloat])
             indexCteFloat +=1
             return cte, 'float', indexCteFloat -1
         else:
             if typeChecker.isBoolean(cte):
-                cteTable.append([len(functionDir), cte,'Boolean',  indexCteBoolean])
+                cteTable.append([ cte,'Boolean',  indexCteBoolean])
                 indexCteBoolean +=1
                 return cte,'boolean', indexCteBoolean -1 # menos 1 porque ya le sumamos uno arriba
             else:
                 if typeChecker.isString(cte):
-                    cteTable.append([len(functionDir), cte,'String',  indexCteString])
+                    cteTable.append([ cte,'String',  indexCteString])
                     indexCteString +=1
                     return cte,'String', indexCteString -1 # menos 1 porque ya le sumamos uno arriba
                 else:
@@ -161,6 +162,7 @@ def checkIfVarIdExistsOnGlobal(n): # check if Var ID exists on global
             if varID[1] == n:
                 return True
     return False
+
 
 
 def returnFunctionIndex(id):

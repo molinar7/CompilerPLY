@@ -568,8 +568,8 @@ def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
 	varName, varType,  varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
-	stackOP.append(varMemIndex) # quitar comments para mostrar memindex
-	#stackOP.append(varName) # quitar comments para mostrar nombre de var
+	#stackOP.append(varMemIndex) # quitar comments para mostrar memindex
+	stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
 
 
@@ -685,6 +685,15 @@ def printCteTable():
 	for element in VCsemantics.cteTable:
 		print(element)
 
+def getTypesQty():
+	VCmemory.getContextTypesQty() # genera la lista con la cantidad de los tipos en los contextos
+	VCmemory.cteTypeQty.append(['cte', VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
+								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
+	print(VCmemory.globalVarTypeQty)
+	print(VCmemory.localVarTypeQty)
+	print(VCmemory.cteTypeQty)
+
+
 def main():
 	print('')
 	parsing()
@@ -702,8 +711,12 @@ def main():
 	#print('pila Operadores:' , stackOP)
 	#print('pila de tipos:' ,stackType)
 	#print('pila de simbolos:' ,stackSymbol)
-	print(VCmemory.globalMemory)
-	#print(VCmemory.localMemory)
+	getTypesQty()
+
+	
+	
+	
+
 
 	
 

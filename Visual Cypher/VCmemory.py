@@ -1,8 +1,10 @@
 import VCsemantics
 import VCparser
 
-globalMemory = ['GLOBAL', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
-localMemory = ['LOCAL', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
+globalVarTypeQty = []
+localVarTypeQty = [] # Esta lista nos sirve para saber cuantas variables de cada tipo hay en locales
+cteTypeQty = []
+tempTypeQty = []
 
 #Variables globales
 indexGlobalInt = 100001 
@@ -42,10 +44,7 @@ def resetScopeIndexs():
     indexTemporalString = 36001
     indexTemporalBoolean = 38001
 
-    VCsemantics.indexCtelInt = 40001
-    VCsemantics.indexCteFloat = 43001
-    VCsemantics.indexCteString = 46001
-    VCsemantics.indexCteBoolean = 48001
+
 
 def getTempIndex (typeResult):
     global indexTemporalInt, indexTemporalFloat, indexTemporalString, indexTemporalBoolean
@@ -62,3 +61,32 @@ def getTempIndex (typeResult):
         indexTemporalBoolean +=1
         return indexTemporalBoolean -1
         
+
+def getContextTypesQty(): # Sirve para no desperdiciar memoria al saber los la cantidad de tipos
+    numberInts = 0 
+    numberFloat = 0
+    numberString = 0
+    numberBoolean = 0
+    for context in VCsemantics.functionDir:
+        for variable in VCsemantics.varsTable:
+            if context[0] == variable[0]: # para nomas contar los tipos en el mismo contexto
+
+                if variable[2] == 'int':
+                    numberInts += 1
+                if variable[2] == 'float':
+                    numberFloat += 1
+                if variable[2] == 'String':
+                    numberString += 1
+                if variable[2] == 'boolean':
+                    numberBoolean += 1
+        if context[0] == 1:
+            globalVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
+        else:
+            localVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
+        numberInts = 0 # se resetean en cada cambio de contexto
+        numberFloat = 0
+        numberString = 0
+        numberBoolean = 0
+    
+        
+
