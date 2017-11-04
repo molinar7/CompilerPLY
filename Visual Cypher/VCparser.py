@@ -4,6 +4,7 @@ import sys
 import VCsemantics
 from VCquadruples import * # con esto ya no es necesario poner el nombre de la clase
 import VCmemory
+import VCvirtualMemory
 
 
 tokens = lexer.tokens
@@ -127,6 +128,7 @@ def p_add_NumVars_Main_Global(p):
 
 def p_push_end_quadruple(p):
 	'push_end_quadruple	: epsilon'
+	VCmemory.getTempsTypeQty() # agrega el conteo de temps del main
 	quadruples.append(['END', '', '',''])# cuadruplo que dice cuando acaba el programa
 def p_type(p):
 	'''
@@ -568,8 +570,8 @@ def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
 	varName, varType,  varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
-	#stackOP.append(varMemIndex) # quitar comments para mostrar memindex
-	stackOP.append(varName) # quitar comments para mostrar nombre de var
+	stackOP.append(varMemIndex) # quitar comments para mostrar memindex
+	#stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
 
 
@@ -595,8 +597,8 @@ def p_push_cte_toTable(p):
 	'push_cte_toTable	:	epsilon'
 	
 	cteValue, cteType, cteIndexMem = VCsemantics.push_cte_toTable(p[-1], str(p.lexer.lineno))
-	#stackOP.append(cteIndexMem)# muestra memIndex
-	stackOP.append(cteValue)# muestra los valores, mas facil para debugear
+	stackOP.append(cteIndexMem)# muestra memIndex
+	#stackOP.append(cteValue)# muestra los valores, mas facil para debugear
 	stackType.append(cteType) 
 def p_fun_esp(p):
 	'''
@@ -687,16 +689,18 @@ def printCteTable():
 
 def getTypesQty():
 	VCmemory.getContextTypesQty() # genera la lista con la cantidad de los tipos en los contextos
-	VCmemory.cteTypeQty.append(['cte', VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
+	VCmemory.cteTypeQty.append([ VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
 								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
 	print(VCmemory.globalVarTypeQty)
 	print(VCmemory.localVarTypeQty)
 	print(VCmemory.cteTypeQty)
+	VCmemory.tempTypeQty.pop(1)
+	print(VCmemory.tempTypeQty)
 
 
-def main():
+def compiler():
 	print('')
-	parsing()
+	parsing() # aqui se hace todo con el recorrido sintactico
 	print('')
 	printFunctionDir()
 	print('')
@@ -711,7 +715,12 @@ def main():
 	#print('pila Operadores:' , stackOP)
 	#print('pila de tipos:' ,stackType)
 	#print('pila de simbolos:' ,stackSymbol)
-	getTypesQty()
+	getTypesQty() # para saber cuantos tipos de datos tenemos ej: (4 ints, 3 float)
+	print('')
+
+	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
+
+
 
 	
 	
@@ -721,7 +730,8 @@ def main():
 	
 
 if __name__ == '__main__':
-    main()
+    compiler()
+	
 	
 
 

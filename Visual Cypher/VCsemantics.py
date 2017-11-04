@@ -25,6 +25,7 @@ def validateSemanticCube(operator,left_op, right_op): # esta funcion comprueba l
 
 def pushTo_FunctionDir(n,t, lineno):
     if not checkIfFunctionExists(n):
+        getTempsTypeQty()
         functionDir.append([ len(functionDir) + 1, n, t])
         resetScopeIndexs() # Resetea los indixes de la memoria ya que se cambio de contexto
     else:

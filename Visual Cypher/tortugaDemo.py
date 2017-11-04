@@ -9,3 +9,6 @@ mario.left(90)
 mario.forward(75)
 mario.home()   
 screen.exitonclick()
+
+
+

@@ -1,16 +1,16 @@
 import VCsemantics
 import VCparser
 
-globalVarTypeQty = []
-localVarTypeQty = [] # Esta lista nos sirve para saber cuantas variables de cada tipo hay en locales
-cteTypeQty = []
-tempTypeQty = []
+globalVarTypeQty = ['global']
+localVarTypeQty = ['local'] # Esta lista nos sirve para saber cuantas variables de cada tipo hay en locales
+cteTypeQty = ['cte']
+tempTypeQty = ['temps']
 
 #Variables globales
-indexGlobalInt = 100001 
-indexGlobalFloat = 130001
-indexGlobalString = 160001
-indexGlobalBoolean = 180001
+indexGlobalInt = 10001 
+indexGlobalFloat = 13001
+indexGlobalString = 16001
+indexGlobalBoolean = 18001
 
 #Variables locales
 indexLocalInt = 20001
@@ -36,7 +36,6 @@ def resetScopeIndexs():
     VCsemantics.indexLocalFloat = 23001
     VCsemantics.indexLocalString = 26001
     VCsemantics.indexLocalBoolean = 28001  
-
     # Hacemos esto porque estas variables globales solamente se usan en esta clase
     global indexTemporalInt, indexTemporalFloat, indexTemporalString, indexTemporalBoolean
     indexTemporalInt = 30001
@@ -80,13 +79,17 @@ def getContextTypesQty(): # Sirve para no desperdiciar memoria al saber los la c
                 if variable[2] == 'boolean':
                     numberBoolean += 1
         if context[0] == 1:
-            globalVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
+            globalVarTypeQty.append([ numberInts, numberFloat, numberString, numberBoolean])
         else:
-            localVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
+            localVarTypeQty.append([context[0], numberInts, numberFloat, numberString, numberBoolean])
         numberInts = 0 # se resetean en cada cambio de contexto
         numberFloat = 0
         numberString = 0
         numberBoolean = 0
     
         
+def getTempsTypeQty():
+    # insertamos a la lista el conteo de las variables temporales
+    tempTypeQty.append([VCsemantics.functionDir[-1][0], indexTemporalInt - 30001, 
+                        indexTemporalFloat - 33001, indexTemporalString - 36001, indexTemporalBoolean - 38001])
 
