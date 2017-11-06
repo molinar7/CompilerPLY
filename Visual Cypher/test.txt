@@ -6,16 +6,15 @@ float f;
 
 
 main(){
- 
- b = 50  ;
- a = b + 10;
- int c;
-  c = 70 + 1;
-  float f;
-  f = 67.0;
 
- f =60.0;
 
+a  = 10;
+
+int j;
+j = 67;
+a = a + j;
+
+print (a);
 
 }
 
