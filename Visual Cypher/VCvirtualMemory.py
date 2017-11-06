@@ -11,15 +11,15 @@ def execution():
 
     #Creaciond de las memorias
     createGlobalMemory()
-    createLocalMemory(VCmemory.localVarTypeQty[-1][0]) # Siempre la primer memoria local que se crea es la global
+    createLocalMemory(VCmemory.localVarTypeQty[-1][0]) # Siempre la primer memoria local que se crea es la main
     createTempMemory(VCmemory.tempTypeQty[-1][0])
 
     
 
     quadrupleTravel()
-    print(globalMemory)
-    print(localMemory)
-    print(tempMemory)
+    print('Global Memory' , globalMemory)
+    print('local memory' , localMemory)
+    print('temp memory', tempMemory)
    
    
   
@@ -85,9 +85,6 @@ def createTempMemory(contextIndex):
            
 
 
- 
-
-
 def quadrupleTravel():
     pointer = 0
 
@@ -101,33 +98,56 @@ def quadrupleTravel():
 
         elif quadruples[pointer][0] == '=':
            result = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+           if result == 'None':
+               print('Variable not initialized')
+               quit()
            setToMemory(quadruples[pointer][3], result)# se envia el memIndex y el valor que se guardara en ese mem index
 
         
         elif quadruples[pointer][0] == '+':
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:
+               print('Variable not initialized')
+               quit()
              result = left_value + right_value
              setToMemory(quadruples[pointer][3], result)
 
         elif quadruples[pointer][0] == '-':
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
+             if left_value == None or right_value == None:
+               print('Variable not initialized')
+               quit()
              result = left_value - right_value
              setToMemory(quadruples[pointer][3], result)
 
         elif quadruples[pointer][0] == '*':
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
+             if left_value == None or right_value == None:
+               print('Variable not initialized')
+               quit()
              result = left_value * right_value
              setToMemory(quadruples[pointer][3], result)
 
         elif quadruples[pointer][0] == '/':
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
+             if left_value == None or right_value == None:
+               print('Variable not initialized')
+               quit()
              result = left_value / right_value
              setToMemory(quadruples[pointer][3], result)
         
+
+        elif quadruples[pointer][0] == 'print':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             print(left_value)
+             
+
+
         pointer += 1
             
             
