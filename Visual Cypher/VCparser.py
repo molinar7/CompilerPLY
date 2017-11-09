@@ -421,13 +421,14 @@ def p_create_gosub(p):
 	global param_counter, functionIndex_onCall
 
 	functionName = VCsemantics.getFunctionName(functionIndex_onCall)
+	functionQuadrupleStart = VCsemantics.getFunctionQuadrupleStart(functionIndex_onCall)
 	functionParamas = VCsemantics.returnFunctionParamNumbers(functionIndex_onCall)
 
 	if param_counter != functionParamas:
 		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
 		quit()
 	else:
-		quadruples.append(['gosub', functionName, '', ''])
+		quadruples.append(['gosub', functionName, '', functionQuadrupleStart])
 
 		#resetear las variables globales
 		param_counter = 0
@@ -570,8 +571,8 @@ def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
 	varName, varType,  varMemIndex = VCsemantics.validateIDScope(p[-1] , str(p.lexer.lineno)) 
-	stackOP.append(varMemIndex) # quitar comments para mostrar memindex
-	#stackOP.append(varName) # quitar comments para mostrar nombre de var
+	#stackOP.append(varMemIndex) # quitar comments para mostrar memindex
+	stackOP.append(varName) # quitar comments para mostrar nombre de var
 	stackType.append(varType)
 
 
@@ -590,6 +591,7 @@ def p_var_cte(p):
 			|	VAR_FLOAT	push_cte_toTable
 			|	VAR_STRING	push_cte_toTable
 			|	VAR_BOOLEAN	push_cte_toTable
+		
 	'''
 	p[0] = p[1]
 
@@ -597,8 +599,8 @@ def p_push_cte_toTable(p):
 	'push_cte_toTable	:	epsilon'
 	
 	cteValue, cteType, cteIndexMem = VCsemantics.push_cte_toTable(p[-1], str(p.lexer.lineno))
-	stackOP.append(cteIndexMem)# muestra memIndex
-	#stackOP.append(cteValue)# muestra los valores, mas facil para debugear
+	#stackOP.append(cteIndexMem)# muestra memIndex
+	stackOP.append(cteValue)# muestra los valores, mas facil para debugear
 	stackType.append(cteType) 
 def p_fun_esp(p):
 	'''
@@ -691,6 +693,7 @@ def getTypesQty():
 	VCmemory.getContextTypesQty() # genera la lista con la cantidad de los tipos en los contextos
 	VCmemory.cteTypeQty.append([ VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
 								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
+
 	print(VCmemory.globalVarTypeQty)
 	print(VCmemory.localVarTypeQty)
 	print(VCmemory.cteTypeQty)

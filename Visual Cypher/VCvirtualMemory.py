@@ -89,6 +89,7 @@ def quadrupleTravel():
     pointer = 0
 
     while quadruples[pointer][0] != 'END':
+    
        
 
 
@@ -145,7 +146,133 @@ def quadrupleTravel():
         elif quadruples[pointer][0] == 'print':
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              print(left_value)
+
+        elif quadruples[pointer][0] == '>':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value > right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+        
+        elif quadruples[pointer][0] == '<':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value < right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == '==':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value == right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == '<=':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value <= right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == '>=':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value >= right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == '!=':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value != right_value:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+        
+        elif quadruples[pointer][0] == 'and':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value == True and right_value == True:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+        
+        elif quadruples[pointer][0] == 'or':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             right_value = getFromMemory(quadruples[pointer][2])
+
+             if left_value == None or right_value == None:# previene var no inlicialisadas
+               print('Variable not initialized')
+               quit()
+            
+             if left_value == True or right_value == True:
+               result = True
+             else:
+               result = False
+
+             setToMemory(quadruples[pointer][3], result)
+
              
+        elif quadruples[pointer][0] == 'gotoF':
+             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
+             if left_value == False:
+                 pointer = quadruples[pointer][3]
+                 continue
 
 
         pointer += 1
