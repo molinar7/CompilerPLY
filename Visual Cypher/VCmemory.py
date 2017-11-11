@@ -61,35 +61,27 @@ def getTempIndex (typeResult):
         return indexTemporalBoolean -1
         
 
-def getContextTypesQty(): # Sirve para no desperdiciar memoria al saber los la cantidad de tipos
-    numberInts = 0 
-    numberFloat = 0
-    numberString = 0
-    numberBoolean = 0
-    for context in VCsemantics.functionDir:
-        for variable in VCsemantics.varsTable:
-            if context[0] == variable[0]: # para nomas contar los tipos en el mismo contexto
-
-                if variable[2] == 'int':
-                    numberInts += 1
-                if variable[2] == 'float':
-                    numberFloat += 1
-                if variable[2] == 'String':
-                    numberString += 1
-                if variable[2] == 'boolean':
-                    numberBoolean += 1
-        if context[0] == 1:
-            globalVarTypeQty.append([ numberInts, numberFloat, numberString, numberBoolean])
-        else:
-            localVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
-        numberInts = 0 # se resetean en cada cambio de contexto
-        numberFloat = 0
-        numberString = 0
-        numberBoolean = 0
+       
+def getContextTypeQty():
+    contextName = VCsemantics.functionDir[-1][1]
+    context = VCsemantics.functionDir[-1][0]
+ 
     
-        
+    if context == 1:
+        globalVarTypeQty.append([ VCsemantics.indexGlobalInt - 10001, VCsemantics.indexGlobalFloat - 13001, 
+                                VCsemantics.indexGlobalString - 16001, VCsemantics.indexGlobalBoolean - 18001])
+
+    else:
+        localVarTypeQty.append([contextName, VCsemantics.indexLocalInt - 20001, VCsemantics.indexLocalFloat - 23001, 
+                            VCsemantics.indexLocalString - 26001, VCsemantics.indexLocalBoolean - 28001])
+
 def getTempsTypeQty():
+    context = VCsemantics.functionDir[-1][0]
+    contextName = VCsemantics.functionDir[-1][1]
+  
+    
     # insertamos a la lista el conteo de las variables temporales
-    tempTypeQty.append([VCsemantics.functionDir[-1][0], indexTemporalInt - 30001, 
+    tempTypeQty.append([contextName, indexTemporalInt - 30001, 
                         indexTemporalFloat - 33001, indexTemporalString - 36001, indexTemporalBoolean - 38001])
+
 

@@ -12,8 +12,9 @@ functionDir = [[1,'global', None]] # El directorio de funciones
 varsTable = [] #LA tabla de variables
 cteTable = [] # Tabla de constantes para no perder el valor
 functionSignature = [] # Esta lista nos ayuda a saber de que tipo son los aprametros de cada funcion
+arrDim = []
 
-localMemTemp = ['', ['int', 0], ['float', 0], ['String', 0], ['boolean', 0]] 
+
 
 
 def validateSemanticCube(operator,left_op, right_op): # esta funcion comprueba las operaciones entre tipos
@@ -25,6 +26,8 @@ def validateSemanticCube(operator,left_op, right_op): # esta funcion comprueba l
 
 def pushTo_FunctionDir(n,t, lineno):
     if not checkIfFunctionExists(n):
+        
+        getContextTypeQty()
         getTempsTypeQty()
         functionDir.append([ len(functionDir) + 1, n, t])
         resetScopeIndexs() # Resetea los indixes de la memoria ya que se cambio de contexto
@@ -113,7 +116,48 @@ def push_cte_toTable(cte, lineno):
                 else:
                     print('ERROR: al line: ',lineno, ',', cte, 'is not a valid constant')
                     quit()
-        
+
+def createArrInfo(lim_inf, lim_sup):
+    context = varsTable[-1][0] # con esto sabemos el contexto del arreglo
+    varId = varsTable[-1][1] # Con esto sabemos cual es la id del array, (es el ultimo agreado a varstable)
+    arrType = varsTable[-1][2]# el tipo de arreglo
+
+    #[context, id, -k, lim_inf, lim_sup]
+    arrDim.append([context, varId, -(lim_inf), lim_inf, lim_sup])
+
+    m0 =   lim_sup - lim_inf + 1 # la cantidad de casillas que ocupara el arreglo
+   
+    if arrType == 'int':
+        global indexGlobalInt, indexLocalInt
+        if context == 1:
+            indexGlobalInt = indexGlobalInt + m0 -1 # este menos uno se quita porque mis indices empiezan en 01 y no en 00
+        else:
+            indexLocalInt = indexLocalInt + m0 -1
+
+    if arrType == 'float':
+        global indexGlobalFloat, indexLocalFloat
+        if context == 1:
+            indexGlobalFloat = indexGlobalFloat + m0 -1
+        else:
+            indexLocalFloat = indexLocalFloat + m0 -1
+
+    if arrType == 'String':
+        global indexGlobalString, indexLocalString
+        if context == 1:
+            indexGlobalString = indexGlobalString + m0 -1 
+        else:
+            indexLocalString = indexLocalString + m0 -1
+
+    if arrType == 'boolean':
+        global indexGlobalBoolean, indexLocalBoolean
+        if context == 1:
+            indexGlobalBoolean = indexGlobalBoolean + m0 -1
+        else:
+            indexLocalBoolean = indexLocalBoolean + m0 -1
+
+    
+    
+    
 
 def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tiene la id
 

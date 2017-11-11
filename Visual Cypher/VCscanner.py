@@ -67,7 +67,8 @@ tokens = [
 'OP_LSQUARE_PAREN',
 'OP_RSQUARE_PAREN',
 'ARC',
-'WHILE'
+'WHILE',
+'ARRAY'
 
 
 
@@ -88,6 +89,7 @@ reserved = {
     'vector': 'VECTOR',
     'figure':   'FIGURE',
     'possess'   :  'POSSESS',
+    'array'    :   'ARRAY',
 
 
     # Condition tokens

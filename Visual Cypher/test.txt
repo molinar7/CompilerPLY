@@ -1,34 +1,21 @@
 program patito{
 
-int i,j,k;
+int a,b;
+float f;
+array int arr[0, 5];
 
-function int fact(int j){
-    int i;
-
-    i = j + (k - j*2 + j);
-
-    if(j == 1){
-        return j;
-    }
-    else{
-       
-       return  fact(3);
-    }
-
-
- 
-
-
+function void uno (int a){
+    a = 10;
 }
+
+
+
 
 main(){
 
+   b = arr[1];
 
 }
-
-
-
-
 
 
 }
