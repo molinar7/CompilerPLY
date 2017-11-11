@@ -1,22 +1,34 @@
 program patito{
 
-int a,b;
-float f;
+int i,j,k;
+
+function int fact(int j){
+    int i;
+
+    i = j + (k - j*2 + j);
+
+    if(j == 1){
+        return j;
+    }
+    else{
+       
+       return  fact(3);
+    }
 
 
+ 
+
+
+}
 
 main(){
 
 
-a  = 10;
-
-int j;
-j = 67;
-a = a + j;
-
-print (a);
-
 }
+
+
+
+
 
 
 }

@@ -81,7 +81,7 @@ def getContextTypesQty(): # Sirve para no desperdiciar memoria al saber los la c
         if context[0] == 1:
             globalVarTypeQty.append([ numberInts, numberFloat, numberString, numberBoolean])
         else:
-            localVarTypeQty.append([context[0], numberInts, numberFloat, numberString, numberBoolean])
+            localVarTypeQty.append([context[1], numberInts, numberFloat, numberString, numberBoolean])
         numberInts = 0 # se resetean en cada cambio de contexto
         numberFloat = 0
         numberString = 0

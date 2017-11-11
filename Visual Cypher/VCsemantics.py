@@ -186,6 +186,10 @@ def getFunctionType(index):
         if element[0] == index:
             return element[2]
     
+def getFunctionQuadrupleStart(index):
+    for element in functionDir:
+        if element[0] == index:
+            return element[3]
 
 
 # checa que los parametros de la llamada de funcion correspondan
