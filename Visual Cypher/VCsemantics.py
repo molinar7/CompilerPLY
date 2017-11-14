@@ -251,6 +251,18 @@ def getFunctionQuadrupleStart(index):
         if element[0] == index:
             return element[3]
 
+def getArrName(arrIndex):
+    for var in varsTable:
+        if var[0] != 1: # checa primero en el modulo
+            if var[3] == arrIndex:
+                return var[1]
+
+    for var in varsTable:
+        if var[0] == 1: # es global entonces
+            if var[3] == arrIndex:
+                return var[1]
+
+
 
 # checa que los parametros de la llamada de funcion correspondan
 # a la funcion

@@ -214,16 +214,18 @@ def p_assigment(p):
 def p_ver_quadruples(p):
 	'ver_quadruples	: epsilon'
 
-	arrIndex = stackOP.pop() # el nindice del arreglo
-	arrIndexType = stackType.pop()  # el tipo del arreglo
+	arrIndex = stackOP.pop() # el indice del arreglo
+	arrIndexType = stackType.pop()  # el tipo del indice del arreglo
 
 	if arrIndexType != 'int': 
 		print ("ERROR: Array index must be an Integer at line:" + str(p.lexer.lineno))
 		quit()
 
-	arrId = p[-5] # El nombre del arreglo
+	
 	arrIndexBase = stackOP.pop() # la base que se sumara
 	arrType = stackType.pop()# el tipo del arreglo
+	arrId = VCsemantics.getArrName(arrIndexBase)
+
 	
 
 	arrK, lim_inf, lim_sup = VCsemantics.validateArrIdScope(arrId,str(p.lexer.lineno ))
@@ -597,8 +599,10 @@ def p_fact(p):
 	'''
 	fact	:	var_cte			
 			|	OP_LPAREN		push_bottle_bottom		mega_expression		OP_RPAREN		remove_bottle_bottom
-			|	OP_LPAREN		push_bottle_bottom	ID		push_varID_to_Stack	 OP_LSQUARE_PAREN			mega_expression			OP_RSQUARE_PAREN	ver_quadruples	OP_RPAREN		remove_bottle_bottom
+			|	ID		push_varID_to_Stack	 OP_LSQUARE_PAREN 	push_bottle_bottom		mega_expression			OP_RSQUARE_PAREN	ver_quadruples		remove_bottle_bottom
 	'''
+
+
 def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo

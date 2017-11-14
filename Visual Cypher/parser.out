@@ -121,7 +121,7 @@ Rule 109   term -> fact check_symbol_term OP_TIMES push_symbol term
 Rule 110   check_symbol_term -> epsilon
 Rule 111   fact -> var_cte
 Rule 112   fact -> OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-Rule 113   fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+Rule 113   fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
 Rule 114   push_varID_to_Stack -> epsilon
 Rule 115   push_bottle_bottom -> epsilon
 Rule 116   remove_bottle_bottom -> epsilon
@@ -177,14 +177,14 @@ OP_GREATER_EQUALS_THAN : 97
 OP_GREATER_THAN      : 95
 OP_LESS_EQUALS_THAN  : 98
 OP_LESS_THAN         : 96
-OP_LPAREN            : 10 11 17 58 59 65 75 76 82 112 113 138
+OP_LPAREN            : 10 11 17 58 59 65 75 76 82 112 138
 OP_LSQUARE_PAREN     : 3 55 113
 OP_MINUS             : 72 72 104
 OP_MINUS_EQUALS      : 70
 OP_NOT_EQUALS        : 100
 OP_PLUS              : 71 71 103
 OP_PLUS_EQUALS       : 69
-OP_RPAREN            : 10 11 17 58 59 65 75 76 82 112 113 138
+OP_RPAREN            : 10 11 17 58 59 65 75 76 82 112 138
 OP_RSQUARE_PAREN     : 3 55 113
 OP_TIMES             : 109
 OP_TWO_POINTS        : 124 136 137 138
@@ -1462,7 +1462,7 @@ state 92
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -1625,7 +1625,7 @@ state 104
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -1669,7 +1669,7 @@ state 105
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -1837,12 +1837,11 @@ state 112
 state 113
 
     (112) fact -> OP_LPAREN . push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> OP_LPAREN . push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
     (115) push_bottle_bottom -> . epsilon
     (139) epsilon -> .
 
-    ID              reduce using rule 139 (epsilon -> .)
     OP_LPAREN       reduce using rule 139 (epsilon -> .)
+    ID              reduce using rule 139 (epsilon -> .)
     VAR_INT         reduce using rule 139 (epsilon -> .)
     VAR_FLOAT       reduce using rule 139 (epsilon -> .)
     VAR_STRING      reduce using rule 139 (epsilon -> .)
@@ -1853,10 +1852,12 @@ state 113
 
 state 114
 
+    (113) fact -> ID . push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> ID . push_varID_to_Stack
     (114) push_varID_to_Stack -> . epsilon
     (139) epsilon -> .
 
+    OP_LSQUARE_PAREN reduce using rule 139 (epsilon -> .)
     OP_DIVISION     reduce using rule 139 (epsilon -> .)
     OP_TIMES        reduce using rule 139 (epsilon -> .)
     OP_PLUS         reduce using rule 139 (epsilon -> .)
@@ -2140,7 +2141,7 @@ state 129
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -2231,7 +2232,7 @@ state 134
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -2589,7 +2590,6 @@ state 157
 state 158
 
     (112) fact -> OP_LPAREN push_bottle_bottom . mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> OP_LPAREN push_bottle_bottom . ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
     (90) mega_expression -> . super_expression check_symbol_megaexp
     (91) mega_expression -> . super_expression AND push_symbol super_expression check_symbol_megaexp
     (92) mega_expression -> . super_expression OR push_symbol super_expression check_symbol_megaexp
@@ -2608,15 +2608,15 @@ state 158
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
     (120) var_cte -> . VAR_STRING push_cte_toTable
     (121) var_cte -> . VAR_BOOLEAN push_cte_toTable
 
-    ID              shift and go to state 204
     OP_LPAREN       shift and go to state 113
+    ID              shift and go to state 114
     VAR_INT         shift and go to state 115
     VAR_FLOAT       shift and go to state 116
     VAR_STRING      shift and go to state 117
@@ -2633,8 +2633,8 @@ state 159
 
     (115) push_bottle_bottom -> epsilon .
 
-    ID              reduce using rule 115 (push_bottle_bottom -> epsilon .)
     OP_LPAREN       reduce using rule 115 (push_bottle_bottom -> epsilon .)
+    ID              reduce using rule 115 (push_bottle_bottom -> epsilon .)
     VAR_INT         reduce using rule 115 (push_bottle_bottom -> epsilon .)
     VAR_FLOAT       reduce using rule 115 (push_bottle_bottom -> epsilon .)
     VAR_STRING      reduce using rule 115 (push_bottle_bottom -> epsilon .)
@@ -2643,8 +2643,10 @@ state 159
 
 state 160
 
+    (113) fact -> ID push_varID_to_Stack . OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> ID push_varID_to_Stack .
 
+    OP_LSQUARE_PAREN shift and go to state 204
     OP_DIVISION     reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
     OP_TIMES        reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
     OP_PLUS         reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
@@ -2667,6 +2669,7 @@ state 161
 
     (114) push_varID_to_Stack -> epsilon .
 
+    OP_LSQUARE_PAREN reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_DIVISION     reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_TIMES        reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_PLUS         reduce using rule 114 (push_varID_to_Stack -> epsilon .)
@@ -2684,7 +2687,6 @@ state 161
     COMA            reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_RSQUARE_PAREN reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_EQUALS       reduce using rule 114 (push_varID_to_Stack -> epsilon .)
-    OP_LSQUARE_PAREN reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_PLUS_EQUALS  reduce using rule 114 (push_varID_to_Stack -> epsilon .)
     OP_MINUS_EQUALS reduce using rule 114 (push_varID_to_Stack -> epsilon .)
 
@@ -2820,7 +2822,7 @@ state 167
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -2951,7 +2953,7 @@ state 174
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3012,7 +3014,7 @@ state 177
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3054,7 +3056,7 @@ state 178
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3180,7 +3182,7 @@ state 188
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3247,7 +3249,7 @@ state 191
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3285,7 +3287,7 @@ state 192
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3316,7 +3318,7 @@ state 193
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3346,7 +3348,7 @@ state 194
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3376,7 +3378,7 @@ state 195
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3406,7 +3408,7 @@ state 196
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3436,7 +3438,7 @@ state 197
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3466,7 +3468,7 @@ state 198
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3558,28 +3560,19 @@ state 203
 
 state 204
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID . push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
-    (117) var_cte -> ID . push_varID_to_Stack
-    (114) push_varID_to_Stack -> . epsilon
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN . push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
+    (115) push_bottle_bottom -> . epsilon
     (139) epsilon -> .
 
-    OP_LSQUARE_PAREN reduce using rule 139 (epsilon -> .)
-    OP_DIVISION     reduce using rule 139 (epsilon -> .)
-    OP_TIMES        reduce using rule 139 (epsilon -> .)
-    OP_PLUS         reduce using rule 139 (epsilon -> .)
-    OP_MINUS        reduce using rule 139 (epsilon -> .)
-    OP_GREATER_THAN reduce using rule 139 (epsilon -> .)
-    OP_LESS_THAN    reduce using rule 139 (epsilon -> .)
-    OP_GREATER_EQUALS_THAN reduce using rule 139 (epsilon -> .)
-    OP_LESS_EQUALS_THAN reduce using rule 139 (epsilon -> .)
-    OP_EQUALS_TWO   reduce using rule 139 (epsilon -> .)
-    OP_NOT_EQUALS   reduce using rule 139 (epsilon -> .)
-    AND             reduce using rule 139 (epsilon -> .)
-    OR              reduce using rule 139 (epsilon -> .)
-    OP_RPAREN       reduce using rule 139 (epsilon -> .)
+    OP_LPAREN       reduce using rule 139 (epsilon -> .)
+    ID              reduce using rule 139 (epsilon -> .)
+    VAR_INT         reduce using rule 139 (epsilon -> .)
+    VAR_FLOAT       reduce using rule 139 (epsilon -> .)
+    VAR_STRING      reduce using rule 139 (epsilon -> .)
+    VAR_BOOLEAN     reduce using rule 139 (epsilon -> .)
 
-    push_varID_to_Stack            shift and go to state 245
-    epsilon                        shift and go to state 161
+    push_bottle_bottom             shift and go to state 245
+    epsilon                        shift and go to state 159
 
 state 205
 
@@ -3821,7 +3814,7 @@ state 230
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -3985,7 +3978,7 @@ state 240
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -4015,7 +4008,7 @@ state 241
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -4042,7 +4035,7 @@ state 242
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -4068,7 +4061,7 @@ state 243
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -4114,24 +4107,45 @@ state 244
 
 state 245
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack . OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
-    (117) var_cte -> ID push_varID_to_Stack .
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom . mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
+    (90) mega_expression -> . super_expression check_symbol_megaexp
+    (91) mega_expression -> . super_expression AND push_symbol super_expression check_symbol_megaexp
+    (92) mega_expression -> . super_expression OR push_symbol super_expression check_symbol_megaexp
+    (94) super_expression -> . expression check_symbol_superexp
+    (95) super_expression -> . expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
+    (96) super_expression -> . expression OP_LESS_THAN push_symbol expression check_symbol_superexp
+    (97) super_expression -> . expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
+    (98) super_expression -> . expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
+    (99) super_expression -> . expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
+    (100) super_expression -> . expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
+    (102) expression -> . term check_symbol_exp
+    (103) expression -> . term check_symbol_exp OP_PLUS push_symbol expression
+    (104) expression -> . term check_symbol_exp OP_MINUS push_symbol expression
+    (107) term -> . fact check_symbol_term
+    (108) term -> . fact check_symbol_term OP_DIVISION push_symbol term
+    (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
+    (111) fact -> . var_cte
+    (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
+    (117) var_cte -> . ID push_varID_to_Stack
+    (118) var_cte -> . VAR_INT push_cte_toTable
+    (119) var_cte -> . VAR_FLOAT push_cte_toTable
+    (120) var_cte -> . VAR_STRING push_cte_toTable
+    (121) var_cte -> . VAR_BOOLEAN push_cte_toTable
 
-    OP_LSQUARE_PAREN shift and go to state 281
-    OP_DIVISION     reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_TIMES        reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_PLUS         reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_MINUS        reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_GREATER_THAN reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_LESS_THAN    reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_GREATER_EQUALS_THAN reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_LESS_EQUALS_THAN reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_EQUALS_TWO   reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_NOT_EQUALS   reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    AND             reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OR              reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
-    OP_RPAREN       reduce using rule 117 (var_cte -> ID push_varID_to_Stack .)
+    OP_LPAREN       shift and go to state 113
+    ID              shift and go to state 114
+    VAR_INT         shift and go to state 115
+    VAR_FLOAT       shift and go to state 116
+    VAR_STRING      shift and go to state 117
+    VAR_BOOLEAN     shift and go to state 118
 
+    mega_expression                shift and go to state 281
+    super_expression               shift and go to state 108
+    expression                     shift and go to state 109
+    term                           shift and go to state 110
+    fact                           shift and go to state 111
+    var_cte                        shift and go to state 112
 
 state 246
 
@@ -4191,7 +4205,22 @@ state 252
     (56) ver_quadruples -> epsilon .
 
     OP_EQUALS       reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_DIVISION     reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_TIMES        reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_PLUS         reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_MINUS        reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_GREATER_THAN reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_LESS_THAN    reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_GREATER_EQUALS_THAN reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_LESS_EQUALS_THAN reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_EQUALS_TWO   reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_NOT_EQUALS   reduce using rule 56 (ver_quadruples -> epsilon .)
+    AND             reduce using rule 56 (ver_quadruples -> epsilon .)
+    OR              reduce using rule 56 (ver_quadruples -> epsilon .)
+    SEMICOLON       reduce using rule 56 (ver_quadruples -> epsilon .)
     OP_RPAREN       reduce using rule 56 (ver_quadruples -> epsilon .)
+    COMA            reduce using rule 56 (ver_quadruples -> epsilon .)
+    OP_RSQUARE_PAREN reduce using rule 56 (ver_quadruples -> epsilon .)
 
 
 state 253
@@ -4297,7 +4326,7 @@ state 261
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -4603,45 +4632,10 @@ state 280
 
 state 281
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN . mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
-    (90) mega_expression -> . super_expression check_symbol_megaexp
-    (91) mega_expression -> . super_expression AND push_symbol super_expression check_symbol_megaexp
-    (92) mega_expression -> . super_expression OR push_symbol super_expression check_symbol_megaexp
-    (94) super_expression -> . expression check_symbol_superexp
-    (95) super_expression -> . expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
-    (96) super_expression -> . expression OP_LESS_THAN push_symbol expression check_symbol_superexp
-    (97) super_expression -> . expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
-    (98) super_expression -> . expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
-    (99) super_expression -> . expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
-    (100) super_expression -> . expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
-    (102) expression -> . term check_symbol_exp
-    (103) expression -> . term check_symbol_exp OP_PLUS push_symbol expression
-    (104) expression -> . term check_symbol_exp OP_MINUS push_symbol expression
-    (107) term -> . fact check_symbol_term
-    (108) term -> . fact check_symbol_term OP_DIVISION push_symbol term
-    (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
-    (111) fact -> . var_cte
-    (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
-    (117) var_cte -> . ID push_varID_to_Stack
-    (118) var_cte -> . VAR_INT push_cte_toTable
-    (119) var_cte -> . VAR_FLOAT push_cte_toTable
-    (120) var_cte -> . VAR_STRING push_cte_toTable
-    (121) var_cte -> . VAR_BOOLEAN push_cte_toTable
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression . OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
 
-    OP_LPAREN       shift and go to state 113
-    ID              shift and go to state 114
-    VAR_INT         shift and go to state 115
-    VAR_FLOAT       shift and go to state 116
-    VAR_STRING      shift and go to state 117
-    VAR_BOOLEAN     shift and go to state 118
+    OP_RSQUARE_PAREN shift and go to state 299
 
-    mega_expression                shift and go to state 299
-    super_expression               shift and go to state 108
-    expression                     shift and go to state 109
-    term                           shift and go to state 110
-    fact                           shift and go to state 111
-    var_cte                        shift and go to state 112
 
 state 282
 
@@ -4947,10 +4941,29 @@ state 298
 
 state 299
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression . OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN . ver_quadruples remove_bottle_bottom
+    (56) ver_quadruples -> . epsilon
+    (139) epsilon -> .
 
-    OP_RSQUARE_PAREN shift and go to state 321
+    OP_DIVISION     reduce using rule 139 (epsilon -> .)
+    OP_TIMES        reduce using rule 139 (epsilon -> .)
+    OP_PLUS         reduce using rule 139 (epsilon -> .)
+    OP_MINUS        reduce using rule 139 (epsilon -> .)
+    OP_GREATER_THAN reduce using rule 139 (epsilon -> .)
+    OP_LESS_THAN    reduce using rule 139 (epsilon -> .)
+    OP_GREATER_EQUALS_THAN reduce using rule 139 (epsilon -> .)
+    OP_LESS_EQUALS_THAN reduce using rule 139 (epsilon -> .)
+    OP_EQUALS_TWO   reduce using rule 139 (epsilon -> .)
+    OP_NOT_EQUALS   reduce using rule 139 (epsilon -> .)
+    AND             reduce using rule 139 (epsilon -> .)
+    OR              reduce using rule 139 (epsilon -> .)
+    SEMICOLON       reduce using rule 139 (epsilon -> .)
+    OP_RPAREN       reduce using rule 139 (epsilon -> .)
+    COMA            reduce using rule 139 (epsilon -> .)
+    OP_RSQUARE_PAREN reduce using rule 139 (epsilon -> .)
 
+    ver_quadruples                 shift and go to state 321
+    epsilon                        shift and go to state 252
 
 state 300
 
@@ -5030,7 +5043,7 @@ state 304
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -5264,14 +5277,29 @@ state 320
 
 state 321
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN . ver_quadruples OP_RPAREN remove_bottle_bottom
-    (56) ver_quadruples -> . epsilon
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples . remove_bottle_bottom
+    (116) remove_bottle_bottom -> . epsilon
     (139) epsilon -> .
 
+    OP_DIVISION     reduce using rule 139 (epsilon -> .)
+    OP_TIMES        reduce using rule 139 (epsilon -> .)
+    OP_PLUS         reduce using rule 139 (epsilon -> .)
+    OP_MINUS        reduce using rule 139 (epsilon -> .)
+    OP_GREATER_THAN reduce using rule 139 (epsilon -> .)
+    OP_LESS_THAN    reduce using rule 139 (epsilon -> .)
+    OP_GREATER_EQUALS_THAN reduce using rule 139 (epsilon -> .)
+    OP_LESS_EQUALS_THAN reduce using rule 139 (epsilon -> .)
+    OP_EQUALS_TWO   reduce using rule 139 (epsilon -> .)
+    OP_NOT_EQUALS   reduce using rule 139 (epsilon -> .)
+    AND             reduce using rule 139 (epsilon -> .)
+    OR              reduce using rule 139 (epsilon -> .)
+    SEMICOLON       reduce using rule 139 (epsilon -> .)
     OP_RPAREN       reduce using rule 139 (epsilon -> .)
+    COMA            reduce using rule 139 (epsilon -> .)
+    OP_RSQUARE_PAREN reduce using rule 139 (epsilon -> .)
 
-    ver_quadruples                 shift and go to state 335
-    epsilon                        shift and go to state 252
+    remove_bottle_bottom           shift and go to state 335
+    epsilon                        shift and go to state 280
 
 state 322
 
@@ -5422,16 +5450,31 @@ state 334
 
 state 335
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples . OP_RPAREN remove_bottle_bottom
+    (113) fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .
 
-    OP_RPAREN       shift and go to state 342
+    OP_DIVISION     reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_TIMES        reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_PLUS         reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_MINUS        reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_GREATER_THAN reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_LESS_THAN    reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_GREATER_EQUALS_THAN reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_LESS_EQUALS_THAN reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_EQUALS_TWO   reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_NOT_EQUALS   reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    AND             reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OR              reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    SEMICOLON       reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_RPAREN       reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    COMA            reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
+    OP_RSQUARE_PAREN reduce using rule 113 (fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom .)
 
 
 state 336
 
     (136) figura_attr -> COLOR OP_TWO_POINTS . ID SEMICOLON
 
-    ID              shift and go to state 343
+    ID              shift and go to state 342
 
 
 state 337
@@ -5455,7 +5498,7 @@ state 337
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -5469,7 +5512,7 @@ state 337
     VAR_STRING      shift and go to state 117
     VAR_BOOLEAN     shift and go to state 118
 
-    mega_expression                shift and go to state 344
+    mega_expression                shift and go to state 343
     super_expression               shift and go to state 108
     expression                     shift and go to state 109
     term                           shift and go to state 110
@@ -5480,14 +5523,14 @@ state 338
 
     (138) vector -> VECTOR ID . OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON
 
-    OP_TWO_POINTS   shift and go to state 345
+    OP_TWO_POINTS   shift and go to state 344
 
 
 state 339
 
     (55) assigment -> ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_EQUALS push_symbol mega_expression equals_quadruple . SEMICOLON
 
-    SEMICOLON       shift and go to state 346
+    SEMICOLON       shift and go to state 345
 
 
 state 340
@@ -5510,8 +5553,8 @@ state 340
     STRING          reduce using rule 139 (epsilon -> .)
     BOOLEAN         reduce using rule 139 (epsilon -> .)
 
-    fill_if_goto                   shift and go to state 347
-    epsilon                        shift and go to state 348
+    fill_if_goto                   shift and go to state 346
+    epsilon                        shift and go to state 347
 
 state 341
 
@@ -5533,57 +5576,31 @@ state 341
     STRING          reduce using rule 139 (epsilon -> .)
     BOOLEAN         reduce using rule 139 (epsilon -> .)
 
-    loop_fill                      shift and go to state 349
+    loop_fill                      shift and go to state 348
     epsilon                        shift and go to state 323
 
 state 342
 
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN . remove_bottle_bottom
-    (116) remove_bottle_bottom -> . epsilon
-    (139) epsilon -> .
+    (136) figura_attr -> COLOR OP_TWO_POINTS ID . SEMICOLON
 
-    OP_DIVISION     reduce using rule 139 (epsilon -> .)
-    OP_TIMES        reduce using rule 139 (epsilon -> .)
-    OP_PLUS         reduce using rule 139 (epsilon -> .)
-    OP_MINUS        reduce using rule 139 (epsilon -> .)
-    OP_GREATER_THAN reduce using rule 139 (epsilon -> .)
-    OP_LESS_THAN    reduce using rule 139 (epsilon -> .)
-    OP_GREATER_EQUALS_THAN reduce using rule 139 (epsilon -> .)
-    OP_LESS_EQUALS_THAN reduce using rule 139 (epsilon -> .)
-    OP_EQUALS_TWO   reduce using rule 139 (epsilon -> .)
-    OP_NOT_EQUALS   reduce using rule 139 (epsilon -> .)
-    AND             reduce using rule 139 (epsilon -> .)
-    OR              reduce using rule 139 (epsilon -> .)
-    SEMICOLON       reduce using rule 139 (epsilon -> .)
-    OP_RPAREN       reduce using rule 139 (epsilon -> .)
-    COMA            reduce using rule 139 (epsilon -> .)
-    OP_RSQUARE_PAREN reduce using rule 139 (epsilon -> .)
+    SEMICOLON       shift and go to state 349
 
-    remove_bottle_bottom           shift and go to state 350
-    epsilon                        shift and go to state 280
 
 state 343
 
-    (136) figura_attr -> COLOR OP_TWO_POINTS ID . SEMICOLON
+    (137) figura_attr -> SIZE OP_TWO_POINTS mega_expression . SEMICOLON
 
-    SEMICOLON       shift and go to state 351
+    SEMICOLON       shift and go to state 350
 
 
 state 344
 
-    (137) figura_attr -> SIZE OP_TWO_POINTS mega_expression . SEMICOLON
+    (138) vector -> VECTOR ID OP_TWO_POINTS . OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON
 
-    SEMICOLON       shift and go to state 352
+    OP_LPAREN       shift and go to state 351
 
 
 state 345
-
-    (138) vector -> VECTOR ID OP_TWO_POINTS . OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON
-
-    OP_LPAREN       shift and go to state 353
-
-
-state 346
 
     (55) assigment -> ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_EQUALS push_symbol mega_expression equals_quadruple SEMICOLON .
 
@@ -5607,7 +5624,7 @@ state 346
     VAR_BOOLEAN     reduce using rule 55 (assigment -> ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_EQUALS push_symbol mega_expression equals_quadruple SEMICOLON .)
 
 
-state 347
+state 346
 
     (59) if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF2 if_goto_quadruple ELSE bloque fill_if_goto .
 
@@ -5626,7 +5643,7 @@ state 347
     BOOLEAN         reduce using rule 59 (if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF2 if_goto_quadruple ELSE bloque fill_if_goto .)
 
 
-state 348
+state 347
 
     (63) fill_if_goto -> epsilon .
 
@@ -5645,7 +5662,7 @@ state 348
     BOOLEAN         reduce using rule 63 (fill_if_goto -> epsilon .)
 
 
-state 349
+state 348
 
     (75) for -> FOR OP_LPAREN assigment loop_jumpCount mega_expression SEMICOLON loop_gotoF increment OP_RPAREN bloque loop_fill .
 
@@ -5664,29 +5681,7 @@ state 349
     BOOLEAN         reduce using rule 75 (for -> FOR OP_LPAREN assigment loop_jumpCount mega_expression SEMICOLON loop_gotoF increment OP_RPAREN bloque loop_fill .)
 
 
-state 350
-
-    (113) fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .
-
-    OP_DIVISION     reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_TIMES        reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_PLUS         reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_MINUS        reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_GREATER_THAN reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_LESS_THAN    reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_GREATER_EQUALS_THAN reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_LESS_EQUALS_THAN reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_EQUALS_TWO   reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_NOT_EQUALS   reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    AND             reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OR              reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    SEMICOLON       reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_RPAREN       reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    COMA            reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-    OP_RSQUARE_PAREN reduce using rule 113 (fact -> OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom .)
-
-
-state 351
+state 349
 
     (136) figura_attr -> COLOR OP_TWO_POINTS ID SEMICOLON .
 
@@ -5696,7 +5691,7 @@ state 351
     VECTOR          reduce using rule 136 (figura_attr -> COLOR OP_TWO_POINTS ID SEMICOLON .)
 
 
-state 352
+state 350
 
     (137) figura_attr -> SIZE OP_TWO_POINTS mega_expression SEMICOLON .
 
@@ -5706,7 +5701,7 @@ state 352
     VECTOR          reduce using rule 137 (figura_attr -> SIZE OP_TWO_POINTS mega_expression SEMICOLON .)
 
 
-state 353
+state 351
 
     (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN . mega_expression COMA mega_expression OP_RPAREN SEMICOLON
     (90) mega_expression -> . super_expression check_symbol_megaexp
@@ -5727,7 +5722,56 @@ state 353
     (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
     (111) fact -> . var_cte
     (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
+    (117) var_cte -> . ID push_varID_to_Stack
+    (118) var_cte -> . VAR_INT push_cte_toTable
+    (119) var_cte -> . VAR_FLOAT push_cte_toTable
+    (120) var_cte -> . VAR_STRING push_cte_toTable
+    (121) var_cte -> . VAR_BOOLEAN push_cte_toTable
+
+    OP_LPAREN       shift and go to state 113
+    ID              shift and go to state 114
+    VAR_INT         shift and go to state 115
+    VAR_FLOAT       shift and go to state 116
+    VAR_STRING      shift and go to state 117
+    VAR_BOOLEAN     shift and go to state 118
+
+    mega_expression                shift and go to state 352
+    super_expression               shift and go to state 108
+    expression                     shift and go to state 109
+    term                           shift and go to state 110
+    fact                           shift and go to state 111
+    var_cte                        shift and go to state 112
+
+state 352
+
+    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression . COMA mega_expression OP_RPAREN SEMICOLON
+
+    COMA            shift and go to state 353
+
+
+state 353
+
+    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA . mega_expression OP_RPAREN SEMICOLON
+    (90) mega_expression -> . super_expression check_symbol_megaexp
+    (91) mega_expression -> . super_expression AND push_symbol super_expression check_symbol_megaexp
+    (92) mega_expression -> . super_expression OR push_symbol super_expression check_symbol_megaexp
+    (94) super_expression -> . expression check_symbol_superexp
+    (95) super_expression -> . expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
+    (96) super_expression -> . expression OP_LESS_THAN push_symbol expression check_symbol_superexp
+    (97) super_expression -> . expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
+    (98) super_expression -> . expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
+    (99) super_expression -> . expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
+    (100) super_expression -> . expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
+    (102) expression -> . term check_symbol_exp
+    (103) expression -> . term check_symbol_exp OP_PLUS push_symbol expression
+    (104) expression -> . term check_symbol_exp OP_MINUS push_symbol expression
+    (107) term -> . fact check_symbol_term
+    (108) term -> . fact check_symbol_term OP_DIVISION push_symbol term
+    (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
+    (111) fact -> . var_cte
+    (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
+    (113) fact -> . ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
     (117) var_cte -> . ID push_varID_to_Stack
     (118) var_cte -> . VAR_INT push_cte_toTable
     (119) var_cte -> . VAR_FLOAT push_cte_toTable
@@ -5750,68 +5794,19 @@ state 353
 
 state 354
 
-    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression . COMA mega_expression OP_RPAREN SEMICOLON
+    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression . OP_RPAREN SEMICOLON
 
-    COMA            shift and go to state 355
+    OP_RPAREN       shift and go to state 355
 
 
 state 355
 
-    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA . mega_expression OP_RPAREN SEMICOLON
-    (90) mega_expression -> . super_expression check_symbol_megaexp
-    (91) mega_expression -> . super_expression AND push_symbol super_expression check_symbol_megaexp
-    (92) mega_expression -> . super_expression OR push_symbol super_expression check_symbol_megaexp
-    (94) super_expression -> . expression check_symbol_superexp
-    (95) super_expression -> . expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
-    (96) super_expression -> . expression OP_LESS_THAN push_symbol expression check_symbol_superexp
-    (97) super_expression -> . expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
-    (98) super_expression -> . expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
-    (99) super_expression -> . expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
-    (100) super_expression -> . expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
-    (102) expression -> . term check_symbol_exp
-    (103) expression -> . term check_symbol_exp OP_PLUS push_symbol expression
-    (104) expression -> . term check_symbol_exp OP_MINUS push_symbol expression
-    (107) term -> . fact check_symbol_term
-    (108) term -> . fact check_symbol_term OP_DIVISION push_symbol term
-    (109) term -> . fact check_symbol_term OP_TIMES push_symbol term
-    (111) fact -> . var_cte
-    (112) fact -> . OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-    (113) fact -> . OP_LPAREN push_bottle_bottom ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_RPAREN remove_bottle_bottom
-    (117) var_cte -> . ID push_varID_to_Stack
-    (118) var_cte -> . VAR_INT push_cte_toTable
-    (119) var_cte -> . VAR_FLOAT push_cte_toTable
-    (120) var_cte -> . VAR_STRING push_cte_toTable
-    (121) var_cte -> . VAR_BOOLEAN push_cte_toTable
-
-    OP_LPAREN       shift and go to state 113
-    ID              shift and go to state 114
-    VAR_INT         shift and go to state 115
-    VAR_FLOAT       shift and go to state 116
-    VAR_STRING      shift and go to state 117
-    VAR_BOOLEAN     shift and go to state 118
-
-    mega_expression                shift and go to state 356
-    super_expression               shift and go to state 108
-    expression                     shift and go to state 109
-    term                           shift and go to state 110
-    fact                           shift and go to state 111
-    var_cte                        shift and go to state 112
-
-state 356
-
-    (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression . OP_RPAREN SEMICOLON
-
-    OP_RPAREN       shift and go to state 357
-
-
-state 357
-
     (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression OP_RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 358
+    SEMICOLON       shift and go to state 356
 
 
-state 358
+state 356
 
     (138) vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON .
 
