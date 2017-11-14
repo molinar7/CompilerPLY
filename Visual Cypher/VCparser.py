@@ -208,9 +208,36 @@ def	p_statement(p):
 
 def p_assigment(p):
 	'''
-	assigment	:	ID		push_varID_to_Stack		OP_EQUALS	push_symbol				mega_expression			equals_quadruple	SEMICOLON
-				|	ID		OP_LSQUARE_PAREN		VAR_INT		OP_RSQUARE_PAREN		OP_EQUALS				mega_expression		SEMICOLON
+	assigment	:	ID		push_varID_to_Stack		OP_EQUALS	push_symbol		mega_expression			equals_quadruple	SEMICOLON
+				|	ID		push_varID_to_Stack		OP_LSQUARE_PAREN			mega_expression			OP_RSQUARE_PAREN	ver_quadruples	OP_EQUALS	push_symbol		mega_expression	 equals_quadruple	SEMICOLON
 	'''
+def p_ver_quadruples(p):
+	'ver_quadruples	: epsilon'
+
+	arrIndex = stackOP.pop() # el nindice del arreglo
+	arrIndexType = stackType.pop()  # el tipo del arreglo
+
+	if arrIndexType != 'int': 
+		print ("ERROR: Array index must be an Integer at line:" + str(p.lexer.lineno))
+		quit()
+
+	arrId = p[-5] # El nombre del arreglo
+	arrIndexBase = stackOP.pop() # la base que se sumara
+	arrType = stackType.pop()# el tipo del arreglo
+	
+
+	arrK, lim_inf, lim_sup = VCsemantics.validateArrIdScope(arrId,str(p.lexer.lineno ))
+
+	tempo = VCmemory.getTempIndex(arrType)# ayuda a conseguir el index de la temporal
+	quadruples.append(['ver', arrIndex, lim_inf, lim_sup])
+	quadruples.append(['+-k', arrIndex, arrK ,tempo])
+
+	newTempo = VCmemory.getTempIndex(arrType) # al sumarle la base se guarda en nueva temporal
+	quadruples.append(['+base', tempo, arrIndexBase , newTempo])
+
+	stackOP.append('(' + str(newTempo) + ')')
+	stackType.append(arrType)
+	
 
 def p_equals_quadruple(p):
 	'equals_quadruple	:	epsilon'

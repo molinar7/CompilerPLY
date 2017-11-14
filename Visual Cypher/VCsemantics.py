@@ -119,11 +119,12 @@ def push_cte_toTable(cte, lineno):
 
 def createArrInfo(lim_inf, lim_sup):
     context = varsTable[-1][0] # con esto sabemos el contexto del arreglo
-    varId = varsTable[-1][1] # Con esto sabemos cual es la id del array, (es el ultimo agreado a varstable)
+    arrId = varsTable[-1][1] # Con esto sabemos cual es la id del array, (es el ultimo agreado a varstable)
+    arrMemIndex = varsTable[-1][3]
     arrType = varsTable[-1][2]# el tipo de arreglo
 
-    #[context, id, -k, lim_inf, lim_sup]
-    arrDim.append([context, varId, -(lim_inf), lim_inf, lim_sup])
+    #[context, id, type,  -k, lim_inf, lim_sup]
+    arrDim.append([context, arrId, -(lim_inf), lim_inf, lim_sup])
 
     m0 =   lim_sup - lim_inf + 1 # la cantidad de casillas que ocupara el arreglo
    
@@ -184,8 +185,23 @@ def validateIDScope(v, lineno): # Esta funcion nos sirve para ver que scope tien
             quit()
 
 
+def validateArrIdScope (id, lineno): #BORRAR maybeee no se usaaa pero s epodria usar
+     if checkIfVarIdExistsOnModule(id):
+         for element in arrDim:
+             if element[0] == len(functionDir):
+                 if element[1] == id:
+                    return element[2],element[3],element[4]# k,lim_inf, lim_sup
+     else:# Si el arreglo no existio en el contexto actual entonces debe ser global
+        if checkIfVarIdExistsOnGlobal(id):
+            for element in arrDim:
+                if element[0] == 1:
+                    if element[1] == id:
+                        return element[2],element[3],element[4] #  k,lim_inf, lim_sup
+        else:
+            print('ERROR:', id, 'at line', lineno ,'does not exist, you need to define it')
+            quit()
 
-
+       
 
 def checkIfFunctionExists(n): # check that functions do not repeat
     for nombre in functionDir:

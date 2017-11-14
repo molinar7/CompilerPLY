@@ -11,7 +11,7 @@ def execution():
 
     #Creaciond de las memorias
     createGlobalMemory()
-    createLocalMemory(VCmemory.localVarTypeQty[-1][0]) # Siempre la primer memoria local que se crea es la main
+    createLocalMemory(VCmemory.localVarTypeQty[-1][0]) #  0 porque siempre la primer memoria local que se crea es la main
     createTempMemory(VCmemory.tempTypeQty[-1][0])
 
     

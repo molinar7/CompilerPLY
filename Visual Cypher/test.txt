@@ -2,18 +2,23 @@ program patito{
 
 int a,b;
 float f;
-array int arr[0, 5];
+array int arr[-2, 3];
 
 function void uno (int a){
-    a = 10;
+    
 }
 
 
 
 
 main(){
-
-   b = arr[1];
+    a = 3;
+    b = 2;
+   while(a>b){
+       arr[a] = a +b;
+       a--;
+   }
+ 
 
 }
 
