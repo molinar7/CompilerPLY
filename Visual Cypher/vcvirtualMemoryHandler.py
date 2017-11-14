@@ -47,6 +47,7 @@ def getFromMemory(memIndex):
 
 
 def setToMemory(memIndex, value):
+    
 #-------------Global-------------
     if memIndex >= 10001 and memIndex<= 13000:
         VCvirtualMemory.globalMemory[0][memIndex - 10001] = value

@@ -597,6 +597,7 @@ def p_fact(p):
 	'''
 	fact	:	var_cte			
 			|	OP_LPAREN		push_bottle_bottom		mega_expression		OP_RPAREN		remove_bottle_bottom
+			|	OP_LPAREN		push_bottle_bottom	ID		push_varID_to_Stack	 OP_LSQUARE_PAREN			mega_expression			OP_RSQUARE_PAREN	ver_quadruples	OP_RPAREN		remove_bottle_bottom
 	'''
 def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
@@ -609,7 +610,7 @@ def p_push_varID_to_Stack(p):
 
 def p_push_bottle_bottom(p):
 	'push_bottle_bottom	:	epsilon'
-	stackSymbol.append(p[-1])
+	stackSymbol.append('(')
 
 def p_remove_bottle_bottom(p):
 	'remove_bottle_bottom	:	epsilon'
@@ -752,7 +753,7 @@ def compiler():
 	print('')
 	print('ArrDim', VCsemantics.arrDim)
 
-	#VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
+	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
 
 
 

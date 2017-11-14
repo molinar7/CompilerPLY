@@ -1,24 +1,24 @@
 program patito{
 
-int a,b;
-float f;
-array int arr[-2, 3];
-
-function void uno (int a){
-    
-}
-
+int i,j,k;
+array int a[-1,10];
 
 
 
 main(){
-    a = 3;
-    b = 2;
-   while(a>b){
-       arr[a] = a +b;
-       a--;
-   }
- 
+i = -1;
+
+while (i <= 10){
+    a[i] = i + 1;
+    i ++;
+}
+
+k = -1;
+
+while (k <= 10){
+    print((a[k]) * 2);
+    k ++;
+}
 
 }
 
