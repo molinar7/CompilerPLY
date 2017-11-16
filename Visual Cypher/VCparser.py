@@ -705,6 +705,7 @@ def p_error(p):
 def parsing():
 	##### Reading the input from a file#################3
 	parser = yacc.yacc()
+	
 	f = open('test.txt', 'r').read()
 	result = parser.parse(f)	
 	print(result)
@@ -752,6 +753,7 @@ def getTypesQty():
 
 
 def compiler():
+
 	print('')
 	parsing() # aqui se hace todo con el recorrido sintactico
 	print('')
@@ -774,7 +776,7 @@ def compiler():
 	#print('ArrDim', VCsemantics.arrDim)
 
 	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
-
+	
 
 
 	
