@@ -308,6 +308,7 @@ def	p_impression(p):
 				|	mega_expression		printer_quadruple	COMA		impression
 	'''
 
+
 def p_printer_quadruple(p):
 	'printer_quadruple	:	epsilon'
 	left_op = stackOP.pop()
@@ -468,7 +469,7 @@ def p_create_gosub(p):
 	
 	if functionType != 'void':
 		tempo = VCmemory.getTempIndex(functionType)
-		quadruples.append(['=', functionName, '', tempo])
+		quadruples.append(['=r', functionName, '', tempo])
 		stackOP.append(tempo)
 		stackType.append(functionType)
 
@@ -738,6 +739,8 @@ def printCteTable():
 		print(element)
 
 def getTypesQty():
+	print('Cantidad de tipos de variable en cada memoria y cada contexto')
+	print('Ejemplo: La memoria local en la funcion 3 tiene: 5 ints, 0 floats, 0 strings y 0 bools')
 	VCmemory.cteTypeQty.append([ VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
 								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
 

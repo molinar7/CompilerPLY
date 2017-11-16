@@ -12,6 +12,13 @@ localMemory = []
 tempMemory = []
 cteMemory = []
 
+nextFunctionIndex = [] # para saber cual es el indice de la siguiente funcion cuando se encuentra 'era'
+nextParamIndex = [] # indice donde se guardara el old param
+oldParamIndex = [] 
+
+returnStack = []
+
+
 def execution():
 
     #Creaciond de las memorias
@@ -22,9 +29,7 @@ def execution():
     
 
     quadrupleTravel()
-    #print('Global Memory' , globalMemory)
-    #print('local memory' , localMemory)
-    #print('temp memory', tempMemory)
+ 
    
    
   
@@ -351,31 +356,38 @@ def quadrupleTravel():
 
         elif quadruples[pointer][0] == 'era': # Cuadruplo para crear memorias
           
-          
-          localMemoryStack.append(localMemory) # se duerme la memoria
-          tempMemoryStack.append(tempMemory) # se duerme la memoria
-          
-          localMemory =[] # despues de dormirla la borramos
-          tempMemory = []
-          createLocalMemory(quadruples[pointer][3]) # se crea la nueva memoria
-          createTempMemory(quadruples[pointer][3])
+          nextFunctionIndex.append(quadruples[pointer][3]) # para saber cual es el indice a la funcion a llamar
+    
+        elif quadruples[pointer][0] == 'param':
 
-
-        elif quadruples[pointer][0] == 'param': 
           param = quadruples[pointer][3]
           param = int(param[-1:])
 
           for signature in VCsemantics.functionSignature:
             if signature[0] == quadruples[pointer][2]:
               paramIndex = signature[param][1]
-          #print(getFromMemory(quadruples[pointer][1]), 'here')
-          setToMemory(paramIndex, getFromMemory(quadruples[pointer][1]))
-        
-          
-          
+              nextParamIndex.append(paramIndex)
+
+          # se tiene que guardar el parametro ya que se dormira la memoria para despues asignarlo a su parametro del nuevo contexto
+          oldParamIndex.append(getFromMemory(quadruples[pointer][1])) 
+     
 
         elif quadruples[pointer][0] == 'gosub': 
-          jumpPointer.append(pointer)
+
+          localMemoryStack.append(localMemory) # se duerme la memoria
+          tempMemoryStack.append(tempMemory) # se duerme la memoria
+          
+          localMemory =[] # despues de dormirla deja de estar activa
+          tempMemory = []
+
+          nIndex = nextFunctionIndex.pop()
+          createLocalMemory(nIndex) # se crea la nueva memoria
+          createTempMemory(nIndex)
+
+          for i in range (0 , len(nextParamIndex)): # em este for esta toda la logica para guardar parametros en nuevas funciones
+            setToMemory(nextParamIndex.pop(), oldParamIndex.pop())
+
+          jumpPointer.append(pointer) # para saber a donde regresar cuando te encuentres un return o end proc
           pointer = quadruples[pointer][3]
           continue
 
@@ -384,11 +396,27 @@ def quadrupleTravel():
           pointer = jumpPointer.pop() + 1
           localMemory = localMemoryStack.pop() # a despertar chiquitas!
           tempMemory = tempMemoryStack.pop()
-          
           continue
           
-
           
+          
+        elif quadruples[pointer][0] == 'return':
+          if not isinstance(quadruples[pointer][1], int): # diferencia un memindex a una casilla de array (memindex)
+                left_op = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+          else:
+                left_op = getFromMemory(quadruples[pointer][1]) 
+          
+          returnStack.append(left_op)
+
+          pointer = jumpPointer.pop() + 1
+          localMemory = localMemoryStack.pop() # a despertar chiquitas!
+          tempMemory = tempMemoryStack.pop()
+          continue
+          
+        elif quadruples[pointer][0] == '=r':
+          result = returnStack.pop()
+          setToMemory(quadruples[pointer][3], result)
+         
           
 
           
