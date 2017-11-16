@@ -1,0 +1,30 @@
+program findNumber{
+
+array int vect[-10,10];
+
+function void findNumber(int n){
+
+    int i;
+    i = -10;
+
+    while (i <= 10){
+        if(vect[i] == n ){
+            print("Encontrado en la casilla: ", i);
+        }
+         i ++;
+    }
+    
+    }
+
+
+
+
+main(){
+
+vect[10] = 20;
+findNumber(20);
+
+}
+
+
+}

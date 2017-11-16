@@ -208,9 +208,38 @@ def	p_statement(p):
 
 def p_assigment(p):
 	'''
-	assigment	:	ID		push_varID_to_Stack		OP_EQUALS	push_symbol				mega_expression			equals_quadruple	SEMICOLON
-				|	ID		OP_LSQUARE_PAREN		VAR_INT		OP_RSQUARE_PAREN		OP_EQUALS				mega_expression		SEMICOLON
+	assigment	:	ID		push_varID_to_Stack		OP_EQUALS	push_symbol		mega_expression			equals_quadruple	SEMICOLON
+				|	ID		push_varID_to_Stack		OP_LSQUARE_PAREN			mega_expression			OP_RSQUARE_PAREN	ver_quadruples	OP_EQUALS	push_symbol		mega_expression	 equals_quadruple	SEMICOLON
 	'''
+def p_ver_quadruples(p):
+	'ver_quadruples	: epsilon'
+
+	arrIndex = stackOP.pop() # el indice del arreglo
+	arrIndexType = stackType.pop()  # el tipo del indice del arreglo
+
+	if arrIndexType != 'int': 
+		print ("ERROR: Array index must be an Integer at line:" + str(p.lexer.lineno))
+		quit()
+
+	
+	arrIndexBase = stackOP.pop() # la base que se sumara
+	arrType = stackType.pop()# el tipo del arreglo
+	arrId = VCsemantics.getArrName(arrIndexBase)
+
+	
+
+	arrK, lim_inf, lim_sup = VCsemantics.validateArrIdScope(arrId,str(p.lexer.lineno ))
+
+	tempo = VCmemory.getTempIndex(arrType)# ayuda a conseguir el index de la temporal
+	quadruples.append(['ver', arrIndex, lim_inf, lim_sup])
+	quadruples.append(['+-k', arrIndex, arrK ,tempo])
+
+	newTempo = VCmemory.getTempIndex(arrType) # al sumarle la base se guarda en nueva temporal
+	quadruples.append(['+base', tempo, arrIndexBase , newTempo])
+
+	stackOP.append('(' + str(newTempo) + ')')
+	stackType.append(arrType)
+	
 
 def p_equals_quadruple(p):
 	'equals_quadruple	:	epsilon'
@@ -278,6 +307,7 @@ def	p_impression(p):
 	impression	:	mega_expression 	printer_quadruple
 				|	mega_expression		printer_quadruple	COMA		impression
 	'''
+
 
 def p_printer_quadruple(p):
 	'printer_quadruple	:	epsilon'
@@ -401,8 +431,8 @@ def p_create_era(p):
 	'create_era		:	epsilon'
 	global functionIndex_onCall 
 	if VCsemantics.checkIfFunctionExists(p[-1]): 
-		quadruples.append(['era', p[-1], '',''])
 		functionIndex_onCall = VCsemantics.returnFunctionIndex(p[-1])
+		quadruples.append(['era', p[-1], '',functionIndex_onCall])
 	else: 
 		print('The function', p[-1], 'at line', str(p.lexer.lineno), 'does not exist')
 		quit()
@@ -415,7 +445,7 @@ def p_create_param(p):
 	param = stackOP.pop() 
 	paramType = stackType.pop()
 	if VCsemantics.validateFunctionParams(functionIndex_onCall, param_counter, paramType,  str(p.lexer.lineno)):
-		quadruples.append(['param', param, '', 'param' + str(param_counter)])
+		quadruples.append(['param', param, functionIndex_onCall, 'param' + str(param_counter)])
 	else:
 		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
 		quit()
@@ -423,20 +453,31 @@ def p_create_param(p):
 def p_create_gosub(p):
 	'create_gosub	:	epsilon'
 	global param_counter, functionIndex_onCall
+	
 
 	functionName = VCsemantics.getFunctionName(functionIndex_onCall)
 	functionQuadrupleStart = VCsemantics.getFunctionQuadrupleStart(functionIndex_onCall)
 	functionParamas = VCsemantics.returnFunctionParamNumbers(functionIndex_onCall)
+	functionType = VCsemantics.getFunctionType(functionIndex_onCall)
+	
 
 	if param_counter != functionParamas:
 		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
 		quit()
 	else:
 		quadruples.append(['gosub', functionName, '', functionQuadrupleStart])
+	
+	if functionType != 'void':
+		tempo = VCmemory.getTempIndex(functionType)
+		quadruples.append(['=r', functionName, '', tempo])
+		stackOP.append(tempo)
+		stackType.append(functionType)
 
-		#resetear las variables globales
-		param_counter = 0
-		functionIndex_onCall = 0
+		
+	#resetear las variables globales
+	param_counter = 0
+	functionIndex_onCall = 0
+	
 
 
 
@@ -570,7 +611,11 @@ def p_fact(p):
 	'''
 	fact	:	var_cte			
 			|	OP_LPAREN		push_bottle_bottom		mega_expression		OP_RPAREN		remove_bottle_bottom
+			|	ID		push_varID_to_Stack	 OP_LSQUARE_PAREN 	push_bottle_bottom		mega_expression			OP_RSQUARE_PAREN	ver_quadruples		remove_bottle_bottom
+			| 	ID	create_era	OP_LPAREN 	push_bottle_bottom function_call_parameters	OP_RPAREN  create_gosub 	remove_bottle_bottom  
 	'''
+
+
 def p_push_varID_to_Stack(p):
 	'push_varID_to_Stack	:	epsilon'
 	# Con validateIdScope sabemos a que scope pertenece las variables a meter a la pila junto con su tipo
@@ -582,7 +627,7 @@ def p_push_varID_to_Stack(p):
 
 def p_push_bottle_bottom(p):
 	'push_bottle_bottom	:	epsilon'
-	stackSymbol.append(p[-1])
+	stackSymbol.append('(')
 
 def p_remove_bottle_bottom(p):
 	'remove_bottle_bottom	:	epsilon'
@@ -694,6 +739,8 @@ def printCteTable():
 		print(element)
 
 def getTypesQty():
+	print('Cantidad de tipos de variable en cada memoria y cada contexto')
+	print('Ejemplo: La memoria local en la funcion 3 tiene: 5 ints, 0 floats, 0 strings y 0 bools')
 	VCmemory.cteTypeQty.append([ VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
 								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
 
@@ -723,9 +770,10 @@ def compiler():
 	#print('pila de simbolos:' ,stackSymbol)
 	getTypesQty() # para saber cuantos tipos de datos tenemos ej: (4 ints, 3 float)
 	print('')
-	print('ArrDim', VCsemantics.arrDim)
+	#print('Dimensiones array:  [index contexto, nombre, -k, lim-inf, lim sup')
+	#print('ArrDim', VCsemantics.arrDim)
 
-	#VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
+	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
 
 
 

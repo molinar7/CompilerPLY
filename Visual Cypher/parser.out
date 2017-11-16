@@ -11,10 +11,10 @@ Grammar
 Rule 0     S' -> program
 Rule 1     program -> PROGRAM ID LCURLY_BRACKET vars add_NumVars_Main_Global function main_function RCURLY_BRACKET
 Rule 2     vars -> type save_type ID pushTo_varsTable vars_prime SEMICOLON vars
-Rule 3     vars -> epsilon
-Rule 4     vars_prime -> COMA ID pushTo_varsTable vars_prime
-Rule 5     vars_prime -> epsilon
-Rule 6     vars_arr -> ARRAY type save_type ID pushTo_varsTable OP_LSQUARE_PAREN VAR_INT COMA VAR_INT create_arr_info OP_RSQUARE_PAREN SEMICOLON vars_arr
+Rule 3     vars -> ARRAY type save_type ID pushTo_varsTable OP_LSQUARE_PAREN VAR_INT COMA VAR_INT create_arr_info OP_RSQUARE_PAREN SEMICOLON vars
+Rule 4     vars -> epsilon
+Rule 5     vars_prime -> COMA ID pushTo_varsTable vars_prime
+Rule 6     vars_prime -> epsilon
 Rule 7     pushTo_varsTable -> epsilon
 Rule 8     save_type -> epsilon
 Rule 9     create_arr_info -> epsilon
@@ -63,151 +63,155 @@ Rule 51    statement -> function_call
 Rule 52    statement -> fun_esp
 Rule 53    statement -> while_loop
 Rule 54    assigment -> ID push_varID_to_Stack OP_EQUALS push_symbol mega_expression equals_quadruple SEMICOLON
-Rule 55    assigment -> ID OP_LSQUARE_PAREN VAR_INT OP_RSQUARE_PAREN OP_EQUALS mega_expression SEMICOLON
-Rule 56    equals_quadruple -> epsilon
-Rule 57    if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF1
-Rule 58    if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF2 if_goto_quadruple ELSE bloque fill_if_goto
-Rule 59    if_gotoF_quadruple -> epsilon
-Rule 60    fill_if_gotoF1 -> epsilon
-Rule 61    fill_if_gotoF2 -> epsilon
-Rule 62    fill_if_goto -> epsilon
-Rule 63    if_goto_quadruple -> epsilon
-Rule 64    printer -> PRINT OP_LPAREN impression OP_RPAREN SEMICOLON
-Rule 65    impression -> mega_expression printer_quadruple
-Rule 66    impression -> mega_expression printer_quadruple COMA impression
-Rule 67    printer_quadruple -> epsilon
-Rule 68    increment -> ID push_varID_to_Stack OP_PLUS_EQUALS push_symbol mega_expression increment_equals SEMICOLON
-Rule 69    increment -> ID push_varID_to_Stack OP_MINUS_EQUALS push_symbol mega_expression increment_equals SEMICOLON
-Rule 70    increment -> ID push_varID_to_Stack OP_PLUS OP_PLUS incrementByOne SEMICOLON
-Rule 71    increment -> ID push_varID_to_Stack OP_MINUS OP_MINUS incrementByOne SEMICOLON
-Rule 72    incrementByOne -> epsilon
-Rule 73    increment_equals -> epsilon
-Rule 74    for -> FOR OP_LPAREN assigment loop_jumpCount mega_expression SEMICOLON loop_gotoF increment OP_RPAREN bloque loop_fill
-Rule 75    while_loop -> WHILE loop_jumpCount OP_LPAREN mega_expression OP_RPAREN loop_gotoF bloque loop_fill
-Rule 76    loop_jumpCount -> epsilon
-Rule 77    loop_gotoF -> epsilon
-Rule 78    loop_fill -> epsilon
-Rule 79    return -> RETURN mega_expression return_quadruple SEMICOLON
-Rule 80    return_quadruple -> epsilon
-Rule 81    function_call -> ID create_era OP_LPAREN function_call_parameters OP_RPAREN create_gosub SEMICOLON
-Rule 82    function_call_parameters -> mega_expression create_param function_call_parameters_prime
-Rule 83    function_call_parameters -> epsilon
-Rule 84    function_call_parameters_prime -> COMA mega_expression create_param function_call_parameters_prime
-Rule 85    function_call_parameters_prime -> epsilon
-Rule 86    create_era -> epsilon
-Rule 87    create_param -> epsilon
-Rule 88    create_gosub -> epsilon
-Rule 89    mega_expression -> super_expression check_symbol_megaexp
-Rule 90    mega_expression -> super_expression AND push_symbol super_expression check_symbol_megaexp
-Rule 91    mega_expression -> super_expression OR push_symbol super_expression check_symbol_megaexp
-Rule 92    check_symbol_megaexp -> epsilon
-Rule 93    super_expression -> expression check_symbol_superexp
-Rule 94    super_expression -> expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
-Rule 95    super_expression -> expression OP_LESS_THAN push_symbol expression check_symbol_superexp
-Rule 96    super_expression -> expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
-Rule 97    super_expression -> expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
-Rule 98    super_expression -> expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
-Rule 99    super_expression -> expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
-Rule 100   check_symbol_superexp -> epsilon
-Rule 101   expression -> term check_symbol_exp
-Rule 102   expression -> term check_symbol_exp OP_PLUS push_symbol expression
-Rule 103   expression -> term check_symbol_exp OP_MINUS push_symbol expression
-Rule 104   push_symbol -> epsilon
-Rule 105   check_symbol_exp -> epsilon
-Rule 106   term -> fact check_symbol_term
-Rule 107   term -> fact check_symbol_term OP_DIVISION push_symbol term
-Rule 108   term -> fact check_symbol_term OP_TIMES push_symbol term
-Rule 109   check_symbol_term -> epsilon
-Rule 110   fact -> var_cte
-Rule 111   fact -> OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
-Rule 112   push_varID_to_Stack -> epsilon
-Rule 113   push_bottle_bottom -> epsilon
-Rule 114   remove_bottle_bottom -> epsilon
-Rule 115   var_cte -> ID push_varID_to_Stack
-Rule 116   var_cte -> VAR_INT push_cte_toTable
-Rule 117   var_cte -> VAR_FLOAT push_cte_toTable
-Rule 118   var_cte -> VAR_STRING push_cte_toTable
-Rule 119   var_cte -> VAR_BOOLEAN push_cte_toTable
-Rule 120   push_cte_toTable -> epsilon
-Rule 121   fun_esp -> figure_creation
-Rule 122   figure_creation -> FIGURE ID OP_TWO_POINTS figure POSSESS bloque_figura
-Rule 123   figure -> POINT
-Rule 124   figure -> LINE
-Rule 125   figure -> SQUARE
-Rule 126   figure -> RECTANGLE
-Rule 127   figure -> TRIANGLE
-Rule 128   figure -> CIRCLE
-Rule 129   figure -> ARC
-Rule 130   bloque_figura -> LCURLY_BRACKET bloque_figura_primo RCURLY_BRACKET
-Rule 131   bloque_figura_primo -> bloque_figura_primo figura_attr
-Rule 132   bloque_figura_primo -> epsilon
-Rule 133   figura_attr -> vector
-Rule 134   figura_attr -> COLOR OP_TWO_POINTS ID SEMICOLON
-Rule 135   figura_attr -> SIZE OP_TWO_POINTS mega_expression SEMICOLON
-Rule 136   vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON
-Rule 137   epsilon -> <empty>
+Rule 55    assigment -> ID push_varID_to_Stack OP_LSQUARE_PAREN mega_expression OP_RSQUARE_PAREN ver_quadruples OP_EQUALS push_symbol mega_expression equals_quadruple SEMICOLON
+Rule 56    ver_quadruples -> epsilon
+Rule 57    equals_quadruple -> epsilon
+Rule 58    if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF1
+Rule 59    if -> IF OP_LPAREN mega_expression OP_RPAREN if_gotoF_quadruple bloque fill_if_gotoF2 if_goto_quadruple ELSE bloque fill_if_goto
+Rule 60    if_gotoF_quadruple -> epsilon
+Rule 61    fill_if_gotoF1 -> epsilon
+Rule 62    fill_if_gotoF2 -> epsilon
+Rule 63    fill_if_goto -> epsilon
+Rule 64    if_goto_quadruple -> epsilon
+Rule 65    printer -> PRINT OP_LPAREN impression OP_RPAREN SEMICOLON
+Rule 66    impression -> mega_expression printer_quadruple impresionb
+Rule 67    impressionb -> COMA mega_expression printer_quadruple impressionb
+Rule 68    impressionb -> epsilon
+Rule 69    printer_quadruple -> epsilon
+Rule 70    increment -> ID push_varID_to_Stack OP_PLUS_EQUALS push_symbol mega_expression increment_equals SEMICOLON
+Rule 71    increment -> ID push_varID_to_Stack OP_MINUS_EQUALS push_symbol mega_expression increment_equals SEMICOLON
+Rule 72    increment -> ID push_varID_to_Stack OP_PLUS OP_PLUS incrementByOne SEMICOLON
+Rule 73    increment -> ID push_varID_to_Stack OP_MINUS OP_MINUS incrementByOne SEMICOLON
+Rule 74    incrementByOne -> epsilon
+Rule 75    increment_equals -> epsilon
+Rule 76    for -> FOR OP_LPAREN assigment loop_jumpCount mega_expression SEMICOLON loop_gotoF increment OP_RPAREN bloque loop_fill
+Rule 77    while_loop -> WHILE loop_jumpCount OP_LPAREN mega_expression OP_RPAREN loop_gotoF bloque loop_fill
+Rule 78    loop_jumpCount -> epsilon
+Rule 79    loop_gotoF -> epsilon
+Rule 80    loop_fill -> epsilon
+Rule 81    return -> RETURN mega_expression return_quadruple SEMICOLON
+Rule 82    return_quadruple -> epsilon
+Rule 83    function_call -> ID create_era OP_LPAREN function_call_parameters OP_RPAREN create_gosub SEMICOLON
+Rule 84    function_call_parameters -> mega_expression create_param function_call_parameters_prime
+Rule 85    function_call_parameters -> epsilon
+Rule 86    function_call_parameters_prime -> COMA mega_expression create_param function_call_parameters_prime
+Rule 87    function_call_parameters_prime -> epsilon
+Rule 88    create_era -> epsilon
+Rule 89    create_param -> epsilon
+Rule 90    create_gosub -> epsilon
+Rule 91    mega_expression -> super_expression check_symbol_megaexp
+Rule 92    mega_expression -> super_expression AND push_symbol super_expression check_symbol_megaexp
+Rule 93    mega_expression -> super_expression OR push_symbol super_expression check_symbol_megaexp
+Rule 94    check_symbol_megaexp -> epsilon
+Rule 95    super_expression -> expression check_symbol_superexp
+Rule 96    super_expression -> expression OP_GREATER_THAN push_symbol expression check_symbol_superexp
+Rule 97    super_expression -> expression OP_LESS_THAN push_symbol expression check_symbol_superexp
+Rule 98    super_expression -> expression OP_GREATER_EQUALS_THAN push_symbol expression check_symbol_superexp
+Rule 99    super_expression -> expression OP_LESS_EQUALS_THAN push_symbol expression check_symbol_superexp
+Rule 100   super_expression -> expression OP_EQUALS_TWO push_symbol expression check_symbol_superexp
+Rule 101   super_expression -> expression OP_NOT_EQUALS push_symbol expression check_symbol_superexp
+Rule 102   check_symbol_superexp -> epsilon
+Rule 103   expression -> term check_symbol_exp
+Rule 104   expression -> term check_symbol_exp OP_PLUS push_symbol expression
+Rule 105   expression -> term check_symbol_exp OP_MINUS push_symbol expression
+Rule 106   push_symbol -> epsilon
+Rule 107   check_symbol_exp -> epsilon
+Rule 108   term -> fact check_symbol_term
+Rule 109   term -> fact check_symbol_term OP_DIVISION push_symbol term
+Rule 110   term -> fact check_symbol_term OP_TIMES push_symbol term
+Rule 111   check_symbol_term -> epsilon
+Rule 112   fact -> var_cte
+Rule 113   fact -> OP_LPAREN push_bottle_bottom mega_expression OP_RPAREN remove_bottle_bottom
+Rule 114   fact -> ID push_varID_to_Stack OP_LSQUARE_PAREN push_bottle_bottom mega_expression OP_RSQUARE_PAREN ver_quadruples remove_bottle_bottom
+Rule 115   fact -> ID create_era OP_LPAREN push_bottle_bottom function_call_parameters OP_RPAREN create_gosub remove_bottle_bottom
+Rule 116   push_varID_to_Stack -> epsilon
+Rule 117   push_bottle_bottom -> epsilon
+Rule 118   remove_bottle_bottom -> epsilon
+Rule 119   var_cte -> ID push_varID_to_Stack
+Rule 120   var_cte -> VAR_INT push_cte_toTable
+Rule 121   var_cte -> VAR_FLOAT push_cte_toTable
+Rule 122   var_cte -> VAR_STRING push_cte_toTable
+Rule 123   var_cte -> VAR_BOOLEAN push_cte_toTable
+Rule 124   push_cte_toTable -> epsilon
+Rule 125   fun_esp -> figure_creation
+Rule 126   figure_creation -> FIGURE ID OP_TWO_POINTS figure POSSESS bloque_figura
+Rule 127   figure -> POINT
+Rule 128   figure -> LINE
+Rule 129   figure -> SQUARE
+Rule 130   figure -> RECTANGLE
+Rule 131   figure -> TRIANGLE
+Rule 132   figure -> CIRCLE
+Rule 133   figure -> ARC
+Rule 134   bloque_figura -> LCURLY_BRACKET bloque_figura_primo RCURLY_BRACKET
+Rule 135   bloque_figura_primo -> bloque_figura_primo figura_attr
+Rule 136   bloque_figura_primo -> epsilon
+Rule 137   figura_attr -> vector
+Rule 138   figura_attr -> COLOR OP_TWO_POINTS ID SEMICOLON
+Rule 139   figura_attr -> SIZE OP_TWO_POINTS mega_expression SEMICOLON
+Rule 140   vector -> VECTOR ID OP_TWO_POINTS OP_LPAREN mega_expression COMA mega_expression OP_RPAREN SEMICOLON
+Rule 141   epsilon -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 90
-ARC                  : 129
-ARRAY                : 6
+AND                  : 92
+ARC                  : 133
+ARRAY                : 3
 BOOLEAN              : 24
 CARET                : 
-CIRCLE               : 128
-COLOR                : 134
-COMA                 : 4 6 27 66 84 136
-ELSE                 : 58
-FIGURE               : 122
+CIRCLE               : 132
+COLOR                : 138
+COMA                 : 3 5 27 67 86 140
+ELSE                 : 59
+FIGURE               : 126
 FLOAT                : 22
-FOR                  : 74
+FOR                  : 76
 FUNCTION             : 10 11
-ID                   : 1 2 4 6 10 11 25 27 54 55 68 69 70 71 81 115 122 134 136
-IF                   : 57 58
+ID                   : 1 2 3 5 10 11 25 27 54 55 70 71 72 73 83 114 115 119 126 138 140
+IF                   : 58 59
 INT                  : 21
-LCURLY_BRACKET       : 1 29 42 130
-LINE                 : 124
+LCURLY_BRACKET       : 1 29 42 134
+LINE                 : 128
 MAIN                 : 17
-OP_DIVISION          : 107
+OP_DIVISION          : 109
 OP_EQUALS            : 54 55
-OP_EQUALS_TWO        : 98
-OP_GREATER_EQUALS_THAN : 96
-OP_GREATER_THAN      : 94
-OP_LESS_EQUALS_THAN  : 97
-OP_LESS_THAN         : 95
-OP_LPAREN            : 10 11 17 57 58 64 74 75 81 111 136
-OP_LSQUARE_PAREN     : 6 55
-OP_MINUS             : 71 71 103
-OP_MINUS_EQUALS      : 69
-OP_NOT_EQUALS        : 99
-OP_PLUS              : 70 70 102
-OP_PLUS_EQUALS       : 68
-OP_RPAREN            : 10 11 17 57 58 64 74 75 81 111 136
-OP_RSQUARE_PAREN     : 6 55
-OP_TIMES             : 108
-OP_TWO_POINTS        : 122 134 135 136
-OR                   : 91
-POINT                : 123
-POSSESS              : 122
-PRINT                : 64
+OP_EQUALS_TWO        : 100
+OP_GREATER_EQUALS_THAN : 98
+OP_GREATER_THAN      : 96
+OP_LESS_EQUALS_THAN  : 99
+OP_LESS_THAN         : 97
+OP_LPAREN            : 10 11 17 58 59 65 76 77 83 113 115 140
+OP_LSQUARE_PAREN     : 3 55 114
+OP_MINUS             : 73 73 105
+OP_MINUS_EQUALS      : 71
+OP_NOT_EQUALS        : 101
+OP_PLUS              : 72 72 104
+OP_PLUS_EQUALS       : 70
+OP_RPAREN            : 10 11 17 58 59 65 76 77 83 113 115 140
+OP_RSQUARE_PAREN     : 3 55 114
+OP_TIMES             : 110
+OP_TWO_POINTS        : 126 138 139 140
+OR                   : 93
+POINT                : 127
+POSSESS              : 126
+PRINT                : 65
 PROGRAM              : 1
 QUOT_MARK            : 
-RCURLY_BRACKET       : 1 29 42 130
-RECTANGLE            : 126
-RETURN               : 79
-SEMICOLON            : 2 6 54 55 64 68 69 70 71 74 79 81 134 135 136
-SIZE                 : 135
-SQUARE               : 125
+RCURLY_BRACKET       : 1 29 42 134
+RECTANGLE            : 130
+RETURN               : 81
+SEMICOLON            : 2 3 54 55 65 70 71 72 73 76 81 83 138 139 140
+SIZE                 : 139
+SQUARE               : 129
 STRING               : 23
-TRIANGLE             : 127
+TRIANGLE             : 131
 VAR                  : 
-VAR_BOOLEAN          : 119
-VAR_FLOAT            : 117
-VAR_INT              : 6 6 55 116
-VAR_STRING           : 118
-VECTOR               : 136
+VAR_BOOLEAN          : 123
+VAR_FLOAT            : 121
+VAR_INT              : 3 3 120
+VAR_STRING           : 122
+VECTOR               : 140
 VOID                 : 11
-WHILE                : 75
+WHILE                : 77
 error                : 
 
 Nonterminals, with rules where they appear
@@ -215,76 +219,78 @@ Nonterminals, with rules where they appear
 add_Function_FirstQuadruple : 10 11
 add_NumVars          : 10 11
 add_NumVars_Main_Global : 1 17
-assigment            : 32 45 74
-bloque               : 57 58 58 74 75
-bloque_figura        : 122
-bloque_figura_primo  : 130 131
+assigment            : 32 45 76
+bloque               : 58 59 59 76 77
+bloque_figura        : 126
+bloque_figura_primo  : 134 135
 bloque_primo         : 42 43
-check_symbol_exp     : 101 102 103
-check_symbol_megaexp : 89 90 91
-check_symbol_superexp : 93 94 95 96 97 98 99
-check_symbol_term    : 106 107 108
-create_arr_info      : 6
-create_era           : 81
-create_gosub         : 81
-create_param         : 82 84
-epsilon              : 3 5 7 8 9 12 13 14 15 16 18 19 20 26 28 31 44 56 59 60 61 62 63 67 72 73 76 77 78 80 83 85 86 87 88 92 100 104 105 109 112 113 114 120 132
-equals_quadruple     : 54
-expression           : 93 94 94 95 95 96 96 97 97 98 98 99 99 102 103
-fact                 : 106 107 108
-figura_attr          : 131
-figure               : 122
-figure_creation      : 121
+check_symbol_exp     : 103 104 105
+check_symbol_megaexp : 91 92 93
+check_symbol_superexp : 95 96 97 98 99 100 101
+check_symbol_term    : 108 109 110
+create_arr_info      : 3
+create_era           : 83 115
+create_gosub         : 83 115
+create_param         : 84 86
+epsilon              : 4 6 7 8 9 12 13 14 15 16 18 19 20 26 28 31 44 56 57 60 61 62 63 64 68 69 74 75 78 79 80 82 85 87 88 89 90 94 102 106 107 111 116 117 118 124 136
+equals_quadruple     : 54 55
+expression           : 95 96 96 97 97 98 98 99 99 100 100 101 101 104 105
+fact                 : 108 109 110
+figura_attr          : 135
+figure               : 126
+figure_creation      : 125
 fill_firstQuadruple  : 17
-fill_if_goto         : 58
-fill_if_gotoF1       : 57
-fill_if_gotoF2       : 58
+fill_if_goto         : 59
+fill_if_gotoF1       : 58
+fill_if_gotoF2       : 59
 for                  : 36 49
 fun_esp              : 39 52
 function             : 1 10 11
 function_bloque      : 10 11 17
 function_bloque_primo : 29 30
 function_call        : 38 51
-function_call_parameters : 81
-function_call_parameters_prime : 82 84
+function_call_parameters : 83 115
+function_call_parameters_prime : 84 86
 function_parameters  : 10 11
 function_parameters_prime : 25 27
 function_statement   : 30
 if                   : 33 46
-if_gotoF_quadruple   : 57 58
-if_goto_quadruple    : 58
-impression           : 64 66
-increment            : 35 48 74
-incrementByOne       : 70 71
-increment_equals     : 68 69
-loop_fill            : 74 75
-loop_gotoF           : 74 75
-loop_jumpCount       : 74 75
+if_gotoF_quadruple   : 58 59
+if_goto_quadruple    : 59
+impresionb           : 66
+impression           : 65
+impressionb          : 67
+increment            : 35 48 76
+incrementByOne       : 72 73
+increment_equals     : 70 71
+loop_fill            : 76 77
+loop_gotoF           : 76 77
+loop_jumpCount       : 76 77
 main_function        : 1
-mega_expression      : 54 55 57 58 65 66 68 69 74 75 79 82 84 111 135 136 136
+mega_expression      : 54 55 55 58 59 66 67 70 71 76 77 81 84 86 113 114 139 140 140
 printer              : 34 47
-printer_quadruple    : 65 66
+printer_quadruple    : 66 67
 program              : 0
 pushTo_FunctionDir   : 10 11 17
 pushTo_functionSignature : 10 11
-pushTo_varsTable     : 2 4 6 25 27
-push_bottle_bottom   : 111
-push_cte_toTable     : 116 117 118 119
+pushTo_varsTable     : 2 3 5 25 27
+push_bottle_bottom   : 113 114 115
+push_cte_toTable     : 120 121 122 123
 push_end_quadruple   : 17
-push_symbol          : 54 68 69 90 91 94 95 96 97 98 99 102 103 107 108
-push_varID_to_Stack  : 54 68 69 70 71 115
-remove_bottle_bottom : 111
+push_symbol          : 54 55 70 71 92 93 96 97 98 99 100 101 104 105 109 110
+push_varID_to_Stack  : 54 55 70 71 72 73 114 119
+remove_bottle_bottom : 113 114 115
 return               : 37 50
-return_quadruple     : 79
-save_type            : 2 6 25 27
+return_quadruple     : 81
+save_type            : 2 3 25 27
 statement            : 43
-super_expression     : 89 90 90 91 91
-term                 : 101 102 103 107 108
-type                 : 2 6 10 25 27
-var_cte              : 110
-vars                 : 1 2 40
-vars_arr             : 6
-vars_prime           : 2 4
-vector               : 133
+super_expression     : 91 92 92 93 93
+term                 : 103 104 105 109 110
+type                 : 2 3 10 25 27
+var_cte              : 112
+vars                 : 1 2 3 40
+vars_prime           : 2 5
+vector               : 137
+ver_quadruples       : 55 114
 while_loop           : 41 53
 
