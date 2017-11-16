@@ -267,7 +267,7 @@ def getArrName(arrIndex):
 # checa que los parametros de la llamada de funcion correspondan
 # a la funcion
 def validateFunctionParams(index, paramCounter, paramType, lineno):
-
+    
     for element in functionDir:# Valida que no sean mas parametros en las llamadas!
         if element[0] == index and paramCounter > element[4]:
             print('TypeError: more positional arguments at line ',  lineno)

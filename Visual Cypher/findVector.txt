@@ -21,7 +21,7 @@ function void findNumber(int n){
 
 main(){
 
-vect[4] = 20;
+vect[10] = 20;
 findNumber(20);
 
 }

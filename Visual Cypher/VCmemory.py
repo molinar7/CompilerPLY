@@ -72,7 +72,7 @@ def getContextTypeQty():
                                 VCsemantics.indexGlobalString - 16001, VCsemantics.indexGlobalBoolean - 18001])
 
     else:
-        localVarTypeQty.append([contextName, VCsemantics.indexLocalInt - 20001, VCsemantics.indexLocalFloat - 23001, 
+        localVarTypeQty.append([context, VCsemantics.indexLocalInt - 20001, VCsemantics.indexLocalFloat - 23001, 
                             VCsemantics.indexLocalString - 26001, VCsemantics.indexLocalBoolean - 28001])
 
 def getTempsTypeQty():
@@ -81,7 +81,7 @@ def getTempsTypeQty():
   
     
     # insertamos a la lista el conteo de las variables temporales
-    tempTypeQty.append([contextName, indexTemporalInt - 30001, 
+    tempTypeQty.append([context, indexTemporalInt - 30001, 
                         indexTemporalFloat - 33001, indexTemporalString - 36001, indexTemporalBoolean - 38001])
 
 

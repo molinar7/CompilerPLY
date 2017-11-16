@@ -2,6 +2,11 @@ from VCquadruples import *
 from vcvirtualMemoryHandler import *
 import VCmemory
 
+localMemoryStack = [] # donde se duermen y despierta los contextos
+tempMemoryStack = []
+
+jumpPointer = [] # Pila para saber a que quadruplo regrear cuando se acabe una funcion
+
 globalMemory = []
 localMemory = []
 tempMemory = []
@@ -17,9 +22,9 @@ def execution():
     
 
     quadrupleTravel()
-    print('Global Memory' , globalMemory)
-    print('local memory' , localMemory)
-    print('temp memory', tempMemory)
+    #print('Global Memory' , globalMemory)
+    #print('local memory' , localMemory)
+    #print('temp memory', tempMemory)
    
    
   
@@ -86,9 +91,11 @@ def createTempMemory(contextIndex):
 
 
 def quadrupleTravel():
+    global localMemory, tempMemory, localMemoryStack, tempMemoryStack
     pointer = 0
 
     while quadruples[pointer][0] != 'END':
+        #print('Pointer at: ',  pointer, localMemory)
     
        
 
@@ -224,12 +231,16 @@ def quadrupleTravel():
              setToMemory(quadruples[pointer][3], result)
 
         elif quadruples[pointer][0] == '==':
-             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
-             right_value = getFromMemory(quadruples[pointer][2])
+             if not isinstance(quadruples[pointer][1], int):
+                left_value = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                left_value = getFromMemory(quadruples[pointer][1])
+             if not isinstance(quadruples[pointer][2], int):
+                right_value = getFromMemory(getFromMemory(int(quadruples[pointer][2][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value == right_value:
                result = True
@@ -242,9 +253,7 @@ def quadrupleTravel():
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value <= right_value:
                result = True
@@ -257,9 +266,7 @@ def quadrupleTravel():
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value >= right_value:
                result = True
@@ -272,9 +279,7 @@ def quadrupleTravel():
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value != right_value:
                result = True
@@ -287,9 +292,7 @@ def quadrupleTravel():
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value == True and right_value == True:
                result = True
@@ -302,9 +305,7 @@ def quadrupleTravel():
              left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
              right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             
             
              if left_value == True or right_value == True:
                result = True
@@ -347,6 +348,50 @@ def quadrupleTravel():
                quit()
              result = left_value + right_value
              setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == 'era': # Cuadruplo para crear memorias
+          
+          
+          localMemoryStack.append(localMemory) # se duerme la memoria
+          tempMemoryStack.append(tempMemory) # se duerme la memoria
+          
+          localMemory =[] # despues de dormirla la borramos
+          tempMemory = []
+          createLocalMemory(quadruples[pointer][3]) # se crea la nueva memoria
+          createTempMemory(quadruples[pointer][3])
+
+
+        elif quadruples[pointer][0] == 'param': 
+          param = quadruples[pointer][3]
+          param = int(param[-1:])
+
+          for signature in VCsemantics.functionSignature:
+            if signature[0] == quadruples[pointer][2]:
+              paramIndex = signature[param][1]
+          #print(getFromMemory(quadruples[pointer][1]), 'here')
+          setToMemory(paramIndex, getFromMemory(quadruples[pointer][1]))
+        
+          
+          
+
+        elif quadruples[pointer][0] == 'gosub': 
+          jumpPointer.append(pointer)
+          pointer = quadruples[pointer][3]
+          continue
+
+        elif quadruples[pointer][0] == 'ENDPROC': 
+          
+          pointer = jumpPointer.pop() + 1
+          localMemory = localMemoryStack.pop() # a despertar chiquitas!
+          tempMemory = tempMemoryStack.pop()
+          
+          continue
+          
+
+          
+          
+
+          
 
 
 

@@ -430,8 +430,8 @@ def p_create_era(p):
 	'create_era		:	epsilon'
 	global functionIndex_onCall 
 	if VCsemantics.checkIfFunctionExists(p[-1]): 
-		quadruples.append(['era', p[-1], '',''])
 		functionIndex_onCall = VCsemantics.returnFunctionIndex(p[-1])
+		quadruples.append(['era', p[-1], '',functionIndex_onCall])
 	else: 
 		print('The function', p[-1], 'at line', str(p.lexer.lineno), 'does not exist')
 		quit()
@@ -444,7 +444,7 @@ def p_create_param(p):
 	param = stackOP.pop() 
 	paramType = stackType.pop()
 	if VCsemantics.validateFunctionParams(functionIndex_onCall, param_counter, paramType,  str(p.lexer.lineno)):
-		quadruples.append(['param', param, '', 'param' + str(param_counter)])
+		quadruples.append(['param', param, functionIndex_onCall, 'param' + str(param_counter)])
 	else:
 		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
 		quit()
@@ -452,20 +452,31 @@ def p_create_param(p):
 def p_create_gosub(p):
 	'create_gosub	:	epsilon'
 	global param_counter, functionIndex_onCall
+	
 
 	functionName = VCsemantics.getFunctionName(functionIndex_onCall)
 	functionQuadrupleStart = VCsemantics.getFunctionQuadrupleStart(functionIndex_onCall)
 	functionParamas = VCsemantics.returnFunctionParamNumbers(functionIndex_onCall)
+	functionType = VCsemantics.getFunctionType(functionIndex_onCall)
+	
 
 	if param_counter != functionParamas:
 		print('TypeError: validateFunctionParams() at line ',  str(p.lexer.lineno))
 		quit()
 	else:
 		quadruples.append(['gosub', functionName, '', functionQuadrupleStart])
+	
+	if functionType != 'void':
+		tempo = VCmemory.getTempIndex(functionType)
+		quadruples.append(['=', functionName, '', tempo])
+		stackOP.append(tempo)
+		stackType.append(functionType)
 
-		#resetear las variables globales
-		param_counter = 0
-		functionIndex_onCall = 0
+		
+	#resetear las variables globales
+	param_counter = 0
+	functionIndex_onCall = 0
+	
 
 
 
@@ -600,6 +611,7 @@ def p_fact(p):
 	fact	:	var_cte			
 			|	OP_LPAREN		push_bottle_bottom		mega_expression		OP_RPAREN		remove_bottle_bottom
 			|	ID		push_varID_to_Stack	 OP_LSQUARE_PAREN 	push_bottle_bottom		mega_expression			OP_RSQUARE_PAREN	ver_quadruples		remove_bottle_bottom
+			| 	ID	create_era	OP_LPAREN 	push_bottle_bottom function_call_parameters	OP_RPAREN  create_gosub 	remove_bottle_bottom  
 	'''
 
 
@@ -755,7 +767,8 @@ def compiler():
 	#print('pila de simbolos:' ,stackSymbol)
 	getTypesQty() # para saber cuantos tipos de datos tenemos ej: (4 ints, 3 float)
 	print('')
-	print('ArrDim', VCsemantics.arrDim)
+	#print('Dimensiones array:  [index contexto, nombre, -k, lim-inf, lim sup')
+	#print('ArrDim', VCsemantics.arrDim)
 
 	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
 
