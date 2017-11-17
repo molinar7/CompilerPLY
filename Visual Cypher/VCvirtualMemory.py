@@ -1,6 +1,8 @@
 from VCquadruples import *
 from vcvirtualMemoryHandler import *
 import VCmemory
+import VCgui
+
 
 localMemoryStack = [] # donde se duermen y despierta los contextos
 tempMemoryStack = []
@@ -199,10 +201,16 @@ def quadrupleTravel():
              
              if not isinstance(left_value, int): # Cuando no es int entonces es un string osea tiene parentesis
                 left_value = int(left_value[1:-1]) # Le quitamos los parentesis y se convierte a string
-                casilla = getFromMemory(left_value)
-                print(getFromMemory(casilla))
+                casilla = getFromMemory(getFromMemory(left_value))
+                VCgui.pantalla.insert('end-1c',  '\n')
+                VCgui.pantalla.insert('end-1c', casilla )
+                print(casilla)
+              
              else:
-                print(getFromMemory(left_value))
+                casilla = getFromMemory(left_value)
+                VCgui.pantalla.insert('end-1c',  '\n')
+                VCgui.pantalla.insert('end-1c', casilla )
+                print(casilla)
 
         
         elif quadruples[pointer][0] == '>':
@@ -430,16 +438,11 @@ def quadrupleTravel():
         elif quadruples[pointer][0] == '=r':
           result = returnStack.pop()
           setToMemory(quadruples[pointer][3], result)
-         
-          
-
-          
-
 
 
         pointer += 1
             
-            
+
    
 
 

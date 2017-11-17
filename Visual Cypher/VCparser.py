@@ -5,10 +5,12 @@ import VCsemantics
 from VCquadruples import * # con esto ya no es necesario poner el nombre de la clase
 import VCmemory
 import VCvirtualMemory
+import VCgui
+
 
 
 tokens = lexer.tokens
-tmp_type = ''
+tmp_type = '' # Guarda el tipo de las variables declaradas
 
 param_counter = 0
 functionIndex_onCall = 0
@@ -706,15 +708,19 @@ def parsing():
 	##### Reading the input from a file#################3
 	parser = yacc.yacc()
 	
-	f = open('test.txt', 'r').read()
+	#f = open('test.vc', 'r').read()
+	f = VCgui.textArea.get("1.0",'end-1c')
 	result = parser.parse(f)	
 	print(result)
 
 
 def printing_quadruples():
+	quadFile = open('quadruple.txt','w') 
 	print('Quadruples:')
+	quadFile.write('Quadruples: \n')
 	index = 0
 	for quadruple in quadruples:
+		quadFile.write(str(quadruple) + '\n')
 		print(index, quadruple)
 		index +=1
 
@@ -740,33 +746,35 @@ def printCteTable():
 		print(element)
 
 def getTypesQty():
-	print('Cantidad de tipos de variable en cada memoria y cada contexto')
-	print('Ejemplo: La memoria local en la funcion 3 tiene: 5 ints, 0 floats, 0 strings y 0 bools')
+	#print('Cantidad de tipos de variable en cada memoria y cada contexto')
+	#print('Ejemplo: La memoria local en la funcion 3 tiene: 5 ints, 0 floats, 0 strings y 0 bools')
 	VCmemory.cteTypeQty.append([ VCsemantics.indexCtelInt - 40001, VCsemantics.indexCteFloat - 43001,
 								VCsemantics.indexCteString - 46001, VCsemantics.indexCteBoolean - 48001])
 
-	print(VCmemory.globalVarTypeQty)
-	print(VCmemory.localVarTypeQty)
-	print(VCmemory.cteTypeQty)
+	#print(VCmemory.globalVarTypeQty)
+	#print(VCmemory.localVarTypeQty)
+	#print(VCmemory.cteTypeQty)
 	VCmemory.tempTypeQty.pop(1)# Quitamos la primer lista porque no hay temporales en global
-	print(VCmemory.tempTypeQty)
+	#print(VCmemory.tempTypeQty)
+
+
 
 
 def compiler():
-
-	print('')
+	
+	#print('')
 	parsing() # aqui se hace todo con el recorrido sintactico
-	print('')
-	printFunctionDir()
-	print('')
-	printfunctionSignature()
-	print('')
-	printing_varTable()
-	print('')
-	printCteTable()
-	print('')
-	printing_quadruples()
-	print('')
+	#print('')
+	#printFunctionDir()
+	#print('')
+	#printfunctionSignature()
+	#print('')
+	#printing_varTable()
+	#print('')
+	#printCteTable()
+	#print('')
+	#printing_quadruples()
+	#print('')
 	#print('pila Operadores:' , stackOP)
 	#print('pila de tipos:' ,stackType)
 	#print('pila de simbolos:' ,stackSymbol)
@@ -775,19 +783,20 @@ def compiler():
 	#print('Dimensiones array:  [index contexto, nombre, -k, lim-inf, lim sup')
 	#print('ArrDim', VCsemantics.arrDim)
 
-	VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
+	#VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
 	
 
-
-	
-	
-	
 
 
 	
 
 if __name__ == '__main__':
-    compiler()
+	
+	VCgui.mGui.mainloop()
+	
+
+	
+	
 	
 	
 
