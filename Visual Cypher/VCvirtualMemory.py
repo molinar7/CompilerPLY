@@ -100,7 +100,7 @@ def quadrupleTravel():
     pointer = 0
 
     while quadruples[pointer][0] != 'END':
-        #print('Pointer at: ',  pointer, localMemory)
+       # print('Pointer at: ',  pointer)
     
        
 
@@ -369,7 +369,10 @@ def quadrupleTravel():
               nextParamIndex.append(paramIndex)
 
           # se tiene que guardar el parametro ya que se dormira la memoria para despues asignarlo a su parametro del nuevo contexto
-          oldParamIndex.append(getFromMemory(quadruples[pointer][1])) 
+          if not isinstance(quadruples[pointer][1], int):
+                oldParamIndex.append(getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1])))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+          else:
+                oldParamIndex.append(getFromMemory(quadruples[pointer][1])) 
      
 
         elif quadruples[pointer][0] == 'gosub': 
