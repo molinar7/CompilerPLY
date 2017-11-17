@@ -100,7 +100,7 @@ def quadrupleTravel():
     pointer = 0
 
     while quadruples[pointer][0] != 'END':
-       # print('Pointer at: ',  pointer)
+        #print('Pointer at: ',  pointer)
     
        
 
@@ -206,8 +206,14 @@ def quadrupleTravel():
 
         
         elif quadruples[pointer][0] == '>':
-             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
-             right_value = getFromMemory(quadruples[pointer][2])
+             if not isinstance(quadruples[pointer][1], int):
+                left_value = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                left_value = getFromMemory(quadruples[pointer][1])
+             if not isinstance(quadruples[pointer][2], int):
+                right_value = getFromMemory(getFromMemory(int(quadruples[pointer][2][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                right_value = getFromMemory(quadruples[pointer][2])
 
              if left_value == None or right_value == None:# previene var no inlicialisadas
                print('Variable not initialized')
@@ -221,12 +227,17 @@ def quadrupleTravel():
              setToMemory(quadruples[pointer][3], result)
         
         elif quadruples[pointer][0] == '<':
-             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
-             right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             if not isinstance(quadruples[pointer][1], int):
+                left_value = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                left_value = getFromMemory(quadruples[pointer][1])
+             if not isinstance(quadruples[pointer][2], int):
+                right_value = getFromMemory(getFromMemory(int(quadruples[pointer][2][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                right_value = getFromMemory(quadruples[pointer][2])
+
+             
             
              if left_value < right_value:
                result = True

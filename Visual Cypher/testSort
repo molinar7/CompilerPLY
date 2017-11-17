@@ -1,0 +1,63 @@
+program bubbleSort{
+
+array int vec [0, 9];
+
+
+function void printArray(){
+    int i;
+    i = 0;
+
+    while (i<= 8){
+        print(vec[i]);
+        i ++;
+    }
+}
+
+
+function void bubbleSort(){
+
+    int n, temp, i , j ;
+    
+    n = 9;
+
+
+    i = 0;
+
+    while ( i < n - 1){
+        
+        j = 0;
+        while(j < (n - i - 1 )){
+
+            if(vec[j] > vec[j + 1]){
+                temp = vec[j];
+                vec[j] = vec [j + 1];
+                vec[j + 1] = temp;
+            }
+            j ++;
+
+        }
+        i ++;
+    }
+
+    
+}
+
+main(){
+   
+    vec[0] = 3;
+    vec[1] =  1;
+    vec[2] =  2;
+    vec[3] =  6;
+    vec[4] =  7;
+    vec[5] = 4;
+    vec[6] = 9;
+    vec[7] =  5;
+    vec[8] =  8;
+
+    bubbleSort();
+    printArray();
+
+}
+
+
+}
