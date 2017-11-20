@@ -9,11 +9,14 @@ import VCgui
 
 
 
+
 tokens = lexer.tokens
 tmp_type = '' # Guarda el tipo de las variables declaradas
 
 param_counter = 0
 functionIndex_onCall = 0
+
+figue = []
 
 def p_program(p):
 	'''
@@ -168,7 +171,7 @@ def p_function_bloque_primo(p):
 	'''
 
 #Statement de las funciones	
-def	p_function_statement(p):# Para prevenir la creacion de vars  en los bloques de los ciclos
+def	p_function_statement(p):# Es de funciones porque tiene el statement vars que solo se usa ahi y NO en ciclos
 	'''
 	function_statement	:	assigment
 						|	if
@@ -177,9 +180,10 @@ def	p_function_statement(p):# Para prevenir la creacion de vars  en los bloques 
 						|	for
 						|	return
 						|	function_call
-						|	fun_esp
 						|	vars
 						|	while_loop
+						|	draw_figure
+						
 				
 	'''	
 def p_bloque(p):
@@ -203,8 +207,8 @@ def	p_statement(p):
 				|	for
 				|	return
 				|	function_call
-				|	fun_esp
 				|	while_loop
+				|	draw_figure
 				
 	'''
 
@@ -653,14 +657,7 @@ def p_push_cte_toTable(p):
 	stackOP.append(cteIndexMem)# muestra memIndex
 	#stackOP.append(cteValue)# muestra los valores, mas facil para debugear
 	stackType.append(cteType) 
-def p_fun_esp(p):
-	'''
-	fun_esp		:	figure_creation
-	'''
-def p_figure_creation(p):
-	'''
-	figure_creation		:	FIGURE	ID	OP_TWO_POINTS	figure	POSSESS		bloque_figura
-	'''
+
 def p_figure(p):
 	'''
 	figure	:	POINT
@@ -671,18 +668,8 @@ def p_figure(p):
 			|	CIRCLE
 			|	ARC
 	'''
-def p_bloque_figura(p):
-	'''
-	bloque_figura	:	LCURLY_BRACKET	bloque_figura_primo	RCURLY_BRACKET	
-	
-	'''
+	figue.append(p[1])
 
-def p_bloque_figura_primo(p):
-	'''
-	bloque_figura_primo	:	bloque_figura_primo		figura_attr
-						|	epsilon
-			
-	'''	
 def p_figura_attr(p):
 	'''
 	figura_attr	:	vector
@@ -693,6 +680,46 @@ def p_vector(p):
 	'''
 	vector	:	VECTOR		ID		OP_TWO_POINTS		OP_LPAREN	mega_expression	COMA	mega_expression	OP_RPAREN	SEMICOLON
 	'''
+
+def p_draw_figure(p):
+	'''
+	draw_figure : figure	OP_LPAREN mega_expression COMA mega_expression COMA mega_expression figure_quadruple OP_RPAREN SEMICOLON
+	'''
+
+def p_figure_quadruple(p):
+	'figure_quadruple : epsilon'
+	figura = figue.pop()
+	param3 =stackOP.pop()
+	param3Type = stackType.pop()
+
+	yPosition =stackOP.pop()
+	yPositionType = stackType.pop()
+
+	xPosition =stackOP.pop()
+	xPositionType = stackType.pop()
+
+	if param3Type == 'int' and xPositionType == 'int' and yPositionType == 'int':
+
+		if figura == 'circle':	
+			quadruples.append(['drawCircle', xPosition, yPosition, param3])
+
+		elif figura == 'rectangle':
+			quadruples.append(['drawRectangle', xPosition, yPosition, param3])
+		
+		elif figura == 'triangle':
+			quadruples.append(['drawTriangle', xPosition, yPosition, param3])
+
+		elif figura == 'line':
+			quadruples.append(['drawLine', xPosition, yPosition, param3])
+
+		elif figura == 'arc':
+			quadruples.append(['drawArc', xPosition, yPosition, param3])
+		
+		
+
+	else:
+		print('ERROR: parameters of the circle musbt be of type integer at line' + str(p.lexer.lineno))
+		quit()
 
 
 def p_epsilon(p):
@@ -716,12 +743,12 @@ def parsing():
 
 def printing_quadruples():
 	quadFile = open('quadruple.txt','w') 
-	print('Quadruples:')
+	#print('Quadruples:')
 	quadFile.write('Quadruples: \n')
 	index = 0
 	for quadruple in quadruples:
 		quadFile.write(str(quadruple) + '\n')
-		print(index, quadruple)
+		#print(index, quadruple)
 		index +=1
 
 def printing_varTable():
@@ -773,7 +800,7 @@ def compiler():
 	#print('')
 	#printCteTable()
 	#print('')
-	#printing_quadruples()
+	printing_quadruples()
 	#print('')
 	#print('pila Operadores:' , stackOP)
 	#print('pila de tipos:' ,stackType)
@@ -793,6 +820,7 @@ def compiler():
 if __name__ == '__main__':
 	
 	VCgui.mGui.mainloop()
+	
 	
 
 	

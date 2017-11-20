@@ -10,6 +10,9 @@ def compiler():
 def execution():
     VCvirtualMemory.execution() # ARRANCA LA EJECUCION!!!
 
+def quitProgram():
+    quit()
+
 
 
             
@@ -19,7 +22,7 @@ def execution():
 mGui = Tk()
 
 
-mGui.geometry('1000x650')
+mGui.geometry('1000x750')
 mGui.title('Visual Cypher')
 
 
@@ -43,5 +46,5 @@ compileButtom= Button(mGui, text = 'Compile', command = compiler)
 compileButtom.pack(side =RIGHT)
 
 
-#reset_button = Button(mGui, text="Reset Environment", command=reset)
-#reset_button.pack(side = LEFT)
+quit_button = Button(mGui, text="QUIT", command= quitProgram)
+quit_button.pack(side = LEFT)

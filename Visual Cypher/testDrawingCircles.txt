@@ -1,0 +1,22 @@
+program drawExample {
+    int n;
+
+    function void drawCircle(int x, int y, int d){
+
+        circle(x, y, d);
+        if(d <= 20){
+            print("Done");
+        }
+        else{
+            drawCircle(x , y + 20, d - 20);
+        }
+    }
+
+
+    main(){
+
+        drawCircle(0,0,100);
+    
+      
+    }
+}

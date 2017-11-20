@@ -2,6 +2,7 @@ from VCquadruples import *
 from vcvirtualMemoryHandler import *
 import VCmemory
 import VCgui
+import VCgraphics
 
 
 localMemoryStack = [] # donde se duermen y despierta los contextos
@@ -20,6 +21,8 @@ oldParamIndex = []
 
 returnStack = []
 
+winFlag = False
+
 
 def execution():
 
@@ -31,6 +34,7 @@ def execution():
     
 
     quadrupleTravel()
+    
  
    
    
@@ -435,9 +439,44 @@ def quadrupleTravel():
           tempMemory = tempMemoryStack.pop()
           continue
           
-        elif quadruples[pointer][0] == '=r':
+        elif quadruples[pointer][0] == '=r': # Cuadruplo de una llamada a funcion con retornoo
           result = returnStack.pop()
           setToMemory(quadruples[pointer][3], result)
+
+        elif quadruples[pointer][0] == 'drawCircle': # Cuadruplo de una llamada a funcion con retornoo
+         
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawCircle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawRectangle': 
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawRectangle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawTriangle': 
+          
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawTriangle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawLine': 
+          
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawLine(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawArc': 
+          
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawArc(x,y,d)
+
 
 
         pointer += 1
