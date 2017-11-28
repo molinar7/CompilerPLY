@@ -1,6 +1,9 @@
 from VCquadruples import *
 from vcvirtualMemoryHandler import *
 import VCmemory
+import VCgui
+import VCgraphics
+
 
 localMemoryStack = [] # donde se duermen y despierta los contextos
 tempMemoryStack = []
@@ -18,6 +21,8 @@ oldParamIndex = []
 
 returnStack = []
 
+winFlag = False
+
 
 def execution():
 
@@ -29,6 +34,7 @@ def execution():
     
 
     quadrupleTravel()
+    
  
    
    
@@ -100,7 +106,7 @@ def quadrupleTravel():
     pointer = 0
 
     while quadruples[pointer][0] != 'END':
-        #print('Pointer at: ',  pointer, localMemory)
+        #print('Pointer at: ',  pointer)
     
        
 
@@ -199,15 +205,27 @@ def quadrupleTravel():
              
              if not isinstance(left_value, int): # Cuando no es int entonces es un string osea tiene parentesis
                 left_value = int(left_value[1:-1]) # Le quitamos los parentesis y se convierte a string
-                casilla = getFromMemory(left_value)
-                print(getFromMemory(casilla))
+                casilla = getFromMemory(getFromMemory(left_value))
+                VCgui.pantalla.insert('end-1c',  '\n')
+                VCgui.pantalla.insert('end-1c', casilla )
+                print(casilla)
+              
              else:
-                print(getFromMemory(left_value))
+                casilla = getFromMemory(left_value)
+                VCgui.pantalla.insert('end-1c',  '\n')
+                VCgui.pantalla.insert('end-1c', casilla )
+                print(casilla)
 
         
         elif quadruples[pointer][0] == '>':
-             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
-             right_value = getFromMemory(quadruples[pointer][2])
+             if not isinstance(quadruples[pointer][1], int):
+                left_value = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                left_value = getFromMemory(quadruples[pointer][1])
+             if not isinstance(quadruples[pointer][2], int):
+                right_value = getFromMemory(getFromMemory(int(quadruples[pointer][2][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                right_value = getFromMemory(quadruples[pointer][2])
 
              if left_value == None or right_value == None:# previene var no inlicialisadas
                print('Variable not initialized')
@@ -221,12 +239,17 @@ def quadrupleTravel():
              setToMemory(quadruples[pointer][3], result)
         
         elif quadruples[pointer][0] == '<':
-             left_value = getFromMemory(quadruples[pointer][1]) # guarda el valor del mem index de la izq
-             right_value = getFromMemory(quadruples[pointer][2])
 
-             if left_value == None or right_value == None:# previene var no inlicialisadas
-               print('Variable not initialized')
-               quit()
+             if not isinstance(quadruples[pointer][1], int):
+                left_value = getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                left_value = getFromMemory(quadruples[pointer][1])
+             if not isinstance(quadruples[pointer][2], int):
+                right_value = getFromMemory(getFromMemory(int(quadruples[pointer][2][1:-1]))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+             else:
+                right_value = getFromMemory(quadruples[pointer][2])
+
+             
             
              if left_value < right_value:
                result = True
@@ -369,7 +392,10 @@ def quadrupleTravel():
               nextParamIndex.append(paramIndex)
 
           # se tiene que guardar el parametro ya que se dormira la memoria para despues asignarlo a su parametro del nuevo contexto
-          oldParamIndex.append(getFromMemory(quadruples[pointer][1])) 
+          if not isinstance(quadruples[pointer][1], int):
+                oldParamIndex.append(getFromMemory(getFromMemory(int(quadruples[pointer][1][1:-1])))) # primero convertimos a int luego obtenemos el memindex del valor del array y luego el valor del memIndex
+          else:
+                oldParamIndex.append(getFromMemory(quadruples[pointer][1])) 
      
 
         elif quadruples[pointer][0] == 'gosub': 
@@ -413,19 +439,49 @@ def quadrupleTravel():
           tempMemory = tempMemoryStack.pop()
           continue
           
-        elif quadruples[pointer][0] == '=r':
+        elif quadruples[pointer][0] == '=r': # Cuadruplo de una llamada a funcion con retornoo
           result = returnStack.pop()
           setToMemory(quadruples[pointer][3], result)
-         
-          
 
+        elif quadruples[pointer][0] == 'drawCircle': # Cuadruplo de una llamada a funcion con retornoo
+         
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawCircle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawRectangle': 
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawRectangle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawTriangle': 
           
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawTriangle(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawLine': 
+          
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawLine(x,y,d)
+
+        elif quadruples[pointer][0] == 'drawArc': 
+          
+          x = getFromMemory(quadruples[pointer][1])
+          y = getFromMemory(quadruples[pointer][2])
+          d = getFromMemory(quadruples[pointer][3])
+          VCgraphics.drawArc(x,y,d)
 
 
 
         pointer += 1
             
-            
+
    
 
 

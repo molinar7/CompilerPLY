@@ -68,7 +68,8 @@ tokens = [
 'OP_RSQUARE_PAREN',
 'ARC',
 'WHILE',
-'ARRAY'
+'ARRAY',
+'DRAW'
 
 
 
@@ -122,7 +123,8 @@ reserved = {
 
     #Figure attributes
     'color' : 'COLOR',
-    'size'  :  'SIZE'
+    'size'  :  'SIZE',
+    'draw'  :   'DRAW'
 
    
 }

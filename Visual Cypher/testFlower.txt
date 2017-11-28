@@ -1,0 +1,26 @@
+program testArcs {
+    int n;
+
+    function void drawFlower(int x, int y, int d){
+
+      arc(x,y,d);
+      if (x >= 7){
+          print("Done");
+      }
+      else{
+          drawFlower(x + 1, y, d);
+      }
+    }
+
+
+    main(){
+        
+        drawFlower(0,45,100);
+        line(-41, 10, -250);
+        
+        
+        
+    
+      
+    }
+}
